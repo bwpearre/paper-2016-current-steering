@@ -192,17 +192,43 @@ charge transfer.
 \subsubsection{Splay histology}
 
 
-\subsection{Zebra finch antedromic HVC $\leftarrow$ X}
+\subsection{Zebra finch antidromic HVC $\leftarrow$ X}
 
 \subsection{Recording}
 
-Recordings of spontaneous activity were done using an Intan RHD2000 amplifier.
+Recordings of spontaneous activity were done using an Intan RHD2000 amplifier at 20 kHz with all possible filtering disabled.
 
 \subsection{Stimulation}
 
-We used a Plexon stimulator, and recorded using a Tucker-Davis Technologies RZ5 amplifier.
+We define stimulation units as follows:
+
+\begin{description}
+\item[Channel:] Our electrodes have 16 separate carbon fibres, each one of which we consider a separate channel, since each is connected to a separate amplifier.  Some work better than others, and usually about 75\% of them have low enough impedance to use.  We refer to these as active channels, or just channels.
+\item[Pulse:] A biphasic charge-balanced square wave of current.  Each phase is 200 $\mu s$ long, and there is no interpulse interval.
+\item[Current-steering configuration (CSC):] The configuration defining which channels receive the positive half of their biphasic pulse first, or vice versa.
+\item[Pulse train:] A sequence of 10 identical pulses delivered simultaneously to all active chennels at 25 Hz.  This is slow enough that pulses do not interfere with each other, and is used to detect the reliability of the response.
+\item[Threshold scan:] A series of pulse trains, each of which has the same CSC but a different current, designed to find the minimum current for this CSC that will antidromically induce a response in HVC.  The algorithm is described below.
+\item[Voltage scan:] The Plexon hardware can deliver a current-controlled pulse to each of 16 channels independently, but only allows one channel at a time to be monitored.  A voltage scan involves sending the same pulse train once per active electrode, monitoring a different one each time.
+\end{description}
+
+We used a Plexon stimulator to control stimulation in AreaX, and recorded from HVC using a Tucker-Davis Technologies RZ5 amplifier.  The Plexon self-monitoring channels were recorded on a National Instruments PCI-6251 data acquisition card using the session-based interface of Matlab (various versions from 2014a through 2015b) on Windows 8.1.
+
+We used MATLAB to control the stimulation and acquisition as follows: the National Instruments card is set to record an adequate number of samples of the Plexon self-monitoring channels at 100 kHz, initiated through software, and sending out a TTL pulse at the beginning of acquisition.  The Plexon stimulator begins stimulating upon receipt of that TTL pulse, and the TDT begins recording at 24.414 kHz (the device's native frequency) on the same signal.  Whenever the Plexon is actively delivering current (i.e. during each pulse within the train) it sends out its own TTL pulse: this signal is recorded by the TDT along with the HVC electrode voltages in order to align stimulation pulses with the recording.  The alignment precision is limited only by the sampling rate of the TDT.
+
 
 \subsubsection{Response detection}
+
+The antidromic response in HVC occurs roughly 3--8 ms after the stimulation pulse, and is highly stereotyped.  In order to detect this reliable response to stimulation, we measure the cross-correlation between the recorded response for each pulse in a train and each other, which provides a robust way of separating neural response from noise.  Because the HVC amplifier's response to the transient stimulation pulse in Area X can persist into the time of interest (3--8 ms), each response is first de-trended using a maximum-likelihood fit over the region 2--25 ms using an eigth order Fourier Series, which removes post-stimulation decay while leaving intact spike-sized signals.  The cross-correlation threshold above which a response is identified is chosen by visual inspection.
+
+As the bird ages, the skull grows down from the implantation site.  For shallow installations such as HVC (depth $\simeq 200\mu m$, the quality of the HVC recordings diminishes as electrodes are forced out of contact with the brain.  This makes it more and more difficult over time to measure the antidromic response.  The above cross-correlation technique is more sensitive than the technique typical of acute or short-term response measurements, in which a pronounced spike is often clearly visible.\marginpar{Need to prevent antidromic response transmission and see if ``measured response'' disappears as it should!  But this requires more birds, and a more complex experiment.} We believe that we are measuring an antidromic response because it is on the correct timescale and appears near the expected stimulation threshold.\marginpar{Cite papers giving timing and stimulation threshold.}
+
+
+\subsubsection{Threshold scan}
+
+
+
+\subsubsection{Voltage scan}
+
 
 \section{Results}
 
@@ -225,11 +251,11 @@ We used a Plexon stimulator, and recorded using a Tucker-Davis Technologies RZ5 
   \label{fig:VoltageVsCSC}
 \end{figure}
 
-\subsubsection{Controlling the antedromic response}
+\subsubsection{Controlling the antidromic response}
 
 \begin{figure}
   \includegraphics[width=\textwidth]{HVCresponseVsCSC}
-  \caption{Different CSCs delivered to Area X can induce different responses antedromically in HVC.  Here are four of the most distinct responses to four of the 32 CSCs shown in \fig{fig:VoltageVsCSC}.  Shading is 95\% confidence, n=198.}
+  \caption{Different CSCs delivered to Area X can induce different responses antidromically in HVC.  Here are four of the most distinct responses to four of the 32 CSCs shown in \fig{fig:VoltageVsCSC}.  Shading is 95\% confidence, n=198.}
   \label{fig:HVCresponseVsCSC}
 \end{figure}
 
