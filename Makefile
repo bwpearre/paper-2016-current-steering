@@ -32,6 +32,7 @@ XDVI	= xdvi -gamma 4
 XDVIPROC= xdvi-xaw
 DVIPS	= dvips
 DVIPDF  = dvipdf
+PS2PDF = ps2pdf
 L2H	= latex2html
 GH	= gv
 
@@ -84,7 +85,12 @@ $(PSF)	: %.ps : %.dvi
 	  @$(DVIPS) $< -o $@
 
 $(PDF)  : %.pdf : %.dvi
-	  @$(DVIPDF) -p letter $<
+	# tmp-file scheme so that Apple Preview doesn't give up on the temporarily-invalid new file
+	@$(DVIPDF)  $< tmp.pdf
+	mv tmp.pdf $@
+
+#$(PDF)  : %.pdf : %.ps
+#	  @$(PS2PDF) -p letter $<
 
 show	: $(TRG)
 	  @for i in $(TRG) ; do $(XDVI) $$i & ; done

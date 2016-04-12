@@ -99,8 +99,6 @@
 \newcommand\argmin{\mathop{\mbox{{\rm argmin}}}\limits}
 \newcommand{\noprint}[1]{}
 
-
-\hyphenation{cross-valid-ation}
 %%% End BWP
 
 
@@ -111,7 +109,8 @@
 % Please capitalize all terms in the title except conjunctions, prepositions, and articles.
 \begin{flushleft}
 {\Large
-\textbf\newline{A Multi-Channel Electrode for Chronic Recording and Safe Current-Steered Stimulation}
+  \textbf\newline{A Multi-Channel Electrode for Chronic Recording and Safe Current-Steered Stimulation}
+}
 \newline
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
 \\
@@ -130,7 +129,7 @@ Timothy J.~Gardner\textsuperscript{1,d}
 %
 % Primary Equal Contribution Note
 %\Yinyang These authors contributed equally to this work.
-Author \textsuperscript{a}~contributed the original Matlab and LabView implementations and most of the manuscript.
+Author \textsuperscript{a}~contributed the original Matlab and LabView implementations and most of the manuscript. Author \textsuperscript{b}~performed the surgeries and histologies.
 
 % Additional Equal Contribution Note
 % Also use this double-dagger symbol for special authorship notes, such as senior authorship.
@@ -179,21 +178,21 @@ Author \textsuperscript{a}~contributed the original Matlab and LabView implement
 
 \section{Materials and Methods}
 
-16-channel electrode arrays were built as in \cite{}.
-
-\subsubsection{Splay histology}
 
 
 
 \subsection{Electrode construction}
 
+Electrode arrays were constructed as described in
+\cite{Guitchounts2013electrode}.  The charge transfer capacity of one
+of the stimulation electrodes was enhanced by electrodeposited iridium
+oxide.  \cite{Cogan2008electrodes} describes the electrochemistry of
+charge transfer.
 
-Electrode arrays 
+\subsubsection{Splay histology}
+
 
 \subsection{Zebra finch antedromic HVC $\leftarrow$ X}
-
-\subsection{Electrodes}
-
 
 \subsection{Recording}
 
@@ -203,7 +202,37 @@ Electrode arrays
 
 \section{Results}
 
+\subsection{Chronic recording}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{XSpikeRecording}
+  \caption{Some of the electrodes in Area X record spikes after nearly a year.  The column titles show the day post-surgery and the number of seconds of recorded data (for bird lw94rhp).  Each row is one electrode (shown here: only the three best of 16).  Legends show the number of spikes; shaded region is mean $\pm$ 95\% confidence.}
+  \label{fig:XSpikeRecording}
+\end{figure}
+
+
+\subsection{Stimulation}
+
+\subsubsection{Minimising stimulation voltage}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{VoltageVsCSC}
+  \caption{The peak X stimulation voltage required in order to achieve biologically effective levels of stimulation in HVC varies with different current-steering configurations.  Here are 32 different configurations, over 5 trials each.  The X axis lists the configuration (each of the 11 active electrodes delivers a positive-first ``0'' or negative-first current-controlled pulse ``1'' pulse).  The Y axis shows the maximum voltage across any electrode.  Error bars are 95\% confidence intervals (n=5), and red dots are the individual trials.  For some CSCs, not all trials evoked a response before our 3V threshold was exceeded, and so the true number is higher.}
+  \label{fig:VoltageVsCSC}
+\end{figure}
+
+\subsubsection{Controlling the antedromic response}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{HVCresponseVsCSC}
+  \caption{Different CSCs delivered to Area X can induce different responses antedromically in HVC.  Here are four of the most distinct responses to four of the 32 CSCs shown in \fig{fig:VoltageVsCSC}.  Shading is 95\% confidence, n=198.}
+  \label{fig:HVCresponseVsCSC}
+\end{figure}
+
+
 \section{Discussion}
+
+  \cite{Histed2009stimulation}
 
 \bibliography{current}
 
