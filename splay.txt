@@ -1,0 +1,23 @@
+bird	bundle 	splay description 	# electrodes	mean inter-electrode distance	stdev inter-electrode distance	max dist
+LBlk178RR	a	clumped	3	5.0	0.0	20.0
+LBr53	c	clumped	10	6.0	2.1	52.9
+LBr84	a	clumped	16	6.3	6.3	48.3
+LBr53	b	clumped	4	7.5	5.0	35.8
+LW48RY	a	clumped	6	16.7	18.9	44.8
+lblk113	a	partial	9	7.7	5.5	107.3
+LW56RY	d	partial	14	12.8	12.1	150.2
+lng51	a	partial	8	14.7	17.8	108.7
+LG395RBlk	a	partial	15	15.1	10.2	163.0
+LG352RBlk	a	partial	15	19.3	19.1	128.7
+LW48RY	c	partial	5	22.0	27.7	103.0
+LW56RY	c	partial	9	28.2	35.8	148.4
+LW56RY	a	partial	11	31.8	28.1	103.0
+jun's1	a	partial	8	35.9	30.6	228.8
+LBr78	a	partial	13	76.5	151.8	167.3
+LW48RY	b	splayed	5	51.4	28.1	51.5
+LBr80	b	splayed	3	20.0	0.0	123.2
+LBr80	a	splayed	6	73.5	35.5	128.0
+LBr53	d	splayed	8	38.5	35.2	142.1
+lbr66	a	splayed	9	47.4	31.5	208.8
+LBr53	a	splayed	5	125.6	63.5	214.5
+LW56RY	b	splayed	16	62.0	58.9	829.4

@@ -191,6 +191,67 @@ charge transfer.
 
 \subsubsection{Splay histology}
 
+Electrode bundles were implanted into birds, all to a depth of roughly 3 mm.
+
+The following criteria were used to exclude observations:
+\begin{itemize}
+\item Electrode shafts lying flat on the surface of the tissue (visible as side-on cylinders).
+\item Bundles that were implanted in fibres of passage.
+\end{itemize}
+
+\begin{table}
+  \begin{tabular}{cccc}
+    Good electrodes & Mean dist ($\mu$m) & StdDev dist ($\mu$m) & Max dist ($\mu$m)  \\
+    \hline
+     3  &  5.0    &    0 &  20.0 \\
+   10  &  6.0   & 2.1 &  52.9 \\
+   16  &  6.3   & 6.3 &  48.3 \\
+    4  &  7.5   & 5.0 &  35.8 \\
+    6  & 16.7  & 18.9 &  44.8 \\
+    9  &  7.7   & 5.5 & 107 \\
+   14 &  12.8  & 12.1 & 15.2 \\
+    8 &  14.7  & 17.8 & 108 \\
+   15&   15.1  & 10.2 & 163 \\
+   15  & 19.3  & 19.1 & 128 \\
+    5  & 22.0  & 27.7 & 103 \\
+    9  & 28.2   & 35.8 & 148 \\
+   11 &  31.8  & 28.1 & 103 \\
+    8  & 35.9  & 30.6 & 228 \\
+   13 &  76.5 & 152 & 167 \\
+    5  & 51.4  & 28.1 &  51.5 \\
+    3  & 20.0    &     0 & 123 \\
+    6  & 73.5  & 35.5 & 128 \\
+    8  & 38.5  & 35.2 & 142 \\
+    9  & 47.4  & 31.5 & 208 \\
+    5 & 126  & 63.5&  214 \\
+    16 &  62.0 &  58.9&  829
+  \end{tabular}
+  \caption{Raw data.  Each row shows the statistics from one electrode array.  ``Good'' electrodes is the the number of carbon fibre electrodes in each bundle that appeared to still be firmly fixed in the neural tissue after slicing.}
+  \label{table:splaydata}
+\end{table}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{splay_data}
+  \caption{Splay histology data from Table~\ref{table:splaydata}.}
+  \label{fig:splaydata}
+\end{figure}
+
+After exclusion, 22 arrays, implanted into 13 different birds, yielded at least 3 measurable electrodes.  See Table~\ref{table:data} for the raw data.
+
+\begin{figure}
+  % montage -geometry 1024x1024 splay_full.jpeg splay_partial.jpeg splay_no.jpeg splay_montage.eps
+  \includegraphics[width=\textwidth]{splay_montage}
+  \caption{Splay types, left to right: examples of full splay, partial splay, and no splay.  In all images, black circles are electrode shafts (slices are 50 $\mu m$); in many cases the slicing plane is not quite orthogonal to the electrodes, yielding oblong shapes.  In the bright-field image on the right, three of the electrode slices were pulled out of the tissue during slicing, and appear to lie flat on the slide.  Since their original locations cannot be determined, we have ignored them.}
+  \label{fig:splay_montage}
+\end{figure}
+
+\begin{figure}
+  % montage -geometry 1024x1024 DAPI-and-NeuN*.jpeg damage.eps
+  \includegraphics[width=\textwidth]{damage}
+  \caption{Damage.  Neural nuclei are shown in green (stained with NeuN) and all cells (e.g. blood) in blue (DAPI).  The presence of non-neural cells indicates damage, and is notable in the vicinity of the largest non-splayed electrode bundle, and nearly absent around individual electrodes.}
+  \label{fig:damage}
+\end{figure}
+
 
 \subsection{Zebra finch antidromic HVC $\leftarrow$ X}
 
