@@ -49,6 +49,7 @@ figure(126);
 %% Pie chart
 subplot(3,3,1);
 pie(counts, key_legend);
+set(gca, 'ColorOrder', colours);
 title('Splay reliability');
 
 %% Mean inter-electrode distance
@@ -57,13 +58,16 @@ for i = 1:length(key_ind)
     means(i) = mean(data(indices{i},4));
     stds(i) = std(data(indices{i},4));
 end
-bar(key_ind, means);
+h = bar(key_ind, means, 'FaceColor', 0.5*[1 1 1]);
+
 hold on;
 errorbar(key_ind, means, stds, 'k. ');
 hold off;
-set(gca, 'XTickLabels', key_legend);
+%set(gca, 'XTickLabels', key_legend);
+xticklabel_rotate(key_ind, 30, key_legend);
 ylabel('Distance (\mu m)');
 title('Mean inter-electrode distance');
+
 
 %% Inter-electrode distance
 subplot(3,3,3);
@@ -71,11 +75,14 @@ for i = 1:length(key_ind)
     means(i) = mean(data(indices{i},6));
     stds(i) = std(data(indices{i},6));
 end
-bar(key_ind, means);
+h = bar(key_ind, means, 'FaceColor', 0.5*[1 1 1]);
 hold on;
 errorbar(key_ind, means, stds, 'k. ');
 hold off;
-set(gca, 'XTickLabels', key_legend);
+foo = get(gca, 'YLim');
+set(gca, 'YLim', [0 foo(2)]);
+%set(gca, 'XTickLabels', key_legend);
+xticklabel_rotate(key_ind, 30, key_legend);
 ylabel('Distance (\mu m)');
 title('Maximum inter-electrode distance');
 
@@ -84,23 +91,19 @@ title('Maximum inter-electrode distance');
 subplot(3,3,[4:9]);
 cla;
 hold on;
-markers = {'^', 'o', 's'};
+markers = {'^', 'd', 's'};
 handles = [];
 for i = 1:length(key_ind)
-    handles(i) = scatter(data(indices{i},4), data(indices{i},6), [], colours(i,:), markers{i}, 'filled');
+    handles(i) = scatter(data(indices{i},4), data(indices{i},6), [], colours(i,:), markers{i});
 end
 hold off;
 xlabel('Average inter-electrode distance per bundle (\mu m)');
 ylabel('Maximal distance per bundle (\mu m)');
 title('Electrode distances per bundle');
-%hLegend = legend(handles, key_legend);
+hLegend = legend(handles, key_legend, 'Location', 'SouthEast');
 %hMarkers = findobj(hLegend,'type','patch');
 %set(hMarkers, 'MarkerEdgeColor','k', 'MarkerFaceColor','b');
 
-%set(gca, 'XScale', 'log', 'YScale', 'log');
+set(gca, 'XScale', 'log', 'YScale', 'log');
 
 
-figure(4563);
-img = imread('DAPI-and-NeuN.jpeg');
-imagesc(img);
-a = roipoly;

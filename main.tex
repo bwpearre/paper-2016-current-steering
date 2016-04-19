@@ -16,9 +16,6 @@
 % amsmath and amssymb packages, useful for mathematical formulas and symbols
 \usepackage{amsmath,amssymb}
 
-% cite package, to clean up citations in the main text. Do not remove.
-\usepackage{cite}
-
 % Use nameref to cite supporting information files (see Supporting Information section for more info)
 \usepackage{nameref,hyperref}
 
@@ -45,9 +42,6 @@
 % Bold the 'Figure #' in the caption and separate it from the title/caption with a period
 % Captions will be left justified
 \usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
-
-% Use the PLoS provided BiBTeX style
-\bibliographystyle{plos2015}
 
 % Remove brackets from numbering in List of References
 \makeatletter
@@ -81,9 +75,22 @@
 %%% Begin BWP
 %\usepackage{amsmath, amsthm, amssymb, wasysym, graphicx}
 %\usepackage[small, hang, bf]{caption}
+
+
+%% CHOOSE!  Use PLOS idiot-biologist-content-free style, or
+%% informative style for internal use?
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+% Use the PLoS provided BiBTeX style
+\bibliographystyle{plos2015}
+
 %\usepackage{natbib}
+%\bibstyle{plainnat}
 %\renewcommand\cite{\citep}
 %\newcommand\citepossessive[1]{\citeauthor{#1}'s \citeyearpar{#1}}
+
+
+
 \newcommand\eq[1]{Eq.~\ref{#1}}
 \newcommand\fig[1]{Fig.~\ref{#1}}
 \newcommand\sref[1]{Section~\ref{#1}}
@@ -159,9 +166,11 @@ Author \textsuperscript{a}~contributed the original Matlab and LabView implement
 \begin{abstract}
   Long-term recording enables.... stimulation enables...
   
-  Big electrodes --- effective for low-voltage stimulation, but damage going in, gliosis
+  Big electrodes --- effective for low-voltage stimulation, but damage going in, gliosis on timescales like a month.
 
   Current steering --- dbs: no learning control.  ``Adaptive'' dbs, model-based coarse-grained current steering.
+
+  Small electrodes (under 10 mm) cause less acute and chronic damage, but are delicate.  We have developed an electrode design in which groups of electrodes support each other during insertion.
   
   We show that the bundled electrodes splay in the brain.
 
@@ -189,19 +198,20 @@ of the stimulation electrodes was enhanced by electrodeposited iridium
 oxide.  \cite{Cogan2008electrodes} describes the electrochemistry of
 charge transfer.
 
-\subsubsection{Splay histology}
+\subsection{Splay histology}
 
-Electrode bundles were implanted into birds, all to a depth of roughly 3 mm.
+Electrode bundles were implanted into birds, all to a depth of roughly 3 mm.  Most of these were ``dummy'' uncoated and blunt-cut rather than fire-sharpened as in \cite{Guitchounts2013electrode}, with 10--16 channels (fibres).
 
-The following criteria were used to exclude observations:
+The following criteria were used to exclude observations:\marginpar{Sanne: check exclusion criteria.}
 \begin{itemize}
-\item Electrode shafts lying flat on the surface of the tissue (visible as side-on cylinders).
-\item Bundles that were implanted in fibres of passage.
+\item Individual fibres were excluded if they were lying flat on the surface of the tissue (visible as side-on cylinders).
+\item Bundles were excluded if they were implanted in fibres of passage.
 \end{itemize}
 
 \begin{table}
   \begin{tabular}{cccc}
-    Good electrodes & Mean dist ($\mu$m) & StdDev dist ($\mu$m) & Max dist ($\mu$m)  \\
+    & \multicolumn{3}{c}{Inter-electrode distance ($\mu$m)} \\
+    \# Good electrodes & Mean & StdDev & Max \\
     \hline
      3  &  5.0    &    0 &  20.0 \\
    10  &  6.0   & 2.1 &  52.9 \\
@@ -236,32 +246,45 @@ The following criteria were used to exclude observations:
   \label{fig:splaydata}
 \end{figure}
 
-After exclusion, 22 arrays, implanted into 13 different birds, yielded at least 3 measurable electrodes.  See Table~\ref{table:data} for the raw data.
+After exclusion, 22 arrays, implanted into 13 different birds, each yielded at least 3 measurable electrodes.  See Table~\ref{table:splaydata} for the raw data.
+
+Clustering was done by hand.  The set of distances between electrodes was computed by measuring the distance between each electrode and its nearest neighbour.\marginpar{I'm about a day from finishing software to do all-to-all comparison.  For now, this suffices.}  Bundles were clustered as follows:
+\begin{description}
+\item[Splayed:] All electrodes were more than 10 $\mu$m from each other, or at most one pair was closer.\marginpar{Why 10 $\mu$m?}
+\item[Partial:] Some \marginpar{How many?} electrodes were more than 10 $\mu$m from each other.
+\item[Clumped:] All electrodes were within 10 $\mu$m of each other.  \marginpar{All-to-all, or nearest-neighbour?}
+\end{description}
+
+\marginpar{Would it make sense to automatically cluster the splay data?}
 
 \begin{figure}
   % montage -geometry 1024x1024 splay_full.jpeg splay_partial.jpeg splay_no.jpeg splay_montage.eps
   \includegraphics[width=\textwidth]{splay_montage}
-  \caption{Splay types, left to right: examples of full splay, partial splay, and no splay.  In all images, black circles are electrode shafts (slices are 50 $\mu m$); in many cases the slicing plane is not quite orthogonal to the electrodes, yielding oblong shapes.  In the bright-field image on the right, three of the electrode slices were pulled out of the tissue during slicing, and appear to lie flat on the slide.  Since their original locations cannot be determined, we have ignored them.}
+  \caption{Splay types, left to right: examples of full splay, partial splay, and clumped.  In all images, black circles are electrode shafts (slices are 50 $\mu m$); in many cases the slicing plane is not quite orthogonal to the electrodes, yielding oblong shapes.  In the bright-field image on the right, three of the electrode slices were pulled out of the tissue during slicing, and appear to lie flat on the slide.  Since their original locations cannot be determined, we have ignored them.}
   \label{fig:splay_montage}
 \end{figure}
+
+\fig{fig:damage} shows some examples of the damage done to the brain in the vicinity of tle electrodes.\marginpar{An image of ``typical'' damage done by ``micro''electrodes would be nice, but it's hard to show what's typical of the prior work with any credibility.  Letting people compare vs.~their own experiences is the best, but not everyone (e.g. me) will know what's typical.}
+\marginpar{I have data on how long post-implant the birds lived, which needs to come along with this figure, if not the rest of the paper.} Visual inspection shows little damage in the vicinity of single electrodes, and slightly more in clumped electrode groups.  Visual inspection can give some indication of the damage done to the brain and the likelihood of achieving good electrical contact with neurons, but we are more interested in the ability to record signals (see Section~\ref{sec:results:recording}).
 
 \begin{figure}
   % montage -geometry 1024x1024 DAPI-and-NeuN*.jpeg damage.eps
   \includegraphics[width=\textwidth]{damage}
-  \caption{Damage.  Neural nuclei are shown in green (stained with NeuN) and all cells (e.g. blood) in blue (DAPI).  The presence of non-neural cells indicates damage, and is notable in the vicinity of the largest non-splayed electrode bundle, and nearly absent around individual electrodes.}
+  \caption{Damage.  Neural nuclei are shown in green (stained with NeuN) and all cells in blue (DAPI).  The presence of non-neural cells indicates damage, and is notable in the vicinity of the largest non-splayed electrode bundle, and nearly absent around individual electrodes.}
   \label{fig:damage}
 \end{figure}
 
 
-\subsection{Zebra finch antidromic HVC $\leftarrow$ X}
 
 \subsection{Recording}
 
-Recordings of spontaneous activity were done using an Intan RHD2000 amplifier at 20 kHz with all possible filtering disabled.
+Recordings of spontaneous activity were done using an Intan RHD2000 amplifier at 20 kHz, with a hardware high-pass filter at 200 Hz.
 
-\subsection{Stimulation}
+\subsection{Stimulation: Zebra finch antidromic HVC $\leftarrow$ X}
 
-We define stimulation units as follows:
+
+
+We will use the following definitions:
 
 \begin{description}
 \item[Channel:] Our electrodes have 16 separate carbon fibres, each one of which we consider a separate channel, since each is connected to a separate amplifier.  Some work better than others, and usually about 75\% of them have low enough impedance to use.  We refer to these as active channels, or just channels.
@@ -295,9 +318,12 @@ As the bird ages, the skull grows down from the implantation site.  For shallow 
 
 \subsection{Chronic recording}
 
+\label{sec:results:recording}
+
 \begin{figure}
+  % Width 9, Height 9, Font scaling 100%
   \includegraphics[width=\textwidth]{XSpikeRecording}
-  \caption{Some of the electrodes in Area X record spikes after nearly a year.  The column titles show the day post-surgery and the number of seconds of recorded data (for bird lw94rhp).  Each row is one electrode (shown here: only the three best of 16).  Legends show the number of spikes; shaded region is mean $\pm$ 95\% confidence.}
+  \caption{Some of the electrodes in Area X record spikes after nearly a year.  The column titles show the day post-surgery and the number of seconds of recorded data (for bird lw94rhp).  Each row is one electrode (shown here: only the four best channels of 16).  Legends show the number of spikes; shaded region is mean $\pm$ 95\% confidence.}
   \label{fig:XSpikeRecording}
 \end{figure}
 
@@ -323,7 +349,13 @@ As the bird ages, the skull grows down from the implantation site.  For shallow 
 
 \section{Discussion}
 
-  \cite{Histed2009stimulation}
+\cite{Histed2009stimulation} showed that injecting current into tissue causes neurons whose axons are very close to the stimulation site to fire, rather than neurons whose bodies are at greater distances.  As a result, the set of neurons that respond to a stimulation pulse is highly sensitive to electrode location, but has spatial extent similar to that of the neuron's dendritic tree.  Furthermore, they showed that neurons stimulated in this manner seldom stimulate downstream neurons synaptically.
+
+Splaying electrode arrays with learning stimulation software may be able to exploit these properties.  First consider each of the $n$ electrodes in our array separately.  $n$ sites stimulated at a given current gives $n$ different random sets of $k_n$ neurons that will fire, and increasing the current changes the size of $k$.  There may exist multiple downstream neurons $y$ such that directly-stimulatable neurons from several of our $n$ sets synapse onto $y$.  This creates a search problem: how to stimulate the $n$ sets in a way that reliably stimulates $y$ enough to cause it to spike?  This requires search over current delivered to each group in $n$ in order to control which neurons are recruited, and timing of stimulation delivery to each group in $n$, so that the downstream neuron is reliably triggered.  Different values of current and timing delivered into the $n$ groups may trigger different downstream neurons, so the search problem is: find as many different downstream neurons as possible.
+
+Furthermore, it seems likely that directly-stimulatable neurons may synapse onto others that are directly-stimulatable, once or $r$ times removed.  This suggests a further dynamic for the timing search, in which different timings for stimulating the $n$ sets may trigger different firing sequences.  This enlarges the space of inducible dynamics considerably, and suggests the possibility of inducing Hebbian learning.
+
+Whereas Histed used single electrodes, we use miltichannel arrays.  Rather than a 16-channel array providing $n=16$ groups of neurons, different current-steering configurations may lead to a much higher value of $n$.  For such an electrode there are $2^{16}$ current-steering configurations even without manipulating current pulse magnitude or timing.
 
 \bibliography{current}
 
