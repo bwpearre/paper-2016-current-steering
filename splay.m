@@ -34,6 +34,9 @@ end
 
 key_ind = 1:3;
 colours = distinguishable_colors(length(key_ind));
+colours = [1 0 0; ...
+    0 0 1; ...
+    0 1 0];
 colormap(colours);
 key_legend = {'Clumped', 'Partial', 'Splayed'};
 
@@ -48,7 +51,7 @@ figure(126);
 
 %% Pie chart
 subplot(3,3,1);
-pie(counts, key_legend);
+p = pie(counts, key_legend);
 set(gca, 'ColorOrder', colours);
 title('Splay reliability');
 

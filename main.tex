@@ -83,7 +83,7 @@
 \usepackage{cite}
 % Use the PLoS provided BiBTeX style
 \bibliographystyle{plos2015}
-
+\usepackage[normalem]{ulem}
 %\usepackage{natbib}
 %\bibstyle{plainnat}
 %\renewcommand\cite{\citep}
@@ -188,8 +188,6 @@ Author \textsuperscript{a}~contributed the original Matlab and LabView implement
 \section{Materials and Methods}
 
 
-
-
 \subsection{Electrode construction}
 
 Electrode arrays were constructed as described in
@@ -200,13 +198,97 @@ charge transfer.
 
 \subsection{Splay histology}
 
-Electrode bundles were implanted into birds, all to a depth of roughly 3 mm.  Most of these were ``dummy'' uncoated and blunt-cut rather than fire-sharpened as in \cite{Guitchounts2013electrode}, with 10--16 channels (fibres).
+Electrode bundles were implanted into birds, all to a depth of roughly 3 mm.  Most of these were ``dummy'' uncoated and blunt-cut rather than fire-sharpened as in \cite{Guitchounts2013electrode}, with 10--16 channels (fibres).  The birds were killed, and their brains sectioned roughly perpendicularly to the electrodes, with a slice thickness of 50 $\mu$m.\marginpar{Sanne: what slice thickness?}
 
 The following criteria were used to exclude observations:\marginpar{Sanne: check exclusion criteria.}
 \begin{itemize}
 \item Individual fibres were excluded if they were lying flat on the surface of the tissue (visible as side-on cylinders).
 \item Bundles were excluded if they were implanted in fibres of passage.
 \end{itemize}
+
+
+Clustering was done by hand.  The set of distances between electrodes was computed by measuring the distance between each electrode and its nearest neighbour.\marginpar{I'm about a day from finishing software to do all-to-all comparison.  For the draft (and possibly first submission, if time is tight) this suffices.}  Bundles were clustered as follows:
+\begin{description}
+\item[Splayed:] All electrodes were more than 10 $\mu$m from each other, or at most one pair was closer.\marginpar{Why 10 $\mu$m?}
+\item[Partial:] Some \marginpar{How many?} electrodes were more than 10 $\mu$m from each other.
+\item[Clumped:] All electrodes were within 10 $\mu$m of each other.  \marginpar{All-to-all, or nearest-neighbour?}
+\end{description}
+\par\noindent Examples of these three categories are shown in \fig{fig:splay_montage}.
+
+\begin{figure}
+  % montage -geometry 1024x1024 splay_full.jpeg splay_partial.jpeg splay_no.jpeg splay_montage.eps
+  \includegraphics[width=\textwidth]{splay_montage}
+  \caption{Splay types, left to right: examples of full splay, partial splay, and clumped.  In all images, black circles are electrode shafts; in many cases the slicing plane is not quite orthogonal to the electrodes, yielding oblong images.  In the bright-field image on the right, three of the electrode slices were pulled out of the tissue during slicing, and appear to lie flat on the slide.  Since their original locations cannot be determined, we have ignored them.}
+  \label{fig:splay_montage}
+\end{figure}
+
+\marginpar{Would it make sense to automatically cluster the splay data?  Or to change the criteria?  I can think of some changes\dots}
+
+
+
+\subsection{Recording}
+
+Recordings of spontaneous activity were done using an Intan RHD2000 amplifier at 20 kHz, with a hardware high-pass filter at 200 Hz.
+
+\subsection{Stimulation: Zebra finch antidromic HVC $\leftarrow$ X}
+
+A common technique for locating HVC in the zebra finch involves implanting a stimulating electrode in Area X and looking for a an antidromic response, which is visible in HVC but not in the surrounding tissue.
+
+We will use the following definitions:
+
+\begin{description}
+\item[Channel:] Our electrodes have 16 separate carbon fibres, each one of which we consider a separate channel, since each is connected to a separate amplifier.  Some work better than others, and usually about 75\% of them have low enough impedance to use.  We refer to these as active channels, or just channels.
+\item[Pulse:] A biphasic charge-balanced square wave of current.  Each phase is 200 $\mu s$ long, and there is no interpulse interval.
+\item[Current-steering configuration (CSC):] The configuration defining which channels receive the positive half of their biphasic pulse first, or vice versa.
+\item[Pulse train:] A sequence of 10 identical pulses delivered simultaneously to all active chennels at 25 Hz.  This is slow enough that pulses do not interfere with each other, and is used to detect the reliability of the response.
+  \begin{itemize}
+  \item Programming\marginpar{Move timing notes to Discussion of compromises required for this experiment?} the Plexon stimulator for one pulse train requires about 2 seconds.
+  \end{itemize}
+\item[Threshold scan:] A series of pulse trains, each of which has the same CSC but a different current, designed to find the minimum current for this CSC that will antidromically induce a response in HVC.  The algorithm is described below.
+  \begin{itemize}
+  \item A threshold scan generally requires roughly 15 pulse trains, and thus takes on the order of 30 seconds.
+  \end{itemize}
+\item[Voltage scan:] The Plexon hardware can deliver a current-controlled pulse to each of 16 channels independently, but only allows monitoring of the voltage delivered on one channel at a time.  A voltage scan involves sending the same pulse train once per active electrode, monitoring a different one each time.
+  \begin{itemize}
+  \item A \marginpar{This does not require full reprogramming of the Plexon!  Just setting the monitor channel is faster, but my code does not take advantage of this, and fully reprogrammes the Plexon each time.} voltage scan requires delivering one pulse train per active electrode, taking a total of about 30 seconds.
+  \end{itemize}
+\end{description}
+
+We used a Plexon stimulator to control stimulation in AreaX, and recorded from HVC using a Tucker-Davis Technologies RZ5 amplifier.  The Plexon self-monitoring channels were recorded on a National Instruments PCI-6251 data acquisition card using the session-based interface of Matlab (various versions from 2014a through 2015b) on Windows 8.1.
+
+We used MATLAB to control the stimulation and acquisition as follows: the National Instruments card is set to record an adequate number of samples of the Plexon self-monitoring channels at 100 kHz, initiated through software, and sending out a TTL pulse at the beginning of acquisition.  The Plexon stimulator begins stimulating upon receipt of that TTL pulse, and the TDT begins recording at 24.414 kHz (the device's native frequency) on the same signal.  Whenever the Plexon is actively delivering current (i.e. during each pulse within the train) it sends out its own TTL pulse: this signal is recorded by the TDT along with the HVC electrode voltages in order to align stimulation pulses with the recording.  The alignment precision is limited only by the sampling rate of the TDT.
+
+\subsubsection{Response detection}
+
+The antidromic response in HVC occurs roughly 3--8 ms after the stimulation pulse, and is highly stereotyped.\marginpar{[citation needed]}.  \fig{fig:clear_hvc_response} shows an example of a pronounced HVC response.  In order to detect this reliable response to stimulation, we measure the cross-correlation between the recorded response for each pulse in a train and each other, which provides a robust way of separating neural response from noise.  Because the HVC amplifier's response to the transient stimulation pulse in Area X can persist into the time of interest (3--8 ms), each response is first de-trended using a maximum-likelihood fit over the region 2--25 ms using an eigth order Fourier Series, which removes post-stimulation decay while leaving intact spike-sized signals.  The cross-correlation threshold above which a response is identified is chosen by visual inspection.
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{lw95rhp-2015-08-05_18.39.07.eps}
+  \caption{An example of a clear response in HVC.  The horizontal axis is time, in milliseconds relative to the onset of a stimulation pulse.  Here, the stimulation is a 400-$\mu$s biphasic pulse of 3 $\mu$A, in which voltage peaked at 1.6 V.  Stimulation was repeated 20 times, with each response aligned to its respective pulse and shown as a separate colour.  Various response activity can be seen, but the most pronounced is at 6.2 ms post-onset. {\em This figure is but a placeholder.  I have better detrending now, and all responses will be in the same colour, etc\dots}}
+  \label{fig:clear_hvc_response}
+\end{figure}
+
+As the bird ages, the skull grows down from the implantation site.  For shallow installations such as HVC (depth $\simeq 200\mu m$, the quality of the HVC recordings diminishes as electrodes are forced out of contact with the brain.  This makes it more and more difficult over time to measure the antidromic response.  The above cross-correlation technique is more sensitive than the technique typical of acute or short-term response measurements, in which a pronounced spike is often clearly visible.\marginpar{Need to prevent antidromic response transmission and see if ``measured response'' disappears as it should!  But this requires more birds, and a more complex experiment.} We believe that we are measuring an antidromic response because it is on the correct timescale and appears near the expected stimulation threshold.\marginpar{Cite papers giving timing and stimulation threshold.}
+
+\subsubsection{Threshold scan}
+
+What parameters are required in order to reliably elicit an antidromic response to stimulation in Area X?  How can this threshold be found quickly, while minimising the risk of exceeding safe stimulation voltages?  How can this process be made robust to noise?\marginpar{How can we establish how much robustness to noise is required?}
+
+After choosing a CSC,\marginpar{Perhaps write a pseudocode block instead of this mess?} we begin stimulating at a current that is known to be below threshold.  While no response is seen, the current is increased gradually (by a factor of $\alpha \approx 1.1$) until either a response is detected or the voltage or current limit is exceeded.  In the latter case, a lack of response is reported, and we move on to the next CSC.  If a response is found, then the step size is decreased ($\alpha \leftarrow \alpha^{2/3}$) and we reduce the current until the response disappears.  This process is repeated until the step size drops below a limt ($\alpha < 1.02$).
+
+While a larger step size would result in a faster search, and a binary search would be easier to described, this ad-hoc approach makes it unlikely that we will stimulate with a current that significantly exceeds the minimum required for a response.
+
+\subsubsection{Voltage scan}
+
+Once the minimum current required in order to achieve a response is identified, we perform a voltage scan at that current, in order to measure the peak voltage delivered to each electrode.
+
+\section{Results}
+
+\subsection{Splay histology}
+
+After exclusion, 22 arrays, implanted into 13 different birds, each yielded at least 3 measurable electrodes.  See Table~\ref{table:splaydata} for the raw data and \fig{fig:splaydata} for visualisations thereof.\marginpar{Perhaps take out the table and just use the graphs?}
+
+
 
 \begin{table}
   \begin{tabular}{cccc}
@@ -246,25 +328,7 @@ The following criteria were used to exclude observations:\marginpar{Sanne: check
   \label{fig:splaydata}
 \end{figure}
 
-After exclusion, 22 arrays, implanted into 13 different birds, each yielded at least 3 measurable electrodes.  See Table~\ref{table:splaydata} for the raw data.
-
-Clustering was done by hand.  The set of distances between electrodes was computed by measuring the distance between each electrode and its nearest neighbour.\marginpar{I'm about a day from finishing software to do all-to-all comparison.  For now, this suffices.}  Bundles were clustered as follows:
-\begin{description}
-\item[Splayed:] All electrodes were more than 10 $\mu$m from each other, or at most one pair was closer.\marginpar{Why 10 $\mu$m?}
-\item[Partial:] Some \marginpar{How many?} electrodes were more than 10 $\mu$m from each other.
-\item[Clumped:] All electrodes were within 10 $\mu$m of each other.  \marginpar{All-to-all, or nearest-neighbour?}
-\end{description}
-
-\marginpar{Would it make sense to automatically cluster the splay data?}
-
-\begin{figure}
-  % montage -geometry 1024x1024 splay_full.jpeg splay_partial.jpeg splay_no.jpeg splay_montage.eps
-  \includegraphics[width=\textwidth]{splay_montage}
-  \caption{Splay types, left to right: examples of full splay, partial splay, and clumped.  In all images, black circles are electrode shafts (slices are 50 $\mu m$); in many cases the slicing plane is not quite orthogonal to the electrodes, yielding oblong shapes.  In the bright-field image on the right, three of the electrode slices were pulled out of the tissue during slicing, and appear to lie flat on the slide.  Since their original locations cannot be determined, we have ignored them.}
-  \label{fig:splay_montage}
-\end{figure}
-
-\fig{fig:damage} shows some examples of the damage done to the brain in the vicinity of tle electrodes.\marginpar{An image of ``typical'' damage done by ``micro''electrodes would be nice, but it's hard to show what's typical of the prior work with any credibility.  Letting people compare vs.~their own experiences is the best, but not everyone (e.g. me) will know what's typical.}
+\fig{fig:damage} shows some examples of the damage done to the brain in the vicinity of tle electrodes.\marginpar{An image of ``typical'' damage done by ``micro''electrodes would be nice, but it's hard to show what's typical of the \sout{competition} prior work with any credibility.  Letting people compare vs.~their own experiences is the best, but not everyone (e.g. me) will know what's typical.}
 \marginpar{I have data on how long post-implant the birds lived, which needs to come along with this figure, if not the rest of the paper.} Visual inspection shows little damage in the vicinity of single electrodes, and slightly more in clumped electrode groups.  Visual inspection can give some indication of the damage done to the brain and the likelihood of achieving good electrical contact with neurons, but we are more interested in the ability to record signals (see Section~\ref{sec:results:recording}).
 
 \begin{figure}
@@ -276,49 +340,18 @@ Clustering was done by hand.  The set of distances between electrodes was comput
 
 
 
-\subsection{Recording}
-
-Recordings of spontaneous activity were done using an Intan RHD2000 amplifier at 20 kHz, with a hardware high-pass filter at 200 Hz.
-
-\subsection{Stimulation: Zebra finch antidromic HVC $\leftarrow$ X}
-
-
-
-We will use the following definitions:
-
-\begin{description}
-\item[Channel:] Our electrodes have 16 separate carbon fibres, each one of which we consider a separate channel, since each is connected to a separate amplifier.  Some work better than others, and usually about 75\% of them have low enough impedance to use.  We refer to these as active channels, or just channels.
-\item[Pulse:] A biphasic charge-balanced square wave of current.  Each phase is 200 $\mu s$ long, and there is no interpulse interval.
-\item[Current-steering configuration (CSC):] The configuration defining which channels receive the positive half of their biphasic pulse first, or vice versa.
-\item[Pulse train:] A sequence of 10 identical pulses delivered simultaneously to all active chennels at 25 Hz.  This is slow enough that pulses do not interfere with each other, and is used to detect the reliability of the response.
-\item[Threshold scan:] A series of pulse trains, each of which has the same CSC but a different current, designed to find the minimum current for this CSC that will antidromically induce a response in HVC.  The algorithm is described below.
-\item[Voltage scan:] The Plexon hardware can deliver a current-controlled pulse to each of 16 channels independently, but only allows one channel at a time to be monitored.  A voltage scan involves sending the same pulse train once per active electrode, monitoring a different one each time.
-\end{description}
-
-We used a Plexon stimulator to control stimulation in AreaX, and recorded from HVC using a Tucker-Davis Technologies RZ5 amplifier.  The Plexon self-monitoring channels were recorded on a National Instruments PCI-6251 data acquisition card using the session-based interface of Matlab (various versions from 2014a through 2015b) on Windows 8.1.
-
-We used MATLAB to control the stimulation and acquisition as follows: the National Instruments card is set to record an adequate number of samples of the Plexon self-monitoring channels at 100 kHz, initiated through software, and sending out a TTL pulse at the beginning of acquisition.  The Plexon stimulator begins stimulating upon receipt of that TTL pulse, and the TDT begins recording at 24.414 kHz (the device's native frequency) on the same signal.  Whenever the Plexon is actively delivering current (i.e. during each pulse within the train) it sends out its own TTL pulse: this signal is recorded by the TDT along with the HVC electrode voltages in order to align stimulation pulses with the recording.  The alignment precision is limited only by the sampling rate of the TDT.
-
-
-\subsubsection{Response detection}
-
-The antidromic response in HVC occurs roughly 3--8 ms after the stimulation pulse, and is highly stereotyped.  In order to detect this reliable response to stimulation, we measure the cross-correlation between the recorded response for each pulse in a train and each other, which provides a robust way of separating neural response from noise.  Because the HVC amplifier's response to the transient stimulation pulse in Area X can persist into the time of interest (3--8 ms), each response is first de-trended using a maximum-likelihood fit over the region 2--25 ms using an eigth order Fourier Series, which removes post-stimulation decay while leaving intact spike-sized signals.  The cross-correlation threshold above which a response is identified is chosen by visual inspection.
-
-As the bird ages, the skull grows down from the implantation site.  For shallow installations such as HVC (depth $\simeq 200\mu m$, the quality of the HVC recordings diminishes as electrodes are forced out of contact with the brain.  This makes it more and more difficult over time to measure the antidromic response.  The above cross-correlation technique is more sensitive than the technique typical of acute or short-term response measurements, in which a pronounced spike is often clearly visible.\marginpar{Need to prevent antidromic response transmission and see if ``measured response'' disappears as it should!  But this requires more birds, and a more complex experiment.} We believe that we are measuring an antidromic response because it is on the correct timescale and appears near the expected stimulation threshold.\marginpar{Cite papers giving timing and stimulation threshold.}
-
-
-\subsubsection{Threshold scan}
-
-
-
-\subsubsection{Voltage scan}
-
-
-\section{Results}
 
 \subsection{Chronic recording}
-
 \label{sec:results:recording}
+
+\subsubsection{HVC}
+
+Long-term recording in HVC is difficult due to skull regrowth interfering with electrodes implanted only a few hundred microns from the surface: after 10 months, we had difficulty picking up antidromic response in our two remaining birds.
+
+\subsubsection{Area X}
+
+More telling of the potential of these electrodes is the recording of spontaneous activity in Area X, which was still easily seen in several channels after a year.\marginpar{I don't think I have data showing good-activity yield early on.}  \
+
 
 \begin{figure}
   % Width 9, Height 9, Font scaling 100%
