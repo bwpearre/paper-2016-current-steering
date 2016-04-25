@@ -122,6 +122,7 @@
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
 \\
 Ben Pearre\textsuperscript{1,a,\textcurrency},
+Sanne~Moorman\textsuperscript{1,b},
 Jun S.~Song\textsuperscript{1,c},
 Timothy J.~Gardner\textsuperscript{1,d}
 \\
@@ -234,6 +235,18 @@ Recordings of spontaneous activity were done using an Intan RHD2000 amplifier at
 
 A common technique for locating HVC in the zebra finch involves implanting a stimulating electrode in Area X and looking for a an antidromic response \cite{Swadlow1998antidromic,Hahnloser2002sparse}, which is visible in HVC but not in the surrounding tissue.
 
+Electrical stimulation saturates the brain, including the recording
+electrode, for some time post-stimulation (depending on the hardware
+used, but generally 1--3 ms post-stimulation).  Responses to
+stimulation can be detected outside of that saturation window.
+
+We tested our ability to steer current in the brain by stimulating in
+Area X and monitoring the response in HVC, about 5 mm away.  This
+spatial separation results in synaptic transmission delays of between
+3 and 8 ms \marginpar{Citation}, which gives the recording amplifier
+time to settle before measuring the response.\marginpar{But why
+  antidromic?}
+
 We will use the following definitions:
 
 \begin{description}
@@ -260,11 +273,11 @@ We used MATLAB to control the stimulation and acquisition as follows: the Nation
 
 \subsubsection{Response detection}
 
-The antidromic response in HVC occurs roughly 3--8 ms after the stimulation pulse, and is highly stereotyped.\marginpar{[citation needed]}.  \fig{fig:clear_hvc_response} shows an example of a pronounced HVC response.  In order to detect this reliable response to stimulation, we measure the cross-correlation between the recorded response for each pulse in a train and each other, which provides a robust way of separating neural response from noise.  Because the HVC amplifier's response to the transient stimulation pulse in Area X can persist into the time of interest (3--8 ms), each response is first de-trended using a maximum-likelihood fit over the region 2--25 ms using an eigth order Fourier Series, which removes post-stimulation decay while leaving intact spike-sized signals.  The cross-correlation threshold above which a response is identified is chosen by visual inspection.
+The antidromic response in HVC occurs roughly 3--8 ms after the stimulation pulse\marginpar{Citation}, and is highly stereotyped: \cite{Hahnloser2002sparse} found that the variability in the timing of the antidromic response in this circuit had a standard deviation of less than 100 $\mu$s.  \fig{fig:clear_hvc_response} shows an example of a pronounced HVC response.  In order to detect this response to stimulation, we measure the cross-correlation between the recorded response for each pulse in a train and each other, which provides a robust way of separating neural response from noise.  Because the HVC amplifier's response to the transient stimulation pulse in Area X can persist into the time of interest (3--8 ms), each response is first de-trended using a maximum-likelihood fit over the region 2--25 ms using an eigth order Fourier Series, which removes post-stimulation decay while leaving intact spike-sized signals.  The cross-correlation threshold above which a response is identified is chosen by visual inspection.
 
 \begin{figure}
   \includegraphics[width=\textwidth]{lw95rhp-2015-08-05_18.39.07.eps}
-  \caption{An example of a clear response in HVC.  The horizontal axis is time, in milliseconds relative to the onset of a stimulation pulse.  Here, the stimulation is a 400-$\mu$s biphasic pulse of 3 $\mu$A, in which voltage peaked at 1.6 V.  Stimulation was repeated 20 times, with each response aligned to its respective pulse and shown as a separate colour.  Various response activity can be seen, but the most pronounced is at 6.2 ms post-onset. {\em This figure is but a placeholder.  I have better detrending now, and all responses will be in the same colour, etc\dots}}
+  \caption{An example of a clear response in HVC.  The horizontal axis is time, in milliseconds relative to the onset of a stimulation pulse.  Here, the stimulation is a 400-$\mu$s biphasic pulse of 3 $\mu$A, in which voltage peaked at 1.6 V.  Stimulation was repeated 20 times, with each response aligned to its respective pulse and shown as a separate colour.  Various response activity can be seen, but the most pronounced is at 6.2 ms post-onset.  {\em Use the top figure?  It only shows one channel, and it's recorded on the Intan, which I was using while the HVC signals were still really pretty.  That means a lot worse amplifier settling, so it's not the best image, but the response is much cleaner than later ones made with the TDT.}}
   \label{fig:clear_hvc_response}
 \end{figure}
 
@@ -272,7 +285,7 @@ As the bird ages, the skull grows down from the implantation site.  For shallow 
 
 \subsubsection{Threshold scan}
 
-What parameters are required in order to reliably elicit an antidromic response to stimulation in Area X?  How can this threshold be found quickly, while minimising the risk of exceeding safe stimulation voltages?  How can this process be made robust to noise?\marginpar{How can we establish how much robustness to noise is required?}
+What stimulation parameters are required in order to reliably elicit an antidromic response to stimulation in Area X?  How can this threshold be found quickly, while minimising the risk of exceeding safe stimulation voltages?  How can this process be made robust to noise?\marginpar{How can we establish how much robustness to noise is required?}
 
 After choosing a CSC,\marginpar{Perhaps write a pseudocode block instead of this mess?} we begin stimulating at a current that is known to be below threshold.  While no response is seen, the current is increased gradually (by a factor of $\alpha \approx 1.1$) until either a response is detected or the voltage or current limit is exceeded.  In the latter case, a lack of response is reported, and we move on to the next CSC.  If a response is found, then the step size is decreased ($\alpha \leftarrow \alpha^{2/3}$) and we reduce the current until the response disappears.  This process is repeated until the step size drops below a limt ($\alpha < 1.02$).
 
@@ -350,7 +363,7 @@ Long-term recording in HVC is difficult due to skull regrowth interfering with e
 
 \subsubsection{Area X}
 
-More telling of the potential of these electrodes is the recording of spontaneous activity in Area X, which was still easily seen in several channels after a year.\marginpar{I don't think I have data showing good-activity yield early on.}  \
+More telling of the potential of these electrodes is the recording of spontaneous activity in Area X, which was still easily seen in several channels after a year.\marginpar{I don't think I have data showing good-activity yield early on.}   \fig{fig:XSpikeRecording} shows recordings in the weeks leading up to the 1-year mark.  These are the three most stable electrodes of the 16.
 
 
 \begin{figure}
@@ -365,9 +378,11 @@ More telling of the potential of these electrodes is the recording of spontaneou
 
 \subsubsection{Minimising stimulation voltage}
 
+Some CSCs were better at triggering an antidromic response than others.  From the $2^{11}$ possible CSCs we chose 32 (30 randomly, and the two that treated all electrodes identically).  For each CSC, we performed a threshold scan to find the minimum current needed to trigger a response.  When this current was found, we performed a voltage scan to find the maximum potential on any electrode.  We tested each CSC five times on an anesthetised bird.  Results are shown in \fig{fig:VoltageVsCSC}.  The best CSCs resulted in a maximum voltage of around 1 V, while the worst were over 2.5 V.  Each threshold scan terminated when a stimulation voltage over 3 V was detected, so we were unable to acquire all five measurements for some CSCs, and thus they are worse than the figure shows.  Perhaps surprisingly, the CSCs that sent identical pulses to all 11 electrodes were among the worst performers, with our simple search revealing CSCs that kept voltages far lower.
+
 \begin{figure}
   \includegraphics[width=\textwidth]{VoltageVsCSC}
-  \caption{The peak X stimulation voltage required in order to achieve biologically effective levels of stimulation in HVC varies with different current-steering configurations.  Here are 32 different configurations, over 5 trials each.  The X axis lists the configuration (each of the 11 active electrodes delivers a positive-first ``0'' or negative-first current-controlled pulse ``1'' pulse).  The Y axis shows the maximum voltage across any electrode.  Error bars are 95\% confidence intervals (n=5), and red dots are the individual trials.  For some CSCs, not all trials evoked a response before our 3V threshold was exceeded, and so the true number is higher.}
+  \caption{The peak Area X stimulation voltage required in order to achieve biologically effective levels of stimulation in HVC varies with different current-steering configurations.  Here are 32 different configurations, over 5 trials each.  The X axis lists the configuration (each of the 11 active electrodes delivers a positive-first ``0'' or negative-first current-controlled pulse ``1'' pulse).  The Y axis shows the maximum voltage across any electrode.  Error bars are 95\% confidence intervals (n=5), and red dots are the individual trials.  For some CSCs, not all trials evoked a response before our 3V threshold was exceeded, and so the true number is higher.}
   \label{fig:VoltageVsCSC}
 \end{figure}
 
