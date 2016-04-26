@@ -186,6 +186,18 @@ Author \textsuperscript{a}~contributed the original Matlab and LabView implement
 
 
 
+Much of the work in current steering in the brain is due to the interest in deep brain stimulation (DBS).  Electrodes tend to be single rods 1.2--1.6 mm in diameter with 4--32 contacts.  As of 2005, current steering was used largely to compensate for errors in placement of the electrode during surgery, which were on the order of 1.5 mm \cite{Holloway2005stereotaxy}.
+
+The first DBS systems deliver some kind of stimulation continuously.  Recently, interest in using biological feedback has grown, but due to the size of the electrodes, current systems rely on slow-timescale local field potentials (LFP) and other macroscopic measures of outcome such as accelerometers for feedback control \cite{Afshar2012closedloop}.  \cite{McIntyre2015} notes that there is currently little evidence that feedback-sensitive ``closed-loop'' systems produce superior clinical outcomes, but that this may be due to an incomplete understanding of the brain.\marginpar{Power use may be improved\dots}
+
+Current steering: \cite{Chaturvedi2012} uses 3D finite element analysis to predict current steering trajectory\marginpar{Verification??} They built a model based on magnetic resonance imaging (MRI) and diffusion tensor imaging (DTI) \cite{Alexander2007dti}
+
+
+
+
+Our electrodes offer the ability to record and stimulate precise areas at almost the same time.
+
+
 \section{Materials and Methods}
 
 
@@ -243,7 +255,7 @@ stimulation can be detected outside of that saturation window.
 We tested our ability to steer current in the brain by stimulating in
 Area X and monitoring the response in HVC, about 5 mm away.  This
 spatial separation results in synaptic transmission delays of between
-3 and 8 ms \marginpar{Citation}, which gives the recording amplifier
+3 and 8 ms \marginpar{Tim: citation for 3--8 ms?}, which gives the recording amplifier
 time to settle before measuring the response.\marginpar{But why
   antidromic?}
 
@@ -267,21 +279,24 @@ We will use the following definitions:
   \end{itemize}
 \end{description}
 
-We used a Plexon stimulator to control stimulation in AreaX, and recorded from HVC using a Tucker-Davis Technologies RZ5 amplifier.  The Plexon self-monitoring channels were recorded on a National Instruments PCI-6251 data acquisition card using the session-based interface of Matlab (various versions from 2014a through 2015b) on Windows 8.1.
+We used a Plexon stimulator to control stimulation in Area X, and recorded from HVC using a Tucker-Davis Technologies RZ5 amplifier.  The Plexon self-monitoring channels were recorded on a National Instruments PCI-6251 data acquisition card using the session-based interface of Matlab (various versions from 2014a through 2015b) on Windows 8.1.
 
 We used MATLAB to control the stimulation and acquisition as follows: the National Instruments card is set to record an adequate number of samples of the Plexon self-monitoring channels at 100 kHz, initiated through software, and sending out a TTL pulse at the beginning of acquisition.  The Plexon stimulator begins stimulating upon receipt of that TTL pulse, and the TDT begins recording at 24.414 kHz (the device's native frequency) on the same signal.  Whenever the Plexon is actively delivering current (i.e. during each pulse within the train) it sends out its own TTL pulse: this signal is recorded by the TDT along with the HVC electrode voltages in order to align stimulation pulses with the recording.  The alignment precision is limited only by the sampling rate of the TDT.
 
 \subsubsection{Response detection}
 
-The antidromic response in HVC occurs roughly 3--8 ms after the stimulation pulse\marginpar{Citation}, and is highly stereotyped: \cite{Hahnloser2002sparse} found that the variability in the timing of the antidromic response in this circuit had a standard deviation of less than 100 $\mu$s.  \fig{fig:clear_hvc_response} shows an example of a pronounced HVC response.  In order to detect this response to stimulation, we measure the cross-correlation between the recorded response for each pulse in a train and each other, which provides a robust way of separating neural response from noise.  Because the HVC amplifier's response to the transient stimulation pulse in Area X can persist into the time of interest (3--8 ms), each response is first de-trended using a maximum-likelihood fit over the region 2--25 ms using an eigth order Fourier Series, which removes post-stimulation decay while leaving intact spike-sized signals.  The cross-correlation threshold above which a response is identified is chosen by visual inspection.
+HVC projects into Area X (and into RA, which we do not discuss here).  When Area X is stimulated, an antidromic response may be observed both in HVC\textsubscript{X} projection neurons and in HVC interneurons.  The antidromic response occurs roughly 3--8 ms after the stimulation pulse,\marginpar{Citation!} and is highly stereotyped: \cite{Fee2004mechanisms} reports that the variability in the timing of the antidromic response in HVC\textsubscript{X} projection neurons is under 50 $\mu$s, while that of HVC intraneurons is above 500 $\mu$s.
+
+\fig{fig:clear_hvc_response} shows an example of a pronounced HVC response to stimulation in Area X.  In order to detect this signal, we measure the cross-correlation between the recorded response for each pulse in a train and each other with a maximum lag of 50 $\mu$s, which provides a robust way of separating neural response from noise.  Because the HVC amplifier's response to the transient stimulation pulse in Area X can persist into the time of interest (3--8 ms), each response is first de-trended using a maximum-likelihood fit over the region 2--25 ms using an eigth order Fourier Series, which removes post-stimulation decay while leaving intact spike-sized signals.  We found this to produce fewer artifacts than the more conventional approach of bandpass-filtering the signal, given the large stimulation artifact.  The cross-correlation threshold above which a response is identified is chosen by visual inspection.
 
 \begin{figure}
   \includegraphics[width=\textwidth]{lw95rhp-2015-08-05_18.39.07.eps}
-  \caption{An example of a clear response in HVC.  The horizontal axis is time, in milliseconds relative to the onset of a stimulation pulse.  Here, the stimulation is a 400-$\mu$s biphasic pulse of 3 $\mu$A, in which voltage peaked at 1.6 V.  Stimulation was repeated 20 times, with each response aligned to its respective pulse and shown as a separate colour.  Various response activity can be seen, but the most pronounced is at 6.2 ms post-onset.  {\em Use the top figure?  It only shows one channel, and it's recorded on the Intan, which I was using while the HVC signals were still really pretty.  That means a lot worse amplifier settling, so it's not the best image, but the response is much cleaner than later ones made with the TDT.}}
+  \includegraphics[width=\textwidth]{lw95rhp-2015-12-02}
+  \caption{An example of a strong response in HVC.  {\bf Top:} The horizontal axis is time in milliseconds relative to the onset of a stimulation pulse.  Here, the stimulation is a 400-$\mu$s biphasic pulse of 3 $\mu$A, in which voltage peaked at 1.6 V.  Stimulation was repeated 20 times at 25 Hz, with each response aligned to its respective pulse.  Various response activity can be seen, but the most pronounced is at 6.2 ms post-onset.  {\bf Bottom:} a different bird, with a much weaker signal, but recorded on TDT.  200 $\mu$s, 6.94 $\mu$A, 1.2 V peak.{\em Use the top figure?  It only shows one channel, and it's recorded on the Intan, which I was using while the HVC signals were still pretty.  That means a lot worse amplifier settling, so it's not the best image, but the response is much cleaner than later ones made with the TDT.}}
   \label{fig:clear_hvc_response}
 \end{figure}
 
-As the bird ages, the skull grows down from the implantation site.  For shallow installations such as HVC (depth $\simeq 200\mu m$, the quality of the HVC recordings diminishes as electrodes are forced out of contact with the brain.  This makes it more and more difficult over time to measure the antidromic response.  The above cross-correlation technique is more sensitive than the technique typical of acute or short-term response measurements, in which a pronounced spike is often clearly visible.\marginpar{Need to prevent antidromic response transmission and see if ``measured response'' disappears as it should!  But this requires more birds, and a more complex experiment.} We believe that we are measuring an antidromic response because it is on the correct timescale and appears near the expected stimulation threshold.\marginpar{Cite papers giving timing and stimulation threshold.}
+As the bird ages, the skull grows down from the implantation site.  For shallow installations such as HVC (depth $\approx 200\mu m$, the quality of the HVC recordings diminishes as electrodes are forced out of contact with the brain.  This makes it more and more difficult over time to measure the antidromic response.  The above cross-correlation technique is more sensitive than the technique typical of acute or short-term response measurements, in which a pronounced spike is often clearly visible.\marginpar{Need to prevent antidromic response transmission and see if ``measured response'' disappears as it should!  But this requires more birds, and a more complex experiment.} We believe that we are measuring an antidromic response because it is on the correct timescale and appears near the expected stimulation threshold.\marginpar{Cite papers giving timing and stimulation threshold.}
 
 \subsubsection{Threshold scan}
 
