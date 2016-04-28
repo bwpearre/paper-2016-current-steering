@@ -89,7 +89,10 @@
 %\renewcommand\cite{\citep}
 %\newcommand\citepossessive[1]{\citeauthor{#1}'s \citeyearpar{#1}}
 
-
+%\usepackage{polski} % For one dude's name in one bibliography entry!
+%\usepackage[utf8]{inputenc}
+%\a[lf]{berenis}
+%\usepackage[LY1]{fontenc}
 
 \newcommand\eq[1]{Eq.~\ref{#1}}
 \newcommand\fig[1]{Fig.~\ref{#1}}
@@ -184,21 +187,33 @@ Author \textsuperscript{a}~contributed the original Matlab and LabView implement
 
 \section{Introduction}
 
+\subsection{Stimulation}
 
+Large electrodes must be stimulated at high currents.  Energy inefficiency.  Imprecision.  Sense-act cycles are limited.
+
+DBS has been used to treat movement disorders (Parkinson's disease), epilepsy, Alzheimer's, chronic pain, cluster headache, depression, OCD, addictive behaviours, anorexia\dots\marginpar{Many more!  But do we want to provide a big list?  Only if we are selling this as a clinical paper, right?}
+
+Standard DBS systems deliver some kind of stimulation continuously.  Recently, interest in using biological feedback has grown.  Due to the size of the electrodes, for feedback control most systems rely on slow-timescale local field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic measures of outcome such as accelerometers \cite{Afshar2012closedloop}, but the addition of a second electrode in a different brain region has been shown to be effective in ameliorating Parkinsonian symptoms in monkeys \cite{Rosin2011adbs}.
+
+\subsection{Current steering}
 
 Much of the work in current steering in the brain is due to the interest in deep brain stimulation (DBS).  Electrodes tend to be single rods 1.2--1.6 mm in diameter with 4--32 contacts.  As of 2005, current steering was used largely to compensate for errors in placement of the electrode during surgery, which were on the order of 1.5 mm \cite{Holloway2005stereotaxy}.
 
-The first DBS systems deliver some kind of stimulation continuously.  Recently, interest in using biological feedback has grown, but due to the size of the electrodes, current systems rely on slow-timescale local field potentials (LFP) and other macroscopic measures of outcome such as accelerometers for feedback control \cite{Afshar2012closedloop}.  \cite{McIntyre2015} notes that there is currently little evidence that feedback-sensitive ``closed-loop'' systems produce superior clinical outcomes, but that this may be due to an incomplete understanding of the brain.\marginpar{Power use may be improved\dots}
-
-Current steering: \cite{Chaturvedi2012} uses 3D finite element analysis to predict current steering trajectory\marginpar{Verification??} They built a model based on magnetic resonance imaging (MRI) and diffusion tensor imaging (DTI) \cite{Alexander2007dti}
+Most attempts to steer current are based on computational models.  Macroscopic models, with voxels of 1--2 mm\textsuperscript{3}: \cite{Chaturvedi2012} uses 3D finite element analysis to predict current steering trajectory\marginpar{Verification??} They built a model based on magnetic resonance imaging (MRI) and diffusion tensor imaging (DTI) \cite{Alexander2007dti}, which produces data with voxels of roughly 2 mm\textsuperscript{3}.
 
 
+\subsubsection{Current steering on a smaller scale:}
 
-
-Our electrodes offer the ability to record and stimulate precise areas at almost the same time.
+\cite{Jepson2014steering_in_retina} use a 61-channel electrode, with electrode as closely packed as 30 $\mu$m, to stimulate macaque retina {\em in vitro}.  They stimulated the retina using single electrodes or combinations of three electrodes with charge-balanced pulses, and found that retinal response could be predicted with a piecewise linear model.
 
 
 \section{Materials and Methods}
+
+\subsection{Bird surgery description}
+
+Jun?
+
+Ground/return electrode should be described somewhere.  Here?
 
 
 \subsection{Electrode construction}
@@ -238,7 +253,6 @@ Clustering was done by hand.  The set of distances between electrodes was comput
 \marginpar{Would it make sense to automatically cluster the splay data?  Or to change the criteria?  I can think of some changes\dots}
 
 
-
 \subsection{Recording}
 
 Recordings of spontaneous activity were done using an Intan RHD2000 amplifier at 20 kHz, with a hardware high-pass filter at 200 Hz.
@@ -255,9 +269,9 @@ stimulation can be detected outside of that saturation window.
 We tested our ability to steer current in the brain by stimulating in
 Area X and monitoring the response in HVC, about 5 mm away.  This
 spatial separation results in synaptic transmission delays of between
-3 and 8 ms \marginpar{Tim: citation for 3--8 ms?}, which gives the recording amplifier
-time to settle before measuring the response.\marginpar{But why
-  antidromic?}
+3 and 8 ms \marginpar{Tim: citation for 3--8 ms?}, which gives the
+recording amplifier time to settle before measuring the
+response.\marginpar{But why antidromic?}
 
 We will use the following definitions:
 
@@ -279,7 +293,9 @@ We will use the following definitions:
   \end{itemize}
 \end{description}
 
-We used a Plexon stimulator to control stimulation in Area X, and recorded from HVC using a Tucker-Davis Technologies RZ5 amplifier.  The Plexon self-monitoring channels were recorded on a National Instruments PCI-6251 data acquisition card using the session-based interface of Matlab (various versions from 2014a through 2015b) on Windows 8.1.
+The stimulation and recording electrodes use separate electrical returns, consisting of\marginpar{Jun?} silver wire in contact with the skull.  Some CSCs balance current delivery between the electrodes, whereas others do not, and in the latter case excess current flows through the common return.
+
+We used a Plexon stimulator to control stimulation in Area X, and recorded from HVC using a Tucker-Davis Technologies RZ5 amplifier\marginpar{And/or an Intan, depending on which recording to show in \fig{fig:clear_hvc_response}}.  The Plexon self-monitoring channels were recorded on a National Instruments PCI-6251 data acquisition card using the session-based interface of Matlab (various versions from 2014a through 2015b) on Windows 8.1.
 
 We used MATLAB to control the stimulation and acquisition as follows: the National Instruments card is set to record an adequate number of samples of the Plexon self-monitoring channels at 100 kHz, initiated through software, and sending out a TTL pulse at the beginning of acquisition.  The Plexon stimulator begins stimulating upon receipt of that TTL pulse, and the TDT begins recording at 24.414 kHz (the device's native frequency) on the same signal.  Whenever the Plexon is actively delivering current (i.e. during each pulse within the train) it sends out its own TTL pulse: this signal is recorded by the TDT along with the HVC electrode voltages in order to align stimulation pulses with the recording.  The alignment precision is limited only by the sampling rate of the TDT.
 
@@ -287,7 +303,7 @@ We used MATLAB to control the stimulation and acquisition as follows: the Nation
 
 HVC projects into Area X (and into RA, which we do not discuss here).  When Area X is stimulated, an antidromic response may be observed both in HVC\textsubscript{X} projection neurons and in HVC interneurons.  The antidromic response occurs roughly 3--8 ms after the stimulation pulse,\marginpar{Citation!} and is highly stereotyped: \cite{Fee2004mechanisms} reports that the variability in the timing of the antidromic response in HVC\textsubscript{X} projection neurons is under 50 $\mu$s, while that of HVC intraneurons is above 500 $\mu$s.
 
-\fig{fig:clear_hvc_response} shows an example of a pronounced HVC response to stimulation in Area X.  In order to detect this signal, we measure the cross-correlation between the recorded response for each pulse in a train and each other with a maximum lag of 50 $\mu$s, which provides a robust way of separating neural response from noise.  Because the HVC amplifier's response to the transient stimulation pulse in Area X can persist into the time of interest (3--8 ms), each response is first de-trended using a maximum-likelihood fit over the region 2--25 ms using an eigth order Fourier Series, which removes post-stimulation decay while leaving intact spike-sized signals.  We found this to produce fewer artifacts than the more conventional approach of bandpass-filtering the signal, given the large stimulation artifact.  The cross-correlation threshold above which a response is identified is chosen by visual inspection.
+\fig{fig:clear_hvc_response} shows an example of a pronounced HVC response to stimulation in Area X.  In order to detect this signal, we measure the cross-correlation between the recorded response for each pulse in a train and each other with a maximum lag of 50 $\mu$s, which provides a robust way of separating neural response from noise.  Because the HVC amplifier's response to the transient stimulation pulse in Area X can persist into the time of interest (3--8 ms), each response is first de-trended using a maximum-likelihood fit over the region 2--25 ms using an eigth order Fourier Series, which removes post-stimulation decay while leaving intact spike-sized signals.\marginpar{Filtering would probably work better with the TDT\dots}  We found this to produce fewer artifacts than the more conventional approach of bandpass-filtering the signal, given the large stimulation artifact.  The cross-correlation threshold above which a response is identified is chosen by visual inspection.\marginpar{But now why not findpeaks $3\sigma$ or whatever, and see if peak jitter is $<50\mu$s as required by \cite{Fee2004mechanisms}?  This has the great advantage that over an $n$-spike train, I could immediately compute Pr(response) (see marginpar QWE to see why this is a good idea).  Could reanalyse old data this way and compare, and decide whether to go forward.}
 
 \begin{figure}
   \includegraphics[width=\textwidth]{lw95rhp-2015-08-05_18.39.07.eps}
@@ -302,9 +318,9 @@ As the bird ages, the skull grows down from the implantation site.  For shallow 
 
 What stimulation parameters are required in order to reliably elicit an antidromic response to stimulation in Area X?  How can this threshold be found quickly, while minimising the risk of exceeding safe stimulation voltages?  How can this process be made robust to noise?\marginpar{How can we establish how much robustness to noise is required?}
 
-After choosing a CSC,\marginpar{Perhaps write a pseudocode block instead of this mess?} we begin stimulating at a current that is known to be below threshold.  While no response is seen, the current is increased gradually (by a factor of $\alpha \approx 1.1$) until either a response is detected or the voltage or current limit is exceeded.  In the latter case, a lack of response is reported, and we move on to the next CSC.  If a response is found, then the step size is decreased ($\alpha \leftarrow \alpha^{2/3}$) and we reduce the current until the response disappears.  This process is repeated until the step size drops below a limt ($\alpha < 1.02$).
+After choosing a CSC,\marginpar{Perhaps write a pseudocode block instead of this mess?} we begin stimulating at a current that is known to be below threshold.  While no response is seen, the current is increased gradually (by a factor of $\alpha \approx 1.1$) until either a response is detected or the voltage or current limit is exceeded.  In the latter case, a lack of response is reported, and we move on to the next CSC.  If a response is found, then the step size is decreased ($\alpha \leftarrow \alpha^{2/3}$) and we reduce the current until the response disappears.  This process is repeated until the step size drops below a limt ($\alpha < 1.02$), and the threshold is taken as the last parameter set that induced a response.\marginpar{QWE: This was expedient, but is primitive! I had planned to use all the data as follows: during threshold scan and during voltage scan, sweep around area of interest, find Pr(response$\,\,|\ldots$), fit a sigmoid to this curve, and take e.g.~midpoint or etc.  Search could even be conducted as above (although could do better) or terminated by estimating the error on the estimate.  I can almost certainly get better results by re-analysing the old data this way.}
 
-While a larger step size would result in a faster search, and a binary search would be easier to described, this ad-hoc approach makes it unlikely that we will stimulate with a current that significantly exceeds the minimum required for a response.
+While a larger step size would result in a faster search, and a binary search would be easier to describe, this ad-hoc approach samples near the current of interest while making it unlikely that we will stimulate with a current that significantly exceeds the minimum required for a response.
 
 \subsubsection{Voltage scan}
 
@@ -396,6 +412,8 @@ More telling of the potential of these electrodes is the recording of spontaneou
 Some CSCs were better at triggering an antidromic response than others.  From the $2^{11}$ possible CSCs we chose 32 (30 randomly, and the two that treated all electrodes identically).  For each CSC, we performed a threshold scan to find the minimum current needed to trigger a response.  When this current was found, we performed a voltage scan to find the maximum potential on any electrode.  We tested each CSC five times on an anesthetised bird.  Results are shown in \fig{fig:VoltageVsCSC}.  The best CSCs resulted in a maximum voltage of around 1 V, while the worst were over 2.5 V.  Each threshold scan terminated when a stimulation voltage over 3 V was detected, so we were unable to acquire all five measurements for some CSCs, and thus they are worse than the figure shows.  Perhaps surprisingly, the CSCs that sent identical pulses to all 11 electrodes were among the worst performers, with our simple search revealing CSCs that kept voltages far lower.
 
 \begin{figure}
+  % lw95rhp-2015-12-04 (data also available on -09 and lw85ry-2015-12-17)
+  % width 6 in, height 5 in, fonts auto
   \includegraphics[width=\textwidth]{VoltageVsCSC}
   \caption{The peak Area X stimulation voltage required in order to achieve biologically effective levels of stimulation in HVC varies with different current-steering configurations.  Here are 32 different configurations, over 5 trials each.  The X axis lists the configuration (each of the 11 active electrodes delivers a positive-first ``0'' or negative-first current-controlled pulse ``1'' pulse).  The Y axis shows the maximum voltage across any electrode.  Error bars are 95\% confidence intervals (n=5), and red dots are the individual trials.  For some CSCs, not all trials evoked a response before our 3V threshold was exceeded, and so the true number is higher.}
   \label{fig:VoltageVsCSC}
@@ -416,7 +434,7 @@ Some CSCs were better at triggering an antidromic response than others.  From th
 
 Splaying electrode arrays with learning stimulation software may be able to exploit these properties.  First consider each of the $n$ electrodes in our array separately.  $n$ sites stimulated at a given current gives $n$ different random sets of $k_n$ neurons that will fire, and increasing the current changes the size of $k$.  There may exist multiple downstream neurons $y$ such that directly-stimulatable neurons from several of our $n$ sets synapse onto $y$.  This creates a search problem: how to stimulate the $n$ sets in a way that reliably stimulates $y$ enough to cause it to spike?  This requires search over current delivered to each group in $n$ in order to control which neurons are recruited, and timing of stimulation delivery to each group in $n$, so that the downstream neuron is reliably triggered.  Different values of current and timing delivered into the $n$ groups may trigger different downstream neurons, so the search problem is: find as many different downstream neurons as possible.
 
-Furthermore, it seems likely that directly-stimulatable neurons may synapse onto others that are directly-stimulatable, once or $r$ times removed.  This suggests a further dynamic for the timing search, in which different timings for stimulating the $n$ sets may trigger different firing sequences.  This enlarges the space of inducible dynamics considerably, and suggests the possibility of inducing Hebbian learning.
+Furthermore, it seems likely that directly-stimulatable neurons may synapse onto others that are directly-stimulatable, once or $r$ times removed.  This suggests a further dynamic for the timing search, in which different timings for stimulating the $n$ sets may trigger different firing sequences (\cite{Jepson2014steering_in_retina} proposes a related mechanism in the context of current steering in retina).  This enlarges the space of inducible dynamics considerably, and suggests the possibility of inducing Hebbian learning.
 
 Whereas Histed used single electrodes, we use miltichannel arrays.  Rather than a 16-channel array providing $n=16$ groups of neurons, different current-steering configurations may lead to a much higher value of $n$.  For such an electrode there are $2^{16}$ current-steering configurations even without manipulating current pulse magnitude or timing.
 
