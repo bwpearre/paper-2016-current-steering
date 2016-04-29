@@ -187,24 +187,36 @@ Author \textsuperscript{a}~contributed the original Matlab and LabView implement
 
 \section{Introduction}
 
-\subsection{Stimulation}
 
-Large electrodes must be stimulated at high currents.  Energy inefficiency.  Imprecision.  Sense-act cycles are limited.
+\subsection{Review of current steering}
+
+Much of the work in current steering in the brain is due to the interest in deep brain stimulation (DBS).  Electrodes tend to be single rods 1.2--1.6 mm in diameter with 4--32 contacts.
 
 DBS has been used to treat movement disorders (Parkinson's disease), epilepsy, Alzheimer's, chronic pain, cluster headache, depression, OCD, addictive behaviours, anorexia\dots\marginpar{Many more!  But do we want to provide a big list?  Only if we are selling this as a clinical paper, right?}
 
-Standard DBS systems deliver some kind of stimulation continuously.  Recently, interest in using biological feedback has grown.  Due to the size of the electrodes, for feedback control most systems rely on slow-timescale local field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic measures of outcome such as accelerometers \cite{Afshar2012closedloop}, but the addition of a second electrode in a different brain region has been shown to be effective in ameliorating Parkinsonian symptoms in monkeys \cite{Rosin2011adbs}.
 
-\subsection{Current steering}
-
-Much of the work in current steering in the brain is due to the interest in deep brain stimulation (DBS).  Electrodes tend to be single rods 1.2--1.6 mm in diameter with 4--32 contacts.  As of 2005, current steering was used largely to compensate for errors in placement of the electrode during surgery, which were on the order of 1.5 mm \cite{Holloway2005stereotaxy}.
-
-Most attempts to steer current are based on computational models.  Macroscopic models, with voxels of 1--2 mm\textsuperscript{3}: \cite{Chaturvedi2012} uses 3D finite element analysis to predict current steering trajectory\marginpar{Verification??} They built a model based on magnetic resonance imaging (MRI) and diffusion tensor imaging (DTI) \cite{Alexander2007dti}, which produces data with voxels of roughly 2 mm\textsuperscript{3}.
-
+Most attempts to steer current use computational models of brain tissue to predict current-steering configurations that preferentially target the intended type of tissue, or make up for errors in electrode placement during surgery \cite{Holloway2005stereotaxy}.  Macroscopic models, with voxels of 1--2 mm\textsuperscript{3}: \cite{Chaturvedi2012} uses 3D finite element analysis to predict current steering trajectory\marginpar{Verification??}. They built a model based on magnetic resonance imaging (MRI) and diffusion tensor imaging (DTI) \cite{Alexander2007dti}, which produces data with voxels of roughly 2 mm\textsuperscript{3}.\marginpar{Lots more references might be added here, all of which have spatial resolution on this order and a variety of temporal resolutions; choose $\approx$3 or just cite a review?}
 
 \subsubsection{Current steering on a smaller scale:}
 
-\cite{Jepson2014steering_in_retina} use a 61-channel electrode, with electrode as closely packed as 30 $\mu$m, to stimulate macaque retina {\em in vitro}.  They stimulated the retina using single electrodes or combinations of three electrodes with charge-balanced pulses, and found that retinal response could be predicted with a piecewise linear model.
+\cite{Jepson2014steering_in_retina} use 64-channel electrode arrays, with electrode as closely packed as 30 $\mu$m, to stimulate macaque retina {\em in vitro}.\marginpar{Note about how different retina structure is from our areas?}  They stimulated the retina using single electrodes or combinations of three electrodes with charge-balanced pulses, and found that retinal response could be predicted with a piecewise linear model.
+
+
+\subsection{Stimulation: closing the loop}
+
+Standard DBS systems deliver some kind of stimulation continuously.  Recently, interest in using biological feedback has grown.  Due to the size of the electrodes, for feedback control most systems rely on large-spatial-scale metrics such as local field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic measures of outcome such as accelerometers \cite{Afshar2012closedloop}, but the addition of a second electrode in a different brain region has been shown to be effective in ameliorating Parkinsonian symptoms in monkeys \cite{Rosin2011adbs}.
+
+\subsection{Review of electrode size and damage}
+
+{\em Large electrodes must be stimulated at high currents.  Energy inefficiency.  Imprecision.  Sense-act cycles are limited.}
+
+Electrodes with cross-sectional dimension above about 10 $\mu$m result in glial scarring up to 300 $\mu$m from the implant, tissue damage, ever-increasing stimulation thresholds, unable to record from some cell types \cite{Biran2005gliosis,Polikov2005gliosis}.
+
+
+\subsubsection{Charge injection}
+
+In order to increase the charge injection capacity of our electrodes, we tried electroplating them with iridium oxide.  This effected an improvement of roughly an order of magnitude: impedances went from around 2 M$\Omega$ to 200 k$\Omega$, and for a given current, the required voltage was much lower.\marginpar{FIXME}  We also experimented with PEDOT, which has excellent charge-injection properties, but we found it to have durability issues.\marginpar{All I know about this is hearsay.}  See \cite{Cogan2008electrodes} for a review of electrode physics.
+
 
 
 \section{Materials and Methods}
