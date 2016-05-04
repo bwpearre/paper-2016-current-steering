@@ -168,19 +168,45 @@ Author \textsuperscript{a}~contributed the original Matlab and LabView implement
 
 
 \begin{abstract}
-  Long-term recording enables.... stimulation enables...
+
+  Problem:
+
+  Electrodes needed for chronic recording and stimulation
+
+  Recording:
+  - gliosis
+
+  Stimulation:
+  - problems with closing the loop due to recording problems
+  - it is unknown how to optimise current steering in the brain
   
-  Big electrodes --- effective for low-voltage stimulation, but damage going in, gliosis on timescales like a month.
+  Current state of the art:
 
-  Current steering --- dbs: no learning control.  ``Adaptive'' dbs, model-based coarse-grained current steering.
+    Big electrodes --- effective for low-voltage stimulation, but damage going in, gliosis on timescales like a month.
 
-  Small electrodes (under 10 mm) cause less acute and chronic damage, but are delicate.  We have developed an electrode design in which groups of electrodes support each other during insertion.
+    Current steering --- dbs: no learning control.  ``Adaptive'' dbs, model-based coarse-grained current steering.
+
+    
+
+
+
+  Contribution:
+
+  Small electrodes (under 10 mm) cause less acute and chronic damage, but are delicate.  We have developed an electrode design in which groups of electrodes support each other during insertion, and then splay, arranging themselves randomly.
   
-  We show that the bundled electrodes splay in the brain.
+  We show that the bundled electrodes splay in the brain, and describe the frequency of splay and average distance between electrodes.
 
-  We present preliminary results showing that these electrodes can remain capable of recording individual spikes for a year after implantation, even when also used to stimulate.
+  We present preliminary results showing that these electrodes remain capable of recording individual spikes for a year after implantation, even when also used to stimulate.
 
   We present preliminary evidence that the spatial scale of the splaying is sufficient to allow the steering of current between the electrodes, and that this allows some degree of high-dimensional control over the brain's response to stimulation.
+
+  Impact:
+  
+  Recording of single neurons over long time periods enables new experiments investigating how the brain changes on longer timescales than have heretofore been possible.  Furthermore, it allows sensitive and high-dimensional input into closed-loop control policies.
+
+  High-electrode-count, spatially distributed, micron-scale stimulation arrays allow unpreedented control over the local brain area.  Many different subsets of neurons may be stimulated.  This has two benefits: first, it allows a variety of dynamical effects to be produced; and second, it permits stimulation at lower voltage thresholds than can be achieved otherwise.
+  
+
 \end{abstract}
 
 \linenumbers
