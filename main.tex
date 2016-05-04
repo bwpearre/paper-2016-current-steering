@@ -192,10 +192,9 @@ Author \textsuperscript{a}~contributed the original Matlab and LabView implement
 
 Much of the work in current steering in the brain is due to the interest in deep brain stimulation (DBS).  Electrodes tend to be single rods 1.2--1.6 mm in diameter with 4--32 contacts.
 
-DBS has been used to treat movement disorders (Parkinson's disease), epilepsy, Alzheimer's, chronic pain, cluster headache, depression, OCD, addictive behaviours, anorexia\dots\marginpar{Many more!  But do we want to provide a big list?  Only if we are selling this as a clinical paper, right?}
+DBS has been used to treat movement disorders (especially those associated with Parkinson's disease), epilepsy, Alzheimer's, chronic pain, cluster headache, depression, OCD, addictive behaviours, anorexia\dots\marginpar{Many more!  But do we want to provide a big list?  Only if we are selling this as a clinical paper, right?}
 
-
-Most attempts to steer current use computational models of brain tissue to predict current-steering configurations that preferentially target the intended type of tissue, or make up for errors in electrode placement during surgery \cite{Holloway2005stereotaxy}.  Macroscopic models, with voxels of 1--2 mm\textsuperscript{3}: \cite{Chaturvedi2012} uses 3D finite element analysis to predict current steering trajectory\marginpar{Verification??}. They built a model based on magnetic resonance imaging (MRI) and diffusion tensor imaging (DTI) \cite{Alexander2007dti}, which produces data with voxels of roughly 2 mm\textsuperscript{3}.\marginpar{Lots more references might be added here, all of which have spatial resolution on this order and a variety of temporal resolutions; choose $\approx$3 or just cite a review?}
+Most\marginpar{Review what's known of DBS's mechanisms of action?  Perhaps only marginally relevant, but there's a good review in \cite{Udupa2015dbs}.} attempts to steer current use computational models of brain tissue to predict current-steering configurations that preferentially target the intended type of tissue, or make up for errors in electrode placement during surgery \cite{Holloway2005stereotaxy}.  One approach \cite{Butson2008steering,Chaturvedi2012} builds a model of the tissue of interest using magnetic resonance imaging (MRI) and diffusion tensor imaging (DTI) \cite{Tuch2001conductivity,Alexander2007dti}, which produces data with voxels of roughly 2 mm\textsuperscript{3}.  They then use 3D finite element analysis to predict current steering trajectory.\marginpar{Lots more references might be added here, all of which have spatial resolution on this order and a variety of temporal resolutions; choose $\approx$3 or just cite a review?}
 
 \subsubsection{Current steering on a smaller scale:}
 
@@ -204,18 +203,20 @@ Most attempts to steer current use computational models of brain tissue to predi
 
 \subsection{Stimulation: closing the loop}
 
-Standard DBS systems deliver some kind of stimulation continuously.  Recently, interest in using biological feedback has grown.  Due to the size of the electrodes, for feedback control most systems rely on large-spatial-scale metrics such as local field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic measures of outcome such as accelerometers \cite{Afshar2012closedloop}, but the addition of a second electrode in a different brain region has been shown to be effective in ameliorating Parkinsonian symptoms in monkeys \cite{Rosin2011adbs}.
+Standard DBS systems deliver some kind of stimulation continuously.  Recently, interest in using biological feedback has grown.  Due to the size of the electrodes, for feedback control most systems rely on large-spatial-scale metrics such as local field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic measures of outcome such as surface electromyography\marginpar{Basu, ``Pathological tremor prediction using surface electromyogram and acceleration''} and accelerations \cite{Afshar2012closedloop}\marginpar{Great review: \cite{Priori2015review}} but the addition of a second electrode in a different brain region has been shown to be effective in ameliorating Parkinsonian symptoms in monkeys \cite{Rosin2011adbs}.
 
 \subsection{Review of electrode size and damage}
 
 {\em Large electrodes must be stimulated at high currents.  Energy inefficiency.  Imprecision.  Sense-act cycles are limited.}
 
-Electrodes with cross-sectional dimension above about 10 $\mu$m result in glial scarring up to 300 $\mu$m from the implant, tissue damage, ever-increasing stimulation thresholds, unable to record from some cell types \cite{Biran2005gliosis,Polikov2005gliosis}.
+Electrodes with cross-sectional dimension above about 10 $\mu$m result in glial scarring up to 300 $\mu$m from the implant (and \cite{Butson2008steering} assumes a 500-$\mu$m encapsulation layer for the $\sim$ 1.3-mm electrodes common in DBS), tissue damage, ever-increasing stimulation thresholds, unable to record from some cell types \cite{Biran2005gliosis,Polikov2005gliosis,Winslow2010gliosis}. 
 
 
 \subsubsection{Charge injection}
 
 In order to increase the charge injection capacity of our electrodes, we tried electroplating them with iridium oxide.  This effected an improvement of roughly an order of magnitude: impedances went from around 2 M$\Omega$ to 200 k$\Omega$, and for a given current, the required voltage was much lower.\marginpar{FIXME}  We also experimented with PEDOT, which has excellent charge-injection properties, but we found it to have durability issues.\marginpar{All I know about this is hearsay.}  See \cite{Cogan2008electrodes} for a review of electrode physics.
+
+\subsection{Contribution}
 
 
 
@@ -447,6 +448,10 @@ Some CSCs were better at triggering an antidromic response than others.  From th
 
 \section{Discussion}
 
+\subsection{Steering}
+
+\cite{Jepson2014steering_in_retina} showed good capacity to control stimulation by steering current between electrodes in monkey retina, allowing targeting of neurons on a smaller scale than the electrode spacing.  The demonstration of fine control is compelling, but whether or not the locally linear predictive response model that they found effective in retina would be extensible to regions with greater lateral connectivity is unknown.
+
 \cite{Histed2009stimulation} showed that injecting current into tissue causes neurons whose axons are very close to the stimulation site to fire, rather than neurons whose bodies are at greater distances.  As a result, the set of neurons that respond to a stimulation pulse is highly sensitive to electrode location, but has spatial extent similar to that of the neuron's dendritic tree.  Furthermore, they showed that neurons stimulated in this manner seldom stimulate downstream neurons synaptically.
 
 Splaying electrode arrays with learning stimulation software may be able to exploit these properties.  First consider each of the $n$ electrodes in our array separately.  $n$ sites stimulated at a given current gives $n$ different random sets of $k_n$ neurons that will fire, and increasing the current changes the size of $k$.  There may exist multiple downstream neurons $y$ such that directly-stimulatable neurons from several of our $n$ sets synapse onto $y$.  This creates a search problem: how to stimulate the $n$ sets in a way that reliably stimulates $y$ enough to cause it to spike?  This requires search over current delivered to each group in $n$ in order to control which neurons are recruited, and timing of stimulation delivery to each group in $n$, so that the downstream neuron is reliably triggered.  Different values of current and timing delivered into the $n$ groups may trigger different downstream neurons, so the search problem is: find as many different downstream neurons as possible.
@@ -454,6 +459,14 @@ Splaying electrode arrays with learning stimulation software may be able to expl
 Furthermore, it seems likely that directly-stimulatable neurons may synapse onto others that are directly-stimulatable, once or $r$ times removed.  This suggests a further dynamic for the timing search, in which different timings for stimulating the $n$ sets may trigger different firing sequences (\cite{Jepson2014steering_in_retina} proposes a related mechanism in the context of current steering in retina).  This enlarges the space of inducible dynamics considerably, and suggests the possibility of inducing Hebbian learning.
 
 Whereas Histed used single electrodes, we use miltichannel arrays.  Rather than a 16-channel array providing $n=16$ groups of neurons, different current-steering configurations may lead to a much higher value of $n$.  For such an electrode there are $2^{16}$ current-steering configurations even without manipulating current pulse magnitude or timing.
+
+\subsection{Ongoing Learning}
+
+The best clinical outcomes require about 20 hours\marginpar{Now where did I read this\dots?} of tuning time, involving multiple patient visits to a clinic.
+
+\subsection{Power}
+
+Another limitation of DBS systems is power use: even with on-demand therapy, the currents required in order to achieve good clinical outcome drain power fast.  Small electrodes that drastically reduce scarring allow stimulation currents several orders of magnitude lower than state-of-the-art systems, and even if current steering does not allow realtime therapy optimisation, it appears to allow further optimisation of power usage.
 
 \bibliography{birds}
 
