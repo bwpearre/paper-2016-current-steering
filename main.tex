@@ -171,7 +171,7 @@ Author \textsuperscript{a}~contributed the original Matlab and LabView implement
 
 Electrical control of the brain facilitates a variety of therapeutic and scientific goals, from treating sensory, motor, and cognitive defects to exploring the effects of disrupting or subtly modifying the brain's behaviour in real time.  These procedures are limited by the brain's reaction to foreign matter: over a period of months, glia encapsulate the electrodes, isolating them from neurons, allowing monitoring and control of the brain only over large spatial scales---often on the order of millimeters.  Small electrodes ($<$ 10 $\mu$m) minimise encapsulation, and thus can both record single neurons for many months and precisely stimulate small groups of neurons.  However, the high impedance of small electrodes can require stimulation voltages that exceed the water hydrolysis point.
 
-We have developed an electrode design in which groups of electrodes support each other during insertion and then splay randomly in the brain, allowing long-term small-spatial-scale recording and stimulation [Guitchounts 2013].
+We have developed an electrode design in which groups of electrodes support each other during insertion and then splay randomly in the brain, allowing long-term small-spatial-scale recording and stimulation.
   
   We describe the splaying properties of these electrode arrays in the brain.  We present preliminary results showing that these electrodes remain capable of recording individual spikes for a year after implantation, even when also used to stimulate.
 
@@ -188,11 +188,15 @@ We have developed an electrode design in which groups of electrodes support each
 
 \subsection{Review of current steering}
 
+\subsubsection{Deep Brain Stimulation}
+
 Much of the work in current steering in the brain is due to the interest in deep brain stimulation (DBS).  Electrodes tend to be single rods 1.2--1.6 mm in diameter with 4--32 contacts.
 
 DBS has been used to treat movement disorders (especially those associated with Parkinson's disease), epilepsy, Alzheimer's, chronic pain, cluster headache, depression, OCD, addictive behaviours, anorexia\dots\marginpar{Many more!  But do we want to provide a big list?  Only if we are selling this as a clinical paper, right?}
 
 Most\marginpar{Review what's known of DBS's mechanisms of action?  Perhaps only marginally relevant, but there's a good review in \cite{Udupa2015dbs}.} attempts to steer current use computational models of brain tissue to predict current-steering configurations that preferentially target the intended type of tissue, or make up for errors in electrode placement during surgery \cite{Holloway2005stereotaxy}.  One approach \cite{Butson2008steering,Chaturvedi2012} builds a model of the tissue of interest using magnetic resonance imaging (MRI) and diffusion tensor imaging (DTI) \cite{Tuch2001conductivity,Alexander2007dti}, which produces data with voxels of roughly 2 mm\textsuperscript{3}.  They then use 3D finite element analysis to predict current steering trajectory.\marginpar{Lots more references might be added here, all of which have spatial resolution on this order and a variety of temporal resolutions; choose $\approx$3 or just cite a review?}
+
+Current-steered and adaptive DBS have been shown 
 
 \subsubsection{Current steering on a smaller scale:}
 
@@ -416,7 +420,7 @@ More telling of the potential of these electrodes is the recording of spontaneou
 \begin{figure}
   % Width 9, Height 9, Font scaling 100%
   \includegraphics[width=\textwidth]{XSpikeRecording}
-  \caption{Some of the electrodes in Area X record spontaneous spikes a year after implantation.  Column titles show the day post-surgery and the number of seconds of recorded data.  Each row is one electrode (shown here: only the four best channels of 16).  Legends show the number of spikes; shaded region is mean $\pm$ 95\% confidence.}
+  \caption{Some of the electrodes in Area X record spontaneous spikes a year after implantation.  Column titles show the day post-surgery and the number of seconds of recorded data.  Each row is one electrode (shown here: only the three most stable channels out of the 16).  Legends show the number of spikes and mean spike rate.  The grey shaded region is standard deviation, and the blue shaded region is the 95\% confidence interval for the mean.}
   \label{fig:XSpikeRecording}
 \end{figure}
 
