@@ -185,6 +185,33 @@ We have developed an electrode design in which groups of electrodes support each
 
 \section{Introduction}
 
+Goal: controlling the brain.
+
+How it's done now: large electrodes, coarse stimuli, crude if any feedback control (due to large electrodes), poor control due to imprecision of stimulation.
+
+How we want to do it: small electrodes that splay.
+\begin{itemize}
+\item They are strong enough to implant.
+\item Small size permits chronic single-unit recording.
+\item Small size, splayed geometry, high channel count allow fine-grained control.
+\item May overcome stimulation current and voltage restrictions.
+\end{itemize}
+
+
+\subsection{Review of electrode size and damage}
+
+{\em Large electrodes must be stimulated at high currents.  Energy inefficiency.  Imprecision.  Sense-act cycles are limited.}
+
+Electrodes with cross-sectional dimension above about 10 $\mu$m result in glial scarring up to 300 $\mu$m from the implant (and \cite{Butson2008steering} assumes a 500-$\mu$m encapsulation layer for the $\sim$ 1.3-mm electrodes common in DBS), tissue damage, ever-increasing stimulation thresholds, unable to record from some cell types \cite{Biran2005gliosis,Polikov2005gliosis,Winslow2010gliosis}. 
+
+Recording is limited by gliosis / encapsulation.  This is mitigated by electrodes $<$ 10 $\mu$m, but these present two difficulties: they are too weak to insert, and during stimulation, their small surface area requires high voltage in order to deliver sufficient current to induce response.
+
+Our hexadecode \cite{Guitchounts2013electrode} uses multiple shanks each of which is too small to stimulate adverse tissue reactions.  The shanks are bundled to support each other during insertion.  They splay in the brain, giving randomly distributed sites for recording and stimulation.
+
+
+\subsubsection{Charge injection}
+
+In order to increase the charge injection capacity of our electrodes, we tried electroplating them with iridium oxide.  This effected an improvement of roughly an order of magnitude: impedances went from around 2 M$\Omega$ to 200 k$\Omega$, and for a given current, the required voltage was much lower.\marginpar{FIXME}  We also experimented with PEDOT, which has excellent charge-injection properties, but we found it to have durability issues.\marginpar{All I know about this is hearsay.}  See \cite{Cogan2008electrodes} for a review of electrode physics.
 
 \subsection{Review of current steering}
 
@@ -207,16 +234,6 @@ Current-steered and adaptive DBS have been shown
 
 Standard DBS systems deliver some kind of stimulation continuously.  Recently, interest in using biological feedback has grown.  Due to the size of the electrodes, for feedback control most systems rely on large-spatial-scale metrics such as local field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic measures of outcome such as surface electromyography\marginpar{Basu, ``Pathological tremor prediction using surface electromyogram and acceleration''} and accelerations \cite{Afshar2012closedloop}\marginpar{Great review: \cite{Priori2015review}} but the addition of a second electrode in a different brain region has been shown to be effective in ameliorating Parkinsonian symptoms in monkeys \cite{Rosin2011adbs}.
 
-\subsection{Review of electrode size and damage}
-
-{\em Large electrodes must be stimulated at high currents.  Energy inefficiency.  Imprecision.  Sense-act cycles are limited.}
-
-Electrodes with cross-sectional dimension above about 10 $\mu$m result in glial scarring up to 300 $\mu$m from the implant (and \cite{Butson2008steering} assumes a 500-$\mu$m encapsulation layer for the $\sim$ 1.3-mm electrodes common in DBS), tissue damage, ever-increasing stimulation thresholds, unable to record from some cell types \cite{Biran2005gliosis,Polikov2005gliosis,Winslow2010gliosis}. 
-
-
-\subsubsection{Charge injection}
-
-In order to increase the charge injection capacity of our electrodes, we tried electroplating them with iridium oxide.  This effected an improvement of roughly an order of magnitude: impedances went from around 2 M$\Omega$ to 200 k$\Omega$, and for a given current, the required voltage was much lower.\marginpar{FIXME}  We also experimented with PEDOT, which has excellent charge-injection properties, but we found it to have durability issues.\marginpar{All I know about this is hearsay.}  See \cite{Cogan2008electrodes} for a review of electrode physics.
 
 \subsection{Contribution}
 
