@@ -450,12 +450,12 @@ More telling of the potential of these electrodes is the recording of spontaneou
 
 Some CSCs were better at triggering an antidromic response than others.  From the $2^{11}$ possible CSCs we chose 32 (30 randomly, and the two that treated all electrodes identically).  For each CSC, we performed a threshold scan to find the minimum current needed to trigger a response.  When this current was found, we performed a voltage scan to find the maximum potential on any electrode.  We tested each CSC five times on an anesthetised bird.  Results are shown in \fig{fig:VoltageVsCSC}.  The best CSCs resulted in a maximum voltage of around 1 V, while the worst were over 2.5 V.  Perhaps surprisingly, the CSCs that sent identical pulses to all 11 electrodes were among the worst performers, with our simple search revealing CSCs that kept voltages far lower.
 
+The maximum-likelihood fits to the voltage sweep data (green errorbars in \fig{fig:VoltageVsCSC}) consistently yield slighly higher threshold voltages than those measured using the search.  This is because whereas the maximum-likelihood fit computes the voltage required in order to obtain a response with 50\% probability, the threshold search looks for any significant correlation between the responses in each spike train, which is detectable well before the stimulation achieves a 50\% response rate.
 
-
-\noprint{FIXME: This doesn't apply to lw95rhp-2015-12-04: Each threshold scan terminated when a stimulation voltage over 3 V was detected, so we were unable to acquire all five measurements for some CSCs, and thus they are worse than the figure shows.}  
+\noprint{FIXME: The following caveat doesn't apply to lw95rhp-2015-12-04: Each threshold scan terminated when a stimulation voltage over 3 V was detected, so for some datasets (e.g. lw95rhp-2015-12-09) we were unable to acquire all five measurements for some CSCs, and thus they are worse than the figure shows.}  
 
 \begin{figure}
-  % plot_max_voltage_bar.m
+  % plot_max_voltage_bar.m, reanalyse_thresholds.m
   % lw95rhp-2015-12-04 (data also available on -09 and lw85ry-2015-12-17)
   % width 7 in, height 6 in, fonts auto
   \includegraphics[width=\textwidth]{VoltageVsCSC}
