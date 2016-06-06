@@ -477,49 +477,45 @@ clustered as follows:
 
 For electrophysiology (recording and stimulation), birds were anesthatised with 1.5\% isoflurane, 98.5\% oxygen, at 0.5 liters/minute.
 
-Recording of spontaneous activity in Area X was with an Intan RHD2000 amplifier at 20 kHz, with a hardware high-pass filter at 200 Hz.
+Recording of spontaneous activity in Area X was with an Intan RHD2000 amplifier at 20 kHz, with a hardware high-pass filter at 200 Hz.  Recordings are broken down into data files 1 minute long.  Any data file with any sample whose absolute value was $>500\mu$V was assumed to have excessive recording noise, and was discarded.
 
 \subsection{Stimulation: Zebra finch antidromic HVC $\leftarrow$ X}
 
-A common technique for locating HVC in the zebra finch involves
+Electrical stimulation saturates the brain, including at the site of
+the recording electrode, for some time post-stimulation (depending on
+the hardware used, but generally for 1--3 ms).  Responses to
+stimulation can be detected outside of that saturation window.  A
+common technique for locating HVC in the zebra finch involves
 implanting a stimulating electrode in Area X and looking for a an
-antidromic response \cite{Swadlow1998antidromic,Hahnloser2002sparse},
-which is visible in HVC but not in the surrounding tissue.
-
-Electrical stimulation saturates the brain, including the recording
-electrode, for some time post-stimulation (depending on the hardware
-used, but generally 1--3 ms post-stimulation).  Responses to
-stimulation can be detected outside of that saturation window.
-
-We tested our ability to steer current in the brain by stimulating in
-Area X and monitoring the response in HVC, about 5 mm away.  This
-spatial separation results in synaptic transmission delays of between
-3 and 8 ms \marginpar{Tim: citation for 3--8 ms?}, which gives the
-recording amplifier time to settle before measuring the
-response.\marginpar{But why antidromic?}
+antidromic response, which is visible in HVC and not in the
+surrounding tissue \cite{Swadlow1998antidromic,Hahnloser2002sparse}.
+Since the two brain areas are separated by about 5 mm, this response
+occurs 3--8 ms after stimulation\marginpar{Tim: citation for 3--8
+  ms?}, which gives the recording amplifier time to settle before
+measuring the response.\marginpar{But why antidromic?}
 
 We will use the following definitions:
 
 \begin{description}
-\item[Channel:] Our electrodes have 16 separate carbon fibres, each one of which we consider a separate channel, since each is connected to a separate amplifier.  Some work better than others, and usually about 75\% of them have low enough impedance to use.  We refer to these as active channels, or just channels.
+\item[Channel:] Our electrodes have 16 channels, each of which is an individual carbon fibre connected to its own amplifier.
 \item[Pulse:] A biphasic charge-balanced square wave of current.  Each phase is 200 $\mu s$ long, and there is no interpulse interval.
 \item[Current-steering configuration (CSC):] The configuration defining which channels receive the positive half of their biphasic pulse first, or vice versa.
-\item[Pulse train:] A sequence of 10 identical pulses delivered simultaneously to all active chennels at 25 Hz.  This is slow enough that pulses do not interfere with each other, and is used to detect the reliability of the response.
+\item[Pulse train:] A sequence of $n$ (usually 10) identical pulses delivered simultaneously to all active channels, usually at 25 Hz.  This is slow enough that pulses do not interfere with each other, and is used to detect the reliability of the response.
   \begin{itemize}
   \item Programming\marginpar{Move timing notes to Discussion of compromises required for this experiment?} the Plexon stimulator for one pulse train requires about 2 seconds.
   \end{itemize}
-\item[Threshold scan:] A series of pulse trains, each of which has the same CSC but a different current, designed to find the minimum current for this CSC that will antidromically induce a response in HVC.  The algorithm is described below.
+\item[Threshold scan:] A series of pulse trains, each of which has the same CSC but a different current, designed to find the minimum current for this CSC that will induce an antidromic response in HVC.  The algorithm is described below.
   \begin{itemize}
   \item A threshold scan generally requires roughly 15 pulse trains, and thus takes on the order of 30 seconds.
   \end{itemize}
 \item[Voltage scan:] The Plexon hardware can deliver a current-controlled pulse to each of 16 channels independently, but only allows monitoring of the voltage delivered on one channel at a time.  A voltage scan involves sending the same pulse train once per active electrode, monitoring a different one each time.
   \begin{itemize}
-  \item A \marginpar{This does not require full reprogramming of the Plexon!  Just setting the monitor channel is faster, but my code does not take advantage of this, and fully reprogrammes the Plexon each time.} voltage scan requires delivering one pulse train per active electrode, taking a total of about 30 seconds.
+  \item A voltage scan requires delivering one pulse train per active electrode, taking a total of about 30 seconds.
   \end{itemize}
 \end{description}
 
 The stimulation and recording electrodes use separate electrical
-returns, consisting of\marginpar{Jun?} silver wire in contact with the
+returns, consisting of silver wire in contact with the
 skull.  Some CSCs balance current delivery between the electrodes,
 whereas others do not, and in the latter case excess current flows
 through the common return.
@@ -547,38 +543,50 @@ along with the HVC electrode voltages.  Thus the data alignment
 precision is controlled by the sampling rate of the TDT (41 $\mu$s).
 
 \subsubsection{Response detection}
+\label{sec:responsedetection}
 
 HVC projects into Area X (and into RA, which we do not discuss here).
 When Area X is stimulated, an antidromic response may be observed both
 in HVC\textsubscript{X} projection neurons and in HVC interneurons.
 The antidromic response occurs roughly 3--8 ms after the stimulation
-pulse,\marginpar{Citation!} and is highly stereotyped:
+pulse, and is highly stereotyped:
 \cite{Fee2004mechanisms} reports that the variability in the timing of
 the antidromic response in HVC\textsubscript{X} projection neurons is
 under 50 $\mu$s, while that of HVC intraneurons is above 500 $\mu$s.
 
 \fig{fig:clear_hvc_response} shows an example of a pronounced HVC
-response to stimulation in Area X.  In order to detect this signal, we
-measure the cross-correlation between the recorded response for each
-pulse in a train and each other with a maximum lag of 50 $\mu$s, which
+response to stimulation in Area X.  We detected this response in two different ways, one during experiment runtime and one in postprocessing analysis:
+
+During runtime, we
+measured the cross-correlation between the recorded response for each
+pulse in a train and each other with a maximum lag of 100 $\mu$s, which
 provides a robust way of separating neural response from noise.
 Because the HVC amplifier's (Intan's or TDT's) response to the
 transient stimulation pulse in Area X can persist into the time of
 interest (3--8 ms), each response is first de-trended using a
 maximum-likelihood fit over the region 2--25 ms using an eigth order
 Fourier Series, which removes post-stimulation decay while leaving
-intact spike-sized signals.\marginpar{Filtering would probably work
+spike-sized signals intact.\marginpar{Filtering would probably work
   better with the TDT than with the Intan\dots} We found this strongly
-biased smoothing technique to produce fewer artifacts than the more
-conventional approach of bandpass-filtering the signal, given the
-large stimulation artifact.  The cross-correlation threshold above
+biased smoothing technique more cleanly removes the large stimulation artifact than the
+conventional approach of bandpass-filtering the signal.  The cross-correlation threshold above
 which a response is identified is chosen by visual
-inspection.\marginpar{But now why not findpeaks $3\sigma$ or whatever,
-  and see if peak jitter is $<50\mu$s as required by
-  \cite{Fee2004mechanisms}?  This has the great advantage that over an
-  $n$-spike train, I could immediately compute Pr(response) (see
-  marginpar QWE to see why this is a good idea).  I reanalysed the old
-  data this way and compared\dots see below.}
+inspection.
+
+A further, independent voltage-threshold analysys was performed on
+the data set offline.  For each train of $n$ pulses, we labeled peaks greater
+than 5 standard deviations from the RMS noise of a nearby (within 20
+ms) non-stimulated recording on the same electrode.  For each of the
+$n$ stimuli in the train, all peaks' delays post-stimulus were
+compared to those from the other $n-1$ responses, and any peak whose
+delay was within 100 $\mu$s of another peak was considered a response
+to the stimulus.  The probability of a response at this current was
+then the maximum number of aligned peaks divided by the number $n$ of
+pulses in the train.  Given the set of points
+Pr(response$\,\,|\,\,$maximum electrode voltage), we then fit a
+sigmoid $0.5 + 0.5 \tanh(\lambda(x-\mu))$ to this curve, and take the
+midpoint $\mu$ as an alternative measure of the voltage required to
+induce a response with probability 50\%.
 
 \begin{figure}
   \includegraphics[width=\textwidth]{lw95rhp-2015-08-05_18.39.07.eps}
@@ -608,8 +616,8 @@ as HVC (depth $\approx 200\mu m$, the quality of the HVC recordings
 diminishes as electrodes are forced out of contact with the brain.
 This makes it more and more difficult over time to measure the
 antidromic response.  The above cross-correlation technique is more
-sensitive than the technique typical of acute or short-term response
-measurements, in which a pronounced spike is often clearly visible.
+sensitive than the method typically used during acute or short-term response
+measurements, in which a pronounced spike is often clearly visible and is identified by eye on an oscilloscope.
 We are confident that we are measuring an antidromic response because
 it is on the correct timescale and appears near the expected
 stimulation threshold.\marginpar{Cite papers giving timing and
@@ -636,22 +644,6 @@ current until the response disappears.  This process is repeated until
 the step size drops below a limit ($\alpha < 1.02$), and the threshold
 is taken as the last parameter set that induced a response.
 
-A further, independent response-detection analysys was performed on
-the data set: for each train of $n$ pulses, we labeled peaks greater
-than 5 standard deviations from the RMS noise of a nearby (within 20
-ms) non-stimulated recording on the same electrode.  For each of the
-$n$ stimuli in the train, all peaks' delays post-stimulus were
-compared to those from the other $n-1$ responses, and any peak whose
-delay was within 100 $\mu$s of another peak was considered a response
-to the stimulus.  The probability of a response at this current was
-then the maximum number of aligned peaks divided by the number $n$ of
-pulses in the train.  Given the set of points
-Pr(response$\,\,|\,\,$maximum electrode voltage), we then fit a
-sigmoid $0.5 + 0.5 \tanh(\lambda(x-\mu))$ to this curve, and take the
-midpoint $\mu$ as an alternative measure of the voltage required to
-induce a response with probability 50\%.\marginpar{Search could even
-  be conducted as above (although could do better) or terminated by
-  estimating the error on the estimate.}
 
 While a larger step size would result in a faster search, and a binary
 search would be easier to describe, this ad-hoc approach samples near
@@ -737,7 +729,7 @@ Section~\ref{sec:results:recording}).
 \begin{figure}
   % montage -geometry 1024x1024 DAPI-and-NeuN*.jpeg damage.eps
   \includegraphics[width=\textwidth]{damage}
-  \caption{Damage.  Neural nuclei are shown in green (stained with
+  \caption{Typical damage.  Neural nuclei are shown in green (stained with
     NeuN) and all cells in blue (DAPI).  The presence of non-neural
     cells indicates damage, and is notable in the vicinity of the
     largest non-splayed electrode bundle, and nearly absent around
@@ -753,16 +745,12 @@ Section~\ref{sec:results:recording}).
 
 \subsubsection{Impedances}
 
-\marginpar{Need a graph showing impedances per electrode over time.
-  At least I have data for that; just haven't writtent the code to
-  extract+plot.}
-
 \subsubsection{HVC}
 
 Long-term recording in HVC is difficult due to skull regrowth
 interfering with electrodes implanted only a few hundred microns from
 the surface: after 10 months, we had difficulty picking up antidromic
-response in our two remaining birds.
+response in our two remaining birds, and while the techniques described in Sec.~\ref{sec:responsedetection} were able to outperform a human, eventually the signal-to-noise ratio became too low for them as well.
 
 \subsubsection{Area X}
 
@@ -791,20 +779,26 @@ channels after a year.\marginpar{I don't have recording-only data from
 
 
 \begin{figure}
+  % Width 9, height 5, fonts auto (100%), lw94rhp
   \includegraphics[width=\textwidth]{Impedances}
-  \caption{{\em Does this add anything?}
-    Impedances for the electrodes shown in \fig{fig:XSpikeRecording}.  Most good electrodes were in the range 400 k$\Omega$--1M$\Omega$ for the recordings shown in that figure.}
+  \caption{Impedances for the electrodes shown in \fig{fig:XSpikeRecording}.  Most good electrodes were in the range 400 k$\Omega$--1M$\Omega$ for the recordings shown in that figure.}
   \label{fig:Impedances}
 \end{figure}
-    
 
 
 \begin{figure}
   \includegraphics[width=\textwidth]{Impedances-all}
-  \caption{{\em Full version of \fig{fig:Impedances}.  I think I like that one better, but this could be worthwhile as well\dots?}}
+  \caption{{\em Full version of \fig{fig:Impedances}.  I think I like that one better, but this could be more useful despite (or because of) showing a bunch of bad electrodes\dots}}
   \label{fig:Impedances-all}
 \end{figure}
-    
+
+
+\begin{figure}
+  % Width 9, height 5, fonts auto (100%), lw95rhp
+  \includegraphics[width=\textwidth]{Impedances-lw95rhp}
+  \caption{Electrode impedances over time on another bird.  This Area X array was treated with iridium oxide.  {\em This plot probably requires a bunch more explanation.  Notably: why the big jumps?  Need to check on stimulation, but hard to generalise with so little data\dots}}
+  \label{fig:Impedances-lw95rhp}
+\end{figure}
 
 
 \subsection{Stimulation}
@@ -854,11 +848,10 @@ response rate.
     active electrodes delivers a positive-first ``0'' or
     negative-first ``1'' current-controlled pulse).  The Y axis shows
     the maximum voltage across any electrode for the given CSC at the
-    lowest current that evoked a reliable response.  Red dots show the
-    voltage results for each trial, and error bars are 95\% confidence
-    intervals (n=5).  Green bars show maximum-likelihood sigmoid fits
-    for the voltage required to induce 50\% probability of response
-    using a completely separate analysis of the data (see Methods),
+    lowest current that evoked a reliable response.  Blue bars are the mean voltage discovered using the online threshold scan technique described in Methods, red dots show the
+    voltage result for each trial, and error bars are 95\% confidence
+    intervals (n=5).  Green bars show the voltage required to induce 50\% probability of response
+    using a the maximum-likelihood analysis described in Methods,
     also as 95\% confidence intervals (when the lines would have
     spanned the whole range of the graph, they have been omitted for
     clarity), and with crossbar marker at the mean, with marker size
