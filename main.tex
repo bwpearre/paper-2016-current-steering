@@ -764,7 +764,7 @@ channels after a year.\marginpar{I don't have recording-only data from
 \begin{figure}
   % Width 9, Height 9, Font scaling 100%
   \includegraphics[width=\textwidth]{XSpikeRecording}
-  \caption{{\em FIXME Here I show 6 electrodes.  3 are beautiful, and 3 fade in and out.  What's the best way to present this?  Should I omit graphs with fewer than, say, 10 spikes?}
+  \caption{{\em FIXME Here I show 6 electrodes.  3 are beautiful, and 3 fade in and out.  What's the best way to present this?  Should I omit graphs with fewer than 20 spikes as I've done here  Or show their messy squiggles?}
     Some of the electrodes in Area X record spontaneous spikes
     a year after implantation.  Column titles show the day
     post-surgery and the number of seconds of recorded data.  Each row
@@ -905,8 +905,8 @@ current delivered to each group in $n$ in order to control which
 neurons are recruited, and timing of stimulation delivery to each
 group in $n$, so that the downstream neuron is reliably triggered.
 Different values of current and timing delivered into the $n$ groups
-may trigger different downstream neurons, so the search problem is:
-find as many different downstream neurons as possible.
+may trigger different downstream neurons, so one possible search problem is
+finding as many different downstream neurons as possible.
 
 Furthermore, it seems likely that directly-stimulatable neurons may
 synapse onto others that are directly-stimulatable, once or $r$ times
@@ -915,14 +915,15 @@ which different timings for stimulating the $n$ sets may trigger
 different firing sequences (\cite{Jepson2014steering_in_retina}
 proposes a related mechanism in the context of current steering in
 retina).  This enlarges the space of inducible dynamics considerably,
-and suggests the possibility of inducing Hebbian learning.
+and suggests the possibility of controlling Hebbian learning.
 
 Whereas Histed used single electrodes, we use miltichannel arrays.
 Rather than a 16-channel array providing $n=16$ groups of neurons,
 different current-steering configurations may lead to a much higher
 value of $n$.  For such an electrode there are $2^{16}$
 current-steering configurations even without manipulating current
-pulse magnitude or timing.
+pulse magnitude or timing, and with those additions the search space
+is approximately infinite.
 
 \subsection{Ongoing Learning}
 
