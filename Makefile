@@ -44,7 +44,7 @@ USETHUMBS = "^[^%]*thumbpdf"
 
 SRC	:= $(shell egrep -l '^[^%]*\\begin\{document\}' *.tex)
 # Here is BWP hack: add /home/bwp/r/bibs/ to bibfile.  Need a 'which'-type cmd.
-BIBFILE := $(shell perl -ne '($$_)=/^[^%]*\\bibliography\{(.*?)\}/;@_=split /,/;foreach $$b (@_) {print "$$b.bib"}' $(SRC))
+BIBFILE := $(shell perl -ne '($$_)=/^[^%]*\\bibliography\{(.*?)\}/;@_=split /,/;foreach $$b (uniq (@_)) {print "$$b.bib"}' $(SRC))
 
 EPSPICS := $(shell perl -ne '@foo=/^[^%]*\\(includegraphics|psfig)(\[.*?\])?\{(.*?)\}/g;if (defined($$foo[2])) { if ($$foo[2] =~ /.eps$$/) { print "$$foo[2] "; } else { print "$$foo[2].eps "; }}' *.tex)
 DEP	= *.tex
@@ -100,7 +100,10 @@ showps	: $(PSF)
 
 ps	: $(PSF) 
 
-pdf	: clean $(PDF) 
+pdf	: clean $(PDF)
+
+diff	: main.tex
+	latexdiff ../paper-2016-syllable-detector-last/main.tex main.tex > diff.tex
 
 # TODO: This probably needs fixing
 #html	: @$(DEP) $(EPSPICS)
