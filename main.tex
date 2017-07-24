@@ -261,35 +261,30 @@ appropriate given the size of DBS electrodes; however, the techniques
 will not provide sufficient accuracy to take advantage of the control
 available with small electrodes.
 
-A promising example of current steering outside the brain uses
-64-channel electrode arrays, with electrode as closely packed as 30
-$\mu$m, to stimulate macaque retina {\em in vitro}
-\cite{Jepson2014steering_in_retina}. They stimulated the retina using
-single electrodes or combinations of three electrodes with
-charge-balanced pulses, and found that retinal response could be
-predicted with a piecewise linear model. The connectivity of retinal
-cells differs from that in most other brain regions, but we feel that
-this experiment nonetheless hints at the potential of neuron-scale
-current steering.
-
 There has also been interest in\marginpar{Do we care? Remove this
   paragraph?} current steering outside the brain. For example,
 \cite{king2006current_steeriing_optimisation} describes an algorithm
 for clinician-assisted hillclimbing search for effective stimulation
-in multielectrode arrays in the spinal cord, and
-\cite{parramon2011current_steering_optimisation} develops
-another\marginpar{Verify this. Internet's down as I write\dots}
-specialised hillclimbing search method.
+in multielectrode arrays in the spinal cord.
+
+An important example of current steering outside the brain but in a
+densely connected network uses 64-channel electrode arrays, with
+electrode as closely packed as 30 $\mu$m, to stimulate macaque retina
+{\em in vitro} \cite{Jepson2014steering_in_retina}. They stimulated
+the retina using single electrodes or combinations of three electrodes
+with charge-balanced pulses, and found that retinal response could be
+predicted with a piecewise linear model of the steered current. The
+connectivity of retinal cells differs from that in most other brain
+regions, but we feel that this experiment nonetheless hints at the
+potential of neuron-scale current steering.
 
 Most DBS systems deliver some fixed stimulation pattern continuously.
 Recently, interest in using biological feedback to tune medical
 devices has grown.  Due to the size of the electrodes, for feedback
 control most systems rely on large-spatial-scale metrics such as local
 field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic
-measures of outcome such as surface electromyography\marginpar{Also:
-  Basu, ``Pathological tremor prediction using surface electromyogram
-  and acceleration''} and accelerations
-\cite{Afshar2012closedloop}\marginpar{Great review:
+measures of outcome such as surface electromyography and accelerations
+\cite{Afshar2012closedloop,Basu2013dbsFeedback}\marginpar{Great review:
   \cite{Priori2015review}}. The addition of feedback from a second
 electrode in a related brain region is effective in ameliorating
 Parkinsonian symptoms in monkeys \cite{Rosin2011adbs}, in which the
@@ -312,28 +307,29 @@ giving randomly distributed sites for recording and stimulation. Here
 we quantify that splay.
 
 In a current-controlled stimulating electrode,\marginpar{Why
-  current-controlled?}  the voltage required to induce neural activity
-goes up as the impedance increases and charge injection capacity
-decreases. Neural damage is likely to occur when voltage exceeds the
-hydrolysis point for water (around 1.2 V). This is not a problem for
-large DBS electrodes, whose surface area tends to be ample and which
-are in any case encapsulated by glia, but it creates a problem for our
-small electrodes (area per shank is around 250 $\mu\textrm{m}^3$):
-their impedance is high and their charge delivery capacity is poor,
-leading to high voltage requirements for stimulation.
+  current-controlled? E.g. \cite{Chaturvedi2012}} the voltage required
+to induce neural activity goes up as the impedance increases and
+charge injection capacity decreases. Neural damage is likely to occur
+when voltage exceeds the hydrolysis point for water (around 1.2
+V). This is not a problem for large DBS electrodes, whose surface area
+tends to be ample and which are in any case encapsulated by glia, but
+it creates a problem for our small electrodes (area per shank is
+around 250 $\mu\textrm{m}^2$): their impedance is high and their
+charge delivery capacity is poor, leading to high voltage requirements
+for stimulation.
 
 We address the voltage problem in two ways. First, we confirm that
 electroplating the electrodes in iridium oxide, as suggested by
-\cite{Cogan2008electrodes}, leads to roughly a tenfold improvement in
-both impedance and charge injection capacity.\marginpar{Confirm
-  improvement in charge delivery. Yarden has numbers of gold
-  $\rightarrow$ IrOx, but do we have carbon $\rightarrow$ IrOx
-  anywhere? But more than that, since we only did this with one
-  chronic electrode (and the short-term birds), is it even worth
-  listing here? Or should I just mention it in Methods?} Second, we
-introduce a novel current-steering technique, and provide preliminary
-evidence that appropriate choice of current-steering configuration can
-be used to reduce stimulation voltage.
+\cite{Cogan2008electrodes}, \marginpar{Confirm improvement in charge
+  delivery. Yarden has numbers of gold $\rightarrow$ IrOx, but do we
+  have carbon $\rightarrow$ IrOx anywhere more systematic than my own
+  data? But more than that, since we only did this with one chronic
+  electrode (and the short-term birds), is it even worth listing here?
+  Or should I just mention it in Methods?} leads to roughly a tenfold
+improvement in both impedance and charge injection capacity. Second,
+we introduce a novel current-steering technique, and provide
+preliminary evidence that appropriate choice of current-steering
+configuration can be used to reduce stimulation voltage.
 
 Due to their size, the multichannel, spatially distributed,
 micron-scale arrays introduced in \cite{Guitchounts2013electrode}
@@ -544,7 +540,7 @@ through the common return.
 
 We used a Plexon stimulator to control stimulation in Area X, and
 recorded from HVC using a Tucker-Davis Technologies (TDT) RZ5
-amplifier or an Intan RZ2000\marginpar{Model #? Also depending on
+amplifier or an Intan RZ2000\marginpar{Model \#? Also depending on
   which recording to show in \fig{fig:clear_hvc_response}}.  The
 Plexon self-monitoring channels were recorded on a National
 Instruments (NI) PCI-6251 data acquisition card using the
