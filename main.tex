@@ -232,14 +232,14 @@ various movement disorders (especially those associated with
 Parkinson's disease), epilepsy, Alzheimer's, chronic pain, cluster
 headache, depression, OCD, addictive behaviours, anorexia, and others
 \cite{Udupa2015dbs}. DBS electrodes usually consist of single rods
-1.2--1.6 mm in diameter with 4--32 contacts. Larger electrodes cause
-more damage both during and after surgery---over the course of weeks
-and months, glia gradually encapsulate intruding electrodes, rendering
-them less effective over time. For example, \cite{Butson2008steering}
-notes a 500-$\mu$m encapsulation layer for the $\sim$~1.3-mm
-electrodes common in DBS.  This encapsulation results in
-ever-increasing stimulation thresholds, rendering the electrodes
-unable to record as effectively
+1.2--1.6 mm in diameter with 4--32 contacts. Large electrodes cause
+significant damage both during and after surgery---over the course of
+weeks and months, glia gradually encapsulate intruding electrodes,
+rendering them less effective over time. For example,
+\cite{Butson2008steering} notes a 500-$\mu$m encapsulation layer for
+the $\sim$~1.3-mm electrodes common in DBS.  This encapsulation
+results in ever-increasing stimulation thresholds, rendering the
+electrodes unable to record as effectively
 \cite{Barrese2016electrodestability,Biran2005gliosis,Polikov2005gliosis,Winslow2010gliosis}.
 
 Even before glial encapsulation, large electrodes lack sufficient
@@ -263,21 +263,17 @@ appropriate given the size of DBS electrodes; however, the techniques
 will not provide sufficient accuracy to take advantage of the control
 available with small electrodes.
 
-There has also been interest in\marginpar{Do we care? Remove this
-  paragraph?} current steering outside the brain. For example,
-\cite{king2006current_steeriing_optimisation} describes an algorithm
-for clinician-assisted hillclimbing search for effective stimulation
-in multielectrode arrays in the spinal cord.
-
-An important example of current steering outside the brain but in a
-densely connected network uses 64-channel electrode arrays, with
-electrode as closely packed as 30 $\mu$m, to stimulate macaque retina
-{\em in vitro} \cite{Jepson2014steering_in_retina}. They stimulated
-the retina using single electrodes or combinations of three electrodes
-with charge-balanced pulses, and found that retinal response could be
+Steering current allows some degree of delivery of stimulus to
+locations between electrodes, allowing control policies to take the
+place of electrodes with higher channel count. For example, 64-channel
+electrode arrays, with electrode as closely packed as 30 $\mu$m, were
+used to stimulate macaque retina {\em in vitro}
+\cite{Jepson2014steering_in_retina}. They stimulated the retina using
+single electrodes or combinations of three electrodes with
+charge-balanced pulses, and found that retinal response could be
 predicted with a piecewise linear model of the steered current. The
-connectivity of retinal cells differs from that in most other brain
-regions, but we feel that this experiment nonetheless hints at the
+connectivity of retinal cells differs from that in most brain regions
+of interest, but we feel that this experiment nonetheless hints at the
 potential of neuron-scale current steering.
 
 Most DBS systems deliver some fixed stimulation pattern continuously.
@@ -286,12 +282,13 @@ devices has grown.  Due to the size of the electrodes, for feedback
 control most systems rely on large-spatial-scale metrics such as local
 field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic
 measures of outcome such as surface electromyography and accelerations
-\cite{Afshar2012closedloop,Basu2013dbsFeedback}\marginpar{Great review:
-  \cite{Priori2015review}}. The addition of feedback from a second
-electrode in a related brain region is effective in ameliorating
-Parkinsonian symptoms in monkeys \cite{Rosin2011adbs}, in which the
-use of tungsten microelectrodes demonstrated the effectiveness of
-feedback that responds to individual spikes rather than just LFPs.
+\cite{Afshar2012closedloop,Basu2013dbsFeedback}\marginpar{Great
+  review: \cite{Priori2015review}}. However, neuron-scale electrodes
+have shown promise for treatment of Parkinsonian symptoms in
+monkeys. A tungsten microelectrode stimulating the globus pallidum in
+response to individual spikes detected by a similar electrode in the
+related brain area M1 proved more effective than more standard
+feedback paradigms or open-loop control \cite{Rosin2011adbs}.
 
 Insertion damage, glial encapsulation over time, and poor spatial
 scale of large electrodes are all mitigated by electrodes $<$ 10
@@ -312,7 +309,7 @@ In a current-controlled stimulating electrode,\marginpar{Why
   current-controlled? E.g. \cite{Chaturvedi2012}?} the voltage required
 to induce neural activity goes up as the impedance increases and
 charge injection capacity decreases. Neural damage is likely to occur
-when voltage exceeds the hydrolysis point for water (around 1.2
+when voltage exceeds the hydrolysis point for water (around 1.3
 V). This is not a problem for large DBS electrodes, whose surface area
 tends to be ample and which are in any case encapsulated by glia, but
 it creates a problem for our small electrodes (area per shank is
@@ -329,33 +326,33 @@ electroplating the electrodes in iridium oxide, as suggested by
   electrode (and the short-term birds), is it even worth listing here?
   Or should I just mention it in Methods?} leads to roughly a tenfold
 improvement in both impedance and charge injection capacity. Second,
-we introduce a novel current-steering technique, and provide
-preliminary evidence that appropriate choice of current-steering
+we provide evidence that appropriate choice of current-steering
 configuration can be used to reduce stimulation voltage.
 
 Due to their size, the multichannel, spatially distributed,
 micron-scale arrays introduced in \cite{Guitchounts2013electrode}
 allow long-term single-unit recordings, enabling new experiments
-investigating how the brain changes on long timescales. Here we
-provide preliminary evidence showing:
+investigating how the brain changes on timescales around a year. Here
+we provide evidence showing:
 \begin{itemize}
 \item How often the electrodes splay correctly in the brain, and the spatial scale of that splay.
 \item That the electrodes can record activity in single units a year after surgery.
 \item That the electrodes can be used to stimulate the brain.
 \item That the spatial scale of splay is sufficient to allow effective current steering.
-  \item That current steering can be used to reduce injected voltage, thus keeping neurons safe while still delivering clinically significant results.
+  \item That current steering can be used to reduce injected voltage, thus keeping neurons safe while still delivering biologically relevant currents.
 \item That current-steered control of stimulation inputs allows
 fine-grained control over small groups of neurons, potentially
 permitting a wide variety of optimisations, such as controlling the
 brain to some set of desired responses.
 \end{itemize}
 
-We were able to build only a limited supply of the electrode arrays, and
-thus provide chronic stimulation data from a very small number of
+We were able to build only a limited supply of the electrode arrays,
+and thus provide chronic stimulation data from a very small number of
 birds. This is a serious limitation of the study, and thus our results
-should be regarded as preliminary. However, we believe that even as
-they stand they will nonetheless be of interest to the community,
-suggesting capabilities that have not heretofore been available.
+should be regarded as preliminary and suggestive. However, we believe
+that even as they stand they will nonetheless be of interest to the
+community, suggesting capabilities that have not heretofore been
+available.
 
 
 
@@ -368,16 +365,17 @@ Electrode arrays were constructed as described in
 \cite{Guitchounts2013electrode}.
 
 \subsubsection{Charge injection}
+\label{sec:chargeinjection}
 
 The charge transfer capacity of one of the electrode arrays (16
 shanks) used for stimulating in Area X was enhanced by
 electrodeposited iridium oxide. This effects an improvement of roughly
-an order of magnitude: impedances went from around 2 M$\Omega$ to 200
+an order of magnitude: impedances went from around 4 M$\Omega$ to 400
 k$\Omega$, and for a given current, the required voltage was much
 lower.\marginpar{FIXME} We also experimented with PEDOT, which has
 excellent charge-injection properties, but we found it to have
 durability issues. A detailed analysis is outside the scope of this
-work\marginpar{All I know about this is hearsay.}  See
+work.\marginpar{All I know about this is hearsay.}  See
 \cite{Cogan2008electrodes} for a review of charge transfer physics.
 
 \subsection{Bird surgery description}
@@ -511,26 +509,29 @@ Recording of spontaneous activity in Area X was with an Intan RHD2000 amplifier 
 \subsection{Stimulation: Zebra finch antidromic HVC $\leftarrow$ X}
 
 Electrical stimulation saturates the brain, including at the site of
-the recording electrode, for some time post-stimulation. Artifacts were visible in the recording traces for 1--3 ms post-stimulus.  Responses to
-stimulation can be detected outside of that saturation window.  A
-common technique for locating HVC in the zebra finch involves
-implanting a stimulating electrode in Area X and looking for a an
-antidromic response, which is visible in HVC and not in the
-surrounding tissue \cite{Swadlow1998antidromic,Hahnloser2002sparse}.
-Since the two brain areas are separated by about 5 mm, this response
-occurs 3--8 ms after stimulation\marginpar{Tim: citation for 3--8
-  ms?}, which gives the recording amplifier time to settle before
-measuring the response.\marginpar{But why antidromic?}
+the recording electrode, for some time post-stimulation. Artifacts
+were visible in the recording traces for 1--3 ms
+post-stimulus.\marginpar{Intan} Responses to stimulation can be
+detected outside of the saturation window.  A common technique for
+locating HVC in the zebra finch involves implanting a stimulating
+electrode in Area X and looking for a an antidromic response, which is
+visible in HVC and not in the surrounding tissue
+\cite{Swadlow1998antidromic,Hahnloser2002sparse}.  Since the two brain
+areas are separated by about 5 mm, this response occurs 3--8 ms after
+stimulation\marginpar{Tim: citation for 3--8 ms?}, which gives the
+recording amplifier time to settle before measuring the
+response.\marginpar{But why antidromic? Could one go forward? Or would
+  that be too risky to HVC if that's the target of study?}
 
 For discussion of the stimulation paradigm, we will use the following definitions:
 
 \begin{description}
 \item[Channel:] Our electrodes have 16 channels, each of which is an individual carbon fibre connected to its own amplifier.
 \item[Pulse:] A biphasic charge-balanced square wave of current.  Each phase is 200 $\mu s$ long, and there is no interpulse interval.
-\item[Current steering:] Delivering pulses, usually of opposite signs, to two or more electrodes in order to control the geometry of current flow through the tissue.
+\item[Current steering:] Delivering pulses, possibly of opposite signs, to two or more electrodes simultaneously in order to control the geometry of current flow through the tissue.
 \item[Current-steering configuration (CSC):] The configuration defining which channels receive the positive half of their biphasic pulse first, or vice versa.
-\item[Pulse train:] A sequence of $n$ (usually 10) identical current-steered stimuli delivered to all active channels, usually at 25 Hz.  This is slow enough that pulses do not interfere with each other, and is used to measure the reliability of the response.
-\item[Threshold scan:] A series of pulse trains, each of which has the same CSC but a different current, designed to find the minimum current for this CSC that will induce an antidromic response in HVC.  The algorithm is described below.
+\item[Pulse train:] A sequence of $n$ (usually 10) identical current-steered stimuli delivered to all active channels, usually at 25 Hz.  This is slow enough that pulses do not interfere with each other, and is used to measure the repeatability of the response.
+\item[Threshold scan:] A series of pulse trains, each of which has the same CSC but a different current magnitude, designed to find the minimum current magnitude for this CSC that will induce an antidromic response in HVC.  The algorithm is described below.
 \item[Voltage scan:] The Plexon hardware can deliver a current-controlled pulse to each of 16 channels independently and simultaneously, but only allows monitoring of the voltage delivered on one channel at a time. A voltage scan involves sending the same pulse train once per active electrode, monitoring a different one each time.
 \end{description}
 
@@ -563,7 +564,7 @@ it sends out its own TTL pulse: this signal is recorded by the TDT
 along with the HVC electrode voltages.  Thus the data alignment
 precision is controlled by the sampling rate of the TDT (41 $\mu$s).
 
-Programming each of the stimulator's 16 channels for one pulse train and running the programme (10 pulses at 25 Hz) requires a little over 2 seconds. A threshold scan requires, on average, around 15 pulse trains, and so generally takes a bit more than 30 seconds. Likewise, a voltage scan requires delivering one pulse train per active electrode, for a total of about 30 seconds.\marginpar{This timing is after I did some speedup hacking, but the experiments presented in this paper were pre-speedup (about half as fast). Does it matter?}
+Programming each of the stimulator's 16 channels for one pulse train and running the train (10 pulses at 25 Hz) requires a little over 2 seconds. A threshold scan requires, on average, around 15 pulse trains, and so generally takes a bit more than 30 seconds. Likewise, a voltage scan requires delivering one pulse train per active electrode, for a total of about 30 seconds.\marginpar{This timing is after I did some speedup hacking, but the experiments presented in this paper were pre-speedup (about half as fast). Does it matter?}
 
 \subsubsection{Response detection}
 \label{sec:responsedetection}
@@ -578,17 +579,17 @@ HVC\textsubscript{X} projection neurons is under 50 $\mu$s, while that
 of HVC intraneurons is above 500 $\mu$s.
 
 \fig{fig:clear_hvc_response} shows an example of a pronounced HVC
-response to stimulation in Area X.  We detected this response in two different ways, one during experiment runtime and one in postprocessing analysis:
+response to stimulation in Area X.  We detected such responses in two different ways, one during experiment runtime and one in postprocessing analysis:
 
 During runtime (threshold and voltage scans), we measured the
 cross-correlation between the recorded response for each pulse in a
 train and each other with a maximum lag of 100 $\mu$s, which provides
-a robust way of separating neural response from noise.  Because the
-HVC amplifier's (Intan's or TDT's) response to the transient
-stimulation pulse in Area X can persist into the time of interest
-(3--8 ms), each response is first de-trended using a
-maximum-likelihood fit over the region 2--25 ms using an eigth order
-Fourier Series, which removes post-stimulation decay while leaving
+a robust way of separating the response of projection neurons from
+noise.  Because the HVC amplifier's (Intan's or TDT's) response to the
+transient stimulation pulse in Area X can persist into the time of
+interest (3--8 ms), each response is first de-trended using a
+maximum-likelihood fit over the region 2.5--25 ms using an eigth order
+Fourier series, which removes post-stimulation decay while leaving
 spike-sized signals intact.\marginpar{Filtering would probably work
   better with the TDT than with the Intan\dots} We found that this
 strongly biased smoothing technique more cleanly removes the large
@@ -670,7 +671,7 @@ the step size drops below a limit ($\alpha < 1.02$), and the threshold
 is taken as the last parameter set that induced a response.
 
 While a larger step size would result in a faster search, and a binary
-search would in addition be easier to describe, this ad-hoc approach
+search would additionally be easier to describe, this ad-hoc approach
 samples near the current of interest while making it unlikely that we
 will stimulate with a current that significantly exceeds the minimum
 required for a response, and thus minimises the possibility of
@@ -769,56 +770,27 @@ the brain (see Section~\ref{sec:results:recording}).
 
 \subsubsection{Impedances}
 
-\subsubsection{HVC}
+\marginpar{I think I have impedance data for Greg's latest electrodes, as well as pre-implant data for the ones shown in the following figures. This paper is not really about biochemistry, but that could all be thrown in\dots}
 
-Long-term recording in HVC is difficult due to skull regrowth
-interfering with electrodes implanted only a few hundred microns from
-the surface: after 10 months, we had difficulty picking up antidromic
-response in our two remaining birds, and while the techniques
-described in Sec.~\ref{sec:responsedetection} were more sensitive and
-robust than detection by eye, eventually the signal-to-noise ratio
-became too low for them as well.
-
-\subsubsection{Area X}
-
-More telling of the potential of these electrodes to detect spikes is
-the recording of spontaneous activity in Area X, which was still
-easily seen in several channels after a year.\marginpar{I don't have
-  recording-only data from early on.}  \fig{fig:XSpikeRecording} shows
-recordings a year after implantation for the most stable electrodes of
-the 16.
-
-
-
-\begin{figure}
-  % Width 9, Height 9, Font scaling 100%
-  \includegraphics[width=\textwidth]{XSpikeRecording}
-  \caption{{\em FIXME Here I show 6 electrodes.  3 are beautiful, and 3 fade in and out.  What's the best way to present this?  Should I omit graphs with fewer than 20 spikes as I've done here  Or show their messy squiggles?}
-    Some of the electrodes in Area X record spontaneous spikes
-    a year after implantation.  Column titles show the day
-    post-surgery and the number of seconds of recorded data.  Each row
-    is one electrode (shown here: the three most stable channels
-    and three that showed some variability).  Legends show the number of seconds of the
-    recording, the number of spikes, and mean spike rate.  The grey
-    shaded region is standard deviation, and the coloured shaded region is
-    the 95\% confidence interval for the mean.}
-  \label{fig:XSpikeRecording}
-\end{figure}
-
-
+\fig{fig:impedances}
+\fig{fig:impedances-all}
+\fig{fig:impedances-lw95rhp}
 
 \begin{figure}
   % Width 9, height 5, fonts auto (100%), lw94rhp
   \includegraphics[width=\textwidth]{Impedances}
-  \caption{Impedances for the electrodes shown in \fig{fig:XSpikeRecording}.  Most good electrodes were in the range 400 k$\Omega$--1M$\Omega$ for the recordings shown in that figure.}
-  \label{fig:Impedances}
+  \caption{Impedances for the electrodes shown in
+    \fig{fig:XSpikeRecording}.  Most good electrodes were in the range
+    400 k$\Omega$--1M$\Omega$ for the recordings shown in that
+    figure.}
+  \label{fig:impedances}
 \end{figure}
 
 
 \begin{figure}
   \includegraphics[width=\textwidth]{Impedances-all}
-  \caption{{\em Full version of \fig{fig:Impedances}.  I think I like that one better, but this could be more useful despite (or because of) showing a bunch of bad electrodes\dots}}
-  \label{fig:Impedances-all}
+  \caption{{\em Full version of \fig{fig:impedances}.  I think I like this one less, but it could be more useful despite (or because of) showing a bunch of bad electrodes\dots}}
+  \label{fig:impedances-all}
 \end{figure}
 
 
@@ -826,27 +798,64 @@ the 16.
   % Width 9, height 5, fonts auto (100%), lw95rhp
   \includegraphics[width=\textwidth]{Impedances-lw95rhp}
   \caption{Electrode impedances over time on another bird.  This Area X array was treated with iridium oxide.  {\em This plot probably requires a bunch more explanation.  Notably: why the big jumps?  Need to check on stimulation, but hard to generalise with so little data\dots}}
-  \label{fig:Impedances-lw95rhp}
+  \label{fig:impedances-lw95rhp}
 \end{figure}
+
+\subsubsection{HVC}
+
+Long-term recording in HVC is difficult due to skull regrowth
+interfering with electrodes implanted only a few hundred microns from
+the surface: after 10 months, we had difficulty picking up antidromic
+response in our two remaining birds, as discussed in \sref{sec:responsedetection}. \marginpar{Duplicate. Omit?} 
+  
+\subsubsection{Area X}
+
+More telling of the potential of these electrodes to detect spikes is
+the recording of spontaneous activity in Area X, which was still
+easily seen in several channels after a year.\marginpar{I don't have
+  recording-only data from early on. Oh---now I do! But in another
+  bird.}  \fig{fig:XSpikeRecording} shows recordings a year after
+implantation for the most stable electrodes of the 16.
+
+
+
+\begin{figure}
+  % Width 9, Height 9, Font scaling 100%, lw94rhp I think?
+  \includegraphics[width=\textwidth]{XSpikeRecording}
+  \caption{{\em FIXME Here I show 6 electrodes.  3 are beautiful, and
+      3 fade in and out.  What's the best way to present this?  Should
+      I omit graphs with fewer than 20 spikes as I've done here Or
+      show their messy squiggles?}  Some of the electrodes in Area X
+    record spontaneous spikes a year after implantation.  Column
+    titles show the day post-surgery and the number of seconds of
+    recorded data.  Each row is one electrode (shown here: the three
+    most stable channels and three that showed some variability).
+    Legends show the number of seconds of the recording, the number of
+    spikes, and mean spike rate.  The grey shaded region is standard
+    deviation, and the coloured shaded region is the 95\% confidence
+    interval for the mean.}
+  \label{fig:XSpikeRecording}
+\end{figure}
+
+
 
 
 \subsection{Stimulation}
 
 \subsubsection{Minimising stimulation voltage}
 
-Some CSCs were better at triggering an antidromic response than
-others.  From the $2^{11}$\marginpar{Explain why this number. Why only
-  one bird?} possible CSCs we chose 32 (30 randomly, and the two that
+Some CSCs required lower currents to induce the antidromic response
+than others. In lw94rhp, 11 electrodes were undamaged. From the
+$2^{11}$ possible CSCs we chose 32 (30 randomly, and the two that
 treated all electrodes identically).  For each CSC, we performed a
 threshold scan to find the minimum current needed to trigger a
-response.  When this current was found, we performed a voltage scan to
-find the maximum potential on any electrode.  We tested each CSC five
-times on an anesthetised bird.  Results are shown in
-\fig{fig:VoltageVsCSC}.  The best CSCs resulted in a maximum voltage
-of around 1~V, while the worst were over 2.5~V.  Perhaps surprisingly, the
-CSCs that sent identical pulses to all 11 electrodes were among the
-worst performers, with our simple search revealing CSCs that kept
-voltages far lower.
+response.  When this current was found, we did a voltage scan.  We
+tested each CSC five times on an anesthetised bird.  Results are shown
+in \fig{fig:VoltageVsCSC}.  The best CSCs resulted in a maximum
+voltage of around 1~V, while the worst were over 2.5~V.  Perhaps
+surprisingly, the CSCs that sent identical pulses to all 11 electrodes
+were among the worst performers, with our simple search revealing CSCs
+that kept voltages far lower.
 
 The maximum-likelihood fits to the voltage sweep data (green errorbars
 in \fig{fig:VoltageVsCSC}) consistently yield slighly higher threshold
@@ -894,17 +903,31 @@ response rate.
 
 \subsubsection{Controlling the antidromic response}
 
+Different CSCs delivered to Area X resulted in different response
+patterns in upstream area HVC, as can be seen by the representative
+examples in \fig{fig:HVCresponseVsCSC}. Besides providing further
+evidence that the electrode arrays splayed, this suggests that the
+approach might be able to induce specifically designed neural dynamics
+beyond simply the presence or absence of a response.
+
 \begin{figure}
   \includegraphics[width=\textwidth]{HVCresponseVsCSC}
+  \includegraphics[width=\textwidth]{lr7-unique-responses-10-07-a}
   \caption{Different CSCs delivered to Area X can induce different
-    responses antidromically in HVC.  Here are four of the most
+    responses antidromically in HVC.  {\em Top:} four of the most
     distinct responses to four of the 32 CSCs shown in
-    \fig{fig:VoltageVsCSC}.  Shading is 95\% confidence, n=198.}
+    \fig{fig:VoltageVsCSC}, bird lr95rhp {\em FIXME Right bird?}.
+        {\em Bottom:} four distinct responses in bird lr7. Shading is
+        95\% confidence, n=198 {\em FIXME n for lr7?}.}
   \label{fig:HVCresponseVsCSC}
 \end{figure}
 
 
 \section{Discussion}
+
+\subsection{Splay}
+
+Achieving consistent splay with these electrode arrays has proven difficult---the spatial distribution of electrodes is highly variable. Nonetheless, they splay well enough often enough to suggest that the design should be investigated further, especially given the state-of-the-art minimal damage and encapsulation.
 
 \subsection{Steering}
 
@@ -916,9 +939,9 @@ or not the locally linear predictive response model that they found
 effective in retina would be extensible to regions with greater
 lateral connectivity is unknown.
 
-\cite{Histed2009stimulation} showed that injecting current into tissue
-causes neurons whose axons are very close to the stimulation site to
-fire, rather than neurons whose bodies are at greater distances.  As a
+Injecting current into tissue causes neurons whose axons are very
+close to the stimulation site to fire, rather than neurons whose
+bodies are at greater distances \cite{Histed2009stimulation}.  As a
 result, the set of neurons that respond to a stimulation pulse is
 highly sensitive to electrode location, but has spatial extent similar
 to that of the neuron's dendritic tree.  Furthermore, they showed that
@@ -934,22 +957,25 @@ may exist multiple downstream neurons $y$ such that
 directly-stimulatable neurons from several of our $n$ sets synapse
 onto $y$.  This creates a search problem: how to stimulate the $n$
 sets in a way that reliably stimulates $y$ enough to cause it to
-spike? This requires search over current delivered to each group in
-$n$ in order to control which neurons are recruited, and timing of
-stimulation delivery to each group in $n$, so that appropriate
-downstream neurons are reliably triggered.  Different values of
-current and timing delivered into the $n$ groups may trigger different
-downstream neurons, so one possible search problem is finding as many
-different downstream neurons as possible.
+spike, while minimising unwanted activity? This requires search over
+current delivered to each group in $n$ in order to control which
+neurons are recruited, and timing of stimulation delivery to each
+group in $n$, so that appropriate downstream neurons are reliably
+triggered.  Different values of current and timing delivered into the
+$n$ groups may trigger different downstream neurons, so one possible
+search problem is finding as many different downstream neurons as
+possible.
 
 Furthermore, it seems likely that directly-stimulatable neurons may
 synapse onto others that are directly-stimulatable, once or $r$ times
 removed. This suggests a more general objective for the search, in
 which different timings for stimulating the $n$ sets may trigger
-different network-scale dynamics. (\cite{Jepson2014steering_in_retina}
-proposes a related mechanism in the context of current steering in
-retina).  This enlarges the space of inducible dynamics considerably,
-and suggests the possibility of inducing Hebbian learning.
+different network-scale dynamics (the same mechanism in the context of
+current steering in retina\cite{Jepson2014steering_in_retina} is
+related).  This greatly enlarges the space of inducible dynamics, and
+also suggests the possibility of inducing Hebbian learning, which we
+presume would tend to magnify and stabilise the effect of such
+stimulation over time.\marginpar{Wild speculation. Too much so?}
 
 Whereas Histed used single electrodes, we use miltichannel arrays.
 Rather than a 16-channel array providing $n=16$ groups of neurons,
@@ -957,15 +983,24 @@ different current-steering configurations may lead to a much higher
 value of $n$.  For such an electrode there are $2^{16}$
 current-steering configurations even without manipulating current
 pulse magnitude or timing, and with those additions the search space
-is nearly infinite.
+is essentially infinite.
 
 \subsection{Ongoing Learning}
 
 DBS treatments depend on finding the most effective stimulation
 patterns given electrode placement and patient response. The best
 clinical outcomes require about 20 hours\marginpar{Now where did I
-  read this\dots CITATION NEEDED?} of hand-tuning, involving multiple
-patient visits to a clinic.\marginpar{This has nothing to do with our paper. Learning is not addressed here. But I could mention it as a possibility. Should I? Or leave it out?}
+  read this? CITATION NEEDED} of hand-tuning, involving multiple
+patient visits to a clinic.\marginpar{This has nothing to do with our
+  paper. Learning is not addressed here. But I could mention it as a
+  possibility. Should I? Or leave it out?} Work in automatic measures
+of patient outcome is progressing (see, e.g.,
+\cite{Basu2013dbsFeedback,Rosin2011adbs}), and with that comes the
+ability to continuously adapt the stimulation in order to optimise
+patient outcomes autonomously, reducing or perhaps obviating the need
+for expert tuning of stimulation patterns. Indeed, the policy search
+space for these electrodes is large enough that human-guided design is
+unlikely to be effective, demanding automated search.
 
 \subsection{Power}
 
@@ -977,7 +1012,21 @@ several orders of magnitude lower than state-of-the-art systems, and
 even if current steering does not allow realtime therapy optimisation,
 it appears to allow further optimisation of power usage.
 
+\subsection{Summary}
 
+While the current study is severely limited by the availability of
+good electrodes and by our continuously evolving experimental design,
+we feel that it will be of interest to the community. We have
+demonstrated the potential for thin carbon-fibre electrode arrays to
+splay in the brain (albeit with significant inconsistency), providing
+multiple sites for recording and stimulation for at least a year
+without rejection by the brain. We have shown that the voltage
+required in order to induce responses can be minimised through
+reasonably careful selection of current-steering configuration during
+stimulus. Finally, we have shown the potential for multielectrode
+arrays to induce multiple different responses in a distal (upstream)
+brain area, which suggests the potential for more precise control over
+neural dynamics than has heretofore been achieved.
 
 
 \bibliography{birds}
