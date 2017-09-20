@@ -205,24 +205,21 @@ Direct control of the brain---the ability to sense and modify its
 dynamics in real time---is a longstanding goal in neuroscience,
 engineering, and medicine. Sensing has been achieved on a variety of
 spatial and temporal scales in humans and non-humans, using fMRI,
-scalp electrode hats, trans-cranial magnetic stimulation,
+scalp electrodes, trans-cranial magnetic stimulation,
 optigenetics, and with surgically implanted electrodes, both on the
 surface of the cortex and implanted into deep brain areas. The gold
 standard for spatial and temporal resolution is patch clamping, which
-can record individual neurons, but is at present infeasible for
+can electrically record individual spikes, but is at present infeasible for
 chronic implants in behaving animals. Small extracellular electrodes
-can potentially still provide high spatial and temporal resolution,
-recording individual neurons and stimulating over regions on the scale
+can potentially provide high spatial and temporal resolution,
+recording individual neurons and stimulating regions on the scale
 of a single dendritic tree. Increasing the channel count of these
 electrodes allows recording signals from different locations
 simultaneously, as well as greater control over
-stimulation. Increasing the size of the electrodes makes them more
-robust and more capable of safely injecting enough current to modify
-neural dynamics, but comes at the expense of spatial resolution and
-chronic recording capability. We propose that a multichannel electrode
+where current is delivered during stimulation. Decreasing the size of the electrodes improves spatial resolution and chronic recording capability, but at the expense of robustness and the ability to inject biologically relevant currents at safe voltages. We propose that a multichannel electrode
 arrays consisting of thin carbon fibres, combined with appropriate
 current steering, can achieve fine spatial resolution, biological
-compatibility, safe stimulation, and produce a variety of different
+compatibility, and safe stimulation, and can produce a variety of different
 neural dynamics.
 
 Much of the work in current steering in the brain is due to interest
@@ -236,7 +233,7 @@ headache, depression, OCD, addictive behaviours, anorexia, and others
 significant damage both during and after surgery---over the course of
 weeks and months, glia gradually encapsulate intruding electrodes,
 rendering them less effective over time. For example,
-\cite{Butson2008steering} notes a 500-$\mu$m encapsulation layer for
+\cite{Butson2008steering} reports a 500-$\mu$m encapsulation layer for
 the $\sim$~1.3-mm electrodes common in DBS.  This encapsulation
 results in ever-increasing stimulation thresholds, rendering the
 electrodes unable to record as effectively
@@ -255,7 +252,7 @@ of interest using magnetic resonance imaging (MRI) and diffusion
 tensor imaging (DTI) \cite{Tuch2001conductivity,Alexander2007dti}.
 This produces data with voxels of roughly 2 mm\textsuperscript{3}.
 They then use finite element analysis to design current-steering
-patterns to target the desired target.\marginpar{Lots more references
+patterns for the desired target.\marginpar{Lots more references
   might be added here, all of which have spatial resolution on this
   order and a variety of temporal resolutions; choose $\approx$3 or
   just cite a review?} The accuracy of this and related approaches is
@@ -273,13 +270,13 @@ single electrodes or combinations of three electrodes with
 charge-balanced pulses, and found that retinal response could be
 predicted with a piecewise linear model of the steered current. The
 connectivity of retinal cells differs from that in most brain regions
-of interest, but we feel that this experiment nonetheless hints at the
+of interest, but we believe that this experiment nonetheless hints at the
 potential of neuron-scale current steering.
 
 Most DBS systems deliver some fixed stimulation pattern continuously.
 Recently, interest in using biological feedback to tune medical
-devices has grown.  Due to the size of the electrodes, for feedback
-control most systems rely on large-spatial-scale metrics such as local
+devices has grown.  For feedback
+control, most systems rely on large-spatial-scale metrics such as local
 field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic
 measures of outcome such as surface electromyography and accelerations
 \cite{Afshar2012closedloop,Basu2013dbsFeedback}\marginpar{Great
@@ -290,7 +287,7 @@ response to individual spikes detected by a similar electrode in the
 related brain area M1 proved more effective than more standard
 feedback paradigms or open-loop control \cite{Rosin2011adbs}.
 
-Insertion damage, glial encapsulation over time, and poor spatial
+Insults during insertion, glial encapsulation over time, and poor spatial
 scale of large electrodes are all mitigated by electrodes $<$ 10
 $\mu$m, but these present two difficulties: they are too fragile to
 insert easily, and during stimulation, their small surface area
@@ -306,16 +303,18 @@ giving randomly distributed sites for recording and stimulation. Here
 we quantify that splay.
 
 In a current-controlled stimulating electrode,\marginpar{Why
-  current-controlled? E.g. \cite{Chaturvedi2012}?} the voltage required
-to induce neural activity goes up as the impedance increases and
-charge injection capacity decreases. Neural damage is likely to occur
-when voltage exceeds the hydrolysis point for water (around 1.3
-V). This is not a problem for large DBS electrodes, whose surface area
-tends to be ample and which are in any case encapsulated by glia, but
-it creates a problem for our small electrodes (area per shank is
-around 250 $\mu\textrm{m}^2$): their impedance is high and their
-charge delivery capacity is poor, leading to high voltage requirements
-for stimulation.
+  current-controlled? E.g. \cite{Chaturvedi2012}?} the voltage
+required to induce neural activity goes up as the impedance increases
+and charge injection capacity decreases. Stimulation voltage above the
+hydrolysis point of water (around 1.3 V) increases the risk of tissue
+damage as well as leading to erosion of carbon electrodes due to
+oxidative etching \cite{Tamakov2010erosion}. This voltage limit is not
+a limiting factor for large DBS electrodes, whose surface area tends
+to be ample and which are in any case encapsulated by glia, but it
+creates a problem for our small electrodes (in our case the area per
+shank is around 2000 $\mu\textrm{m}^2$): their impedance is high and
+their charge delivery capacity is poor, leading to high voltage
+requirements for stimulation.
 
 We address the voltage problem in two ways. First, we confirm that
 electroplating the electrodes in iridium oxide, as suggested by
@@ -332,11 +331,11 @@ configuration can be used to reduce stimulation voltage.
 Due to their size, the multichannel, spatially distributed,
 micron-scale arrays introduced in \cite{Guitchounts2013electrode}
 allow long-term single-unit recordings, enabling new experiments
-investigating how the brain changes on timescales around a year. Here
+investigating how the brain changes on timescales on the order of a year. Here
 we provide evidence showing:
 \begin{itemize}
 \item How often the electrodes splay correctly in the brain, and the spatial scale of that splay.
-\item That the electrodes can record activity in single units a year after surgery.
+\item That the electrodes can record activity in single units\marginpar{Is this claim easily justifiable given the unreliability of spike-sorting?} a year after surgery.
 \item That the electrodes can be used to stimulate the brain.
 \item That the spatial scale of splay is sufficient to allow effective current steering.
   \item That current steering can be used to reduce injected voltage, thus keeping neurons safe while still delivering biologically relevant currents.
@@ -349,7 +348,7 @@ brain to some set of desired responses.
 We were able to build only a limited supply of the electrode arrays,
 and thus provide chronic stimulation data from a very small number of
 birds. This is a serious limitation of the study, and thus our results
-should be regarded as preliminary and suggestive. However, we believe
+should be regarded only as preliminary and suggestive. However, we believe
 that even as they stand they will nonetheless be of interest to the
 community, suggesting capabilities that have not heretofore been
 available.
@@ -357,7 +356,7 @@ available.
 
 
 
-\section{Materials and Methods}
+\section{Methods}
 
 \subsection{Electrode construction}
 
@@ -369,7 +368,7 @@ Electrode arrays were constructed as described in
 
 The charge transfer capacity of one of the electrode arrays (16
 shanks) used for stimulating in Area X was enhanced by
-electrodeposited iridium oxide. This effects an improvement of roughly
+electrodepositing iridium oxide. This effects an improvement of roughly
 an order of magnitude: impedances went from around 4 M$\Omega$ to 400
 k$\Omega$, and for a given current, the required voltage was much
 lower.\marginpar{FIXME} We also experimented with PEDOT, which has
@@ -383,34 +382,33 @@ work.\marginpar{All I know about this is hearsay.}  See
 \subsubsection{Animals and Perfusions}
 
 At the end of the experiment, the birds were given an overdose of
-pentobarbital and perfused with 0.1M phosphate buffer followed by 4\%
-paraformaldehyde in 0.1 M PB.  Brain with skull were removed. The
+pentobarbital (PB) and perfused with 0.1M\marginpar{M is Mol?} phosphate buffer followed by 4\%
+paraformaldehyde in 0.1 M PB.  The brain and skull were removed. The
 electrodes were secured on the skull and brain. 2--4 holes were made
-on the skull to facilitate the solutions to get in. Following an
+on the skull to facilitate fluid flow. Following an
 overnight postfix in 4\% paraformaldehyde, brain with skull was
 treated overnight in 15\% and 30\% sucrose\marginpar{Which?} in 0.1M PB at 4$^\circ$C.
-Brain slices with the electrodes were collected. The tissue samples
-were sectioned towarding to the tips of the implanted elctrodes at
+The brains were sectioned with the electrodes in place. Tissue samples
+were sectioned in the direction from electrode base to tip\marginpar{Base-to-tip seems like the wrong way to do it--more chance of pulling an electrode out. Or is that so rare as to be irrelevant?} at
 50--100$\mu$m by a cryostat (CM 3050 S, Leica). The tissue samples
 were stored in $-20^\circ$C until immunohistochemistry was processed.
 
 \subsubsection{Fluorescent Immunohistochemistry of NeuN, MBP and DAPI}
 
-Sections of the brain were used for immunohistochemical staining of
-Neun and DAPI. Non protein binding was blocked with 5\% normal donkey
+The brain slices were stained with
+NeuN and DAPI. Non-protein binding was blocked with 5\% normal donkey
 serum. The primary antibody against neuronal nuclei was a mouse
 anti-NeuN antibody (1:500, MAB377, A60, Chemicon) and the primary
 antibody against myelin was a rabbit Anti-Myelin Basic Protein / MBP
 Antibody (1:500, LS-C312288, LifeSpan BioSciences, Inc). Following
 primary antibodies incubation for overnight at 4$^\circ$C, Alexa
-Fluor® 488 AffiniPure Donkey Anti-Mouse IgG (H+L) (1:500, 715-545-150,
+Fluor 488 AffiniPure Donkey Anti-Mouse IgG (H+L) (1:500, 715-545-150,
 Jackson ImmunoResearch Laboratories) and Rhodamine (TRITC) AffiniPure
 Donkey Anti-Rabbit IgG (H+L) (1:500,711-025-152, Jackson
 ImmunoResearch Laboratories) added. The sections were coated with
 mounting medium containing 4',6-diamidino-2-phenylindole (DAPI,
-VECTASHIELD).  The sections of brain were visualized and the images
-were captured using a FV10i confocal microscopy(Olympus) and Olympus
-FV10i software.
+VECTASHIELD).  The sections of brain were visualised and the images
+were captured using a FV10i confocal microscope and its standard software (Olympus).
 
 \subsubsection{Surgery information}
 
@@ -418,41 +416,37 @@ All procedures were approved by the Institutional Animal Care and Use
 Committee of Boston University (protocol number 14-029). Zebra finches
 (n = 15: 13 for acute splay histology, 2\marginpar{Include the third?}
 for chronic HVC and Area X recordings) ($>$120 days post-hatch) were
-anesthetized with 4.0\% isoflurane and maintained at 1--2\% isoflurane
+anesthetised with 4.0\% isoflurane and maintained at 1--2\% isoflurane
 during the aseptic surgical procedure. The analgesic Meloxicam
-(4mg/kg) was injected intramuscularly into the breast at the start of
+(4 mg/kg) was injected intramuscularly into the breast at the start of
 the procedure and the animal was placed into a stereotaxic
 instrument. Feathers were removed from the scalp and a Betadyne
-solution applied. Bupivicane (4mg/kg) was then injected subcutaneously
+solution applied. Bupivicane (4 mg/kg) was then injected subcutaneously
 into the scalp before an incision was made along the AP axis.
 
 The same surgical procedure was followed for the acute and chronic
-recording in Area X and HVC \cite{Guitchounts2013electrode}. The skull
-over area X was localized using stereotactic coordinates (20° head
-angle; 5.8 mm AP, 1.5 mm ML, 2.8 mm DV) and the skull over HVC was
+surgeries \cite{Guitchounts2013electrode}. The skull
+over Area X was localized using stereotactic coordinates (20° head
+angle; 5.8 mm AP, 1.5 mm ML, 2.8 mm DV)\marginpar{I think the coord abbrevs should be spelled out, no?} and the skull over HVC was
 localized using stereotactic coordinates (30° head angle; 0.7 mm AP,
-2.3 mm ML, 0.4-0.7 mm DV), and the the outer bone leaflet removed at
-the location of area X and HVC with a dental drill. The lower bone
-leaflet was carefully removed with an opthalamic scalpel, similar to
+2.3 mm ML, 0.4--0.7 mm DV). At each location, the outer bone leaflet was removed with a dental drill, and the lower bone
+leaflet was removed with an opthalamic scalpel---similar to
 implant procedures for recording with microdrives
-\cite{Long2010synfire}, exposing a hole of $\sim 150 \mu$m diameter. A
+\cite{Long2010synfire}---exposing a hole of $\sim 150$ $\mu$m diameter. A
 minimal durotomy was performed using a dura pick (typical durotomy was
-less than 50 microns.). A 16-channel carbon-fibre array
+less than 50 $\mu$m.). A 16-channel carbon-fibre array
 \cite{Guitchounts2013electrode} was mounted on a digital manipulator
-attached to the stereotax and slowly lowered through the
+attached to the stereotax and lowered through the
 durotomy. During insertion into the brain, the carbon fibres would
-occasionally begin to visibly splay. After lowering the array to the
-appropriate depth, the position in the song nucleus HVC was verified
-using antidromic stimulation from another 16-channel array implanted
-in downstream Area X
+occasionally begin to visibly splay. The (downstream) Area X electrode was implanted first, allowing placement of the HVC electrode to be confirmed through antidromic stimulation from Area X
 \cite{Hahnloser2002sparse,Guitchounts2013electrode}.  After verifying
 the position of the array, the craniotomy was covered with the
 silicone elastomer Kwik-Sil (World Precision Instruments), and the
 array was glued into place using light-bonded acrylic (Flow-It ALC,
 Pentron) along the entire length of the electrode shank, such that no
-portion of the carbon fibre bundle was left exposed or loose. A $\sim
-150\mu$m hole was made on the skull of cerebellum and both arrays’
-grounding wires were secured in cerebellum using light-bonded acrylic.
+portion of the carbon fibre bundle was left exposed or loose. Both arrays’
+grounding wires were secured to a $\sim
+150$-$\mu$m hole in the skull at the cerebellum using light-bonded acrylic.
 
 \subsection{Splay histology}
 
@@ -502,26 +496,17 @@ clustered as follows:
 
 \subsection{Recording}
 
-For electrophysiology (recording and stimulation), birds were anesthatised with 1.5\% isoflurane, 98.5\% oxygen, at 0.5 liters/minute.
+For electrophysiology (recording and stimulation), birds were anesthetised with 1.5\% isoflurane, 98.5\% oxygen, at 0.5 liters/minute.
 
-Recording of spontaneous activity in Area X was with an Intan RHD2000 amplifier at 20 kHz, with a high-pass filter at 200 Hz.  Recordings were broken down into data files 1 minute long.  Any data file with any sample whose absolute value was $>500\mu$V was assumed to have excessive recording noise, and was discarded.
+Recording of spontaneous activity in Area X was with an Intan RHD2000 amplifier at 20 kHz, with a high-pass filter at 200 Hz.  Recordings were broken down into data files 1 minute long.  Any data file with any sample whose absolute value was $>500$ $\mu$V was assumed to have excessive recording noise, and was discarded.
 
 \subsection{Stimulation: Zebra finch antidromic HVC $\leftarrow$ X}
 
-Electrical stimulation saturates the brain, including at the site of
-the recording electrode, for some time post-stimulation. Artifacts
-were visible in the recording traces for 1--3 ms
-post-stimulus.\marginpar{Intan} Responses to stimulation can be
-detected outside of the saturation window.  A common technique for
+A common technique for
 locating HVC in the zebra finch involves implanting a stimulating
-electrode in Area X and looking for a an antidromic response, which is
+electrode in Area X and looking for an antidromic response, which is
 visible in HVC and not in the surrounding tissue
-\cite{Swadlow1998antidromic,Hahnloser2002sparse}.  Since the two brain
-areas are separated by about 5 mm, this response occurs 3--8 ms after
-stimulation\marginpar{Tim: citation for 3--8 ms?}, which gives the
-recording amplifier time to settle before measuring the
-response.\marginpar{But why antidromic? Could one go forward? Or would
-  that be too risky to HVC if that's the target of study?}
+\cite{Swadlow1998antidromic,Hahnloser2002sparse}. We use this standard procedure as a starting point for an exploration of stimulation techniques.
 
 For discussion of the stimulation paradigm, we will use the following definitions:
 
@@ -543,12 +528,19 @@ through the common return.
 
 We used a Plexon stimulator to control stimulation in Area X, and
 recorded from HVC using a Tucker-Davis Technologies (TDT) RZ5
-amplifier or an Intan RZ2000\marginpar{Model \#? Also depending on
+BioAmp processor with a Medusa preamplifier, or an Intan RZ2000\marginpar{Model \#? Also depending on
   which recording to show in \fig{fig:clear_hvc_response}}.  The
-Plexon self-monitoring channels were recorded on a National
+stimulator's self-monitoring channels were recorded on a National
 Instruments (NI) PCI-6251 data acquisition card using the
 session-based interface of Matlab (various versions from 2014a through
 2015b) on Windows 8.1.
+
+Electrical stimulation saturates the brain---including at the site of
+the recording electrode, and thus also the recording amplifier---for some time post-stimulation. The time required for the amplifier to decay to baseline results in a stimulation artifact in the recording traces for 1--5 ms post-stimulus (with the TDT).
+\marginpar{Intan} Responses to stimulation can be
+detected outside of the saturation window and inside the decay region with appropriate de-trending. Since HVC and Area X are separated by about 5 mm, this response occurs 3--8 ms after
+stimulation\cite{Fee2004mechanisms}\marginpar{Do you have a better citation?}, which usually gives the TDT amplifier time to settle before the response---at least sufficiently that the voltage traces may be effectively de-trended.
+
 
 Custom MATLAB software controls the experiment, initiating spike train
 delivery and response monitoring.  The Plexon's self-monitoring
@@ -564,7 +556,7 @@ it sends out its own TTL pulse: this signal is recorded by the TDT
 along with the HVC electrode voltages.  Thus the data alignment
 precision is controlled by the sampling rate of the TDT (41 $\mu$s).
 
-Programming each of the stimulator's 16 channels for one pulse train and running the train (10 pulses at 25 Hz) requires a little over 2 seconds. A threshold scan requires, on average, around 15 pulse trains, and so generally takes a bit more than 30 seconds. Likewise, a voltage scan requires delivering one pulse train per active electrode, for a total of about 30 seconds.\marginpar{This timing is after I did some speedup hacking, but the experiments presented in this paper were pre-speedup (about half as fast). Does it matter?}
+Programming each of the stimulator's 16 channels for one pulse train and running the train (10 pulses at 25 Hz) requires a little under 4 seconds. A threshold scan requires, on average, around 15 pulse trains, and so generally takes around a minute. Likewise, a voltage scan requires delivering one pulse train per active electrode, for a total of another minute.\marginpar{This timing is before I did some speedup hacking---it's nearly twice as fast now---but most of the data shown here were gathered pre-speedup. Does it matter?}
 
 \subsubsection{Response detection}
 \label{sec:responsedetection}
@@ -583,7 +575,7 @@ response to stimulation in Area X.  We detected such responses in two different 
 
 During runtime (threshold and voltage scans), we measured the
 cross-correlation between the recorded response for each pulse in a
-train and each other with a maximum lag of 100 $\mu$s, which provides
+train and each other with a maximum lag of 100 $\mu$s (note that our recording amplifier samples every 41 $\mu$s), which provides
 a robust way of separating the response of projection neurons from
 noise.  Because the HVC amplifier's (Intan's or TDT's) response to the
 transient stimulation pulse in Area X can persist into the time of
@@ -597,8 +589,7 @@ stimulation artifact than the conventional approach of
 bandpass-filtering the signal. The cross-correlation threshold above
 which a response is identified is chosen by visual inspection.
 
-A further, independent voltage-threshold analysys was performed on the
-data offline.  For each train of $n$ pulses, we labeled peaks greater
+A further, independent voltage-threshold analysys was performed offline.  For each train of $n$ pulses, we labeled peaks greater
 than 5 standard deviations from the RMS noise of a nearby (within 20
 ms) non-stimulated recording on the same electrode.  For each of the
 $n$ stimuli in the pulse train, all peaks' delays post-stimulus were
@@ -623,7 +614,7 @@ probability 50\%.
     respective pulse to within 41 $\mu$s.  Various response activity
     can be seen, but the most pronounced is at 6.2 ms post-onset.
     {\bf Bottom:} a different bird, with a much weaker signal, but
-    recorded on TDT.  200 $\mu$s, 6.94 $\mu$A, 1.2 V peak.{\em Use the
+    recorded on the TDT.  200 $\mu$s, 6.94 $\mu$A, 1.2 V peak.{\em Use the
       top figure?  It only shows one channel, and it's recorded on the
       Intan, which I was using while the HVC signals were still
       pretty.  That means a lot worse amplifier settling, so it's not
@@ -636,7 +627,7 @@ As the bird ages, the implant bonding site is slowly pushed away
 from\marginpar{Details or citation?  Possibly
   \cite{Barrese2016electrodestability}, although they don't really
   discuss this so much.} the skull.  For shallow installations such as
-HVC (depth $\approx 200\mu m$, the quality of the HVC recordings
+HVC (depth $\approx 200$ $\mu$m, the quality of the HVC recordings
 diminishes as electrodes are forced out of contact with the brain.
 This makes it more and more difficult over time to measure the
 antidromic response.  The above cross-correlation technique for
@@ -681,7 +672,10 @@ injuring the bird.
 
 Once the minimum current required in order to achieve a response is
 identified, we perform a voltage scan at that current, in order to
-measure the peak voltage delivered to each electrode.
+measure the peak voltage delivered to each electrode. Since the ratio
+of voltages over the electrodes tends to remain fairly constant, the
+electrode that reached the highest absolute voltage in the previous
+scan is used for the overvoltage termination condition.
 
 \section{Results}
 
