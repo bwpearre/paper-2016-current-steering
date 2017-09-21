@@ -821,13 +821,13 @@ implantation for the most stable electrodes of the 16.
       I omit graphs with fewer than 20 spikes as I've done here Or
       show their messy squiggles?}  Some of the electrodes in Area X
     record spontaneous spikes a year after implantation.  Column
-    titles show the number of days since implantation and the number of seconds of
-    recorded data.  Each row is one electrode (shown here: the three
+    titles show the number of days since implantation. {\em FIXME Add the number of seconds of
+    recorded data, and remove it from the legends}.  Each row is one electrode (shown here: the three
     most stable channels and three that showed some variability).
     Legends show the number of seconds of the recording, the number of
     spikes, and mean spike rate.  The grey shaded region is standard
     deviation, and the coloured shaded region is the 95\% confidence
-    interval for the mean. {\em FIXME Are these the same spike?}}
+    interval of the mean. {\em FIXME Are these the same spike?}}
   \label{fig:XSpikeRecording}
 \end{figure}
 
@@ -856,7 +856,7 @@ in \fig{fig:VoltageVsCSC}) consistently yield slighly higher threshold
 voltages than those measured using the search.  This is because
 whereas the maximum-likelihood fit computes the voltage required in
 order to obtain a response with 50\% probability, the threshold
-search, which guided data acquisition in realtime, looks for any
+search, which guided data acquisition in realtime with an eye to maximising safety, looks for any
 significant correlation between the responses in each spike train,
 which is detectable well before the stimulation achieves a 50\%
 response rate.
@@ -876,43 +876,41 @@ response rate.
   \caption{The peak Area X stimulation voltage required in order to
     achieve biologically effective levels of stimulation in HVC varies
     with different current-steering configurations.  Here are 32
-    different configurations, over 5 trials each, taken 214 days
+    different configurations, over 5 trials each, taken 214 days {\em FIXME Why 214, when the recording graphs show 300+ days? How about discussing that? How about naming the birds?}
     post-surgery.  The X axis lists the configuration (each of the 11
     active electrodes delivers a positive-first ``0'' or
     negative-first ``1'' current-controlled pulse).  The Y axis shows
-    the maximum voltage across any electrode for the given CSC at the
+    the maximum absolute voltage (across the stimulating electrodes) for the given CSC at the
     lowest current that evoked a reliable response.  Blue bars are the
     mean voltage discovered using the online threshold scan technique
     described in Methods, red dots show the voltage result for each
-    trial, and error bars are 95\% confidence intervals (n=5).  Green
-    bars show the voltage required to induce 50\% probability of
-    response using a the maximum-likelihood analysis described in
-    Methods, also as 95\% confidence intervals (when the confidence
+    trial, and black error bars are 95\% confidence intervals (n=5).  Green
+    bars show the voltage required to induce response to 50\% of
+    stimulus pulses using a the maximum-likelihood analysis described in
+    \sref{sec:responsedetection}, also as 95\% confidence intervals (when the confidence
     lines would have spanned the whole range of the graph, they have
-    been omitted for clarity), and with crossbar marker at the mean,
-    with marker width chosen to give an approximate sense of
-    confidence. {\em FIXME Cosmetic stuff: xlabel/ylabel collisions, expand Y axis, maybe angle the CSCs, and why a bar graph?}}
+    been omitted), and with crossbar marker at the mean.
+    {\em FIXME Cosmetic stuff: xlabel/ylabel collisions, expand Y axis, maybe angle the CSCs, and why a bar graph?}}
   \label{fig:VoltageVsCSC}
 \end{figure}
 
 \subsubsection{Controlling the antidromic response}
 
-Different CSCs delivered to Area X resulted in different response
-patterns in upstream area HVC, as can be seen by the representative
-examples in \fig{fig:HVCresponseVsCSC}. Besides providing further
+Different CSCs delivered to Area X resulted not only in different response thresholds, but in different response patterns in upstream area HVC. Representative
+examples in \fig{fig:HVCresponseVsCSC} show that at least over the timescale of the experiment (around 4 hours) the responses to different stimulus patterns are surprisingly stereotyped. Besides providing further
 evidence that the electrode arrays splayed, this suggests that the
-approach might be able to induce specifically designed neural dynamics
+approach might be able to induce specifically targeted neural dynamics
 beyond simply the presence or absence of a response.
 
 \begin{figure}
   \includegraphics[width=\textwidth]{HVCresponseVsCSC}
   \includegraphics[width=\textwidth]{lr7-unique-responses-10-07-a}
   \caption{Different CSCs delivered to Area X can induce different
-    responses antidromically in HVC.  {\em Top:} four of the most
+    responses antidromically in upstream area HVC.  {\em Top:} four of the most
     distinct responses to four of the 32 CSCs shown in
     \fig{fig:VoltageVsCSC}, bird lr95rhp {\em FIXME Right bird?}.
         {\em Bottom:} four distinct responses in bird lr7. Shading is
-        95\% confidence, n=198 {\em FIXME n for lr7?}.}
+        95\% confidence, n=198 {\em FIXME n for lr7? Better colours? No checkboxes?}.}
   \label{fig:HVCresponseVsCSC}
 \end{figure}
 
@@ -921,7 +919,7 @@ beyond simply the presence or absence of a response.
 
 \subsection{Splay}
 
-Achieving consistent splay with these electrode arrays has proven difficult---the spatial distribution of electrodes is highly variable. Nonetheless, they splay well enough often enough to suggest that the design should be investigated further, especially given the state-of-the-art minimal damage and encapsulation.
+Achieving consistent splay with these electrode arrays has proven difficult---the spatial distribution of electrodes is highly variable. Nonetheless, they splay well enough often enough to suggest that the design should be investigated further, especially given the state-of-the-art minimal damage and encapsulation.\marginpar{Is there any publication yet for the polyimide electrodes, or Nathan's fibres?}
 
 \subsection{Steering}
 
@@ -966,28 +964,28 @@ removed. This suggests a more general objective for the search, in
 which different timings for stimulating the $n$ sets may trigger
 different network-scale dynamics (the same mechanism in the context of
 current steering in retina\cite{Jepson2014steering_in_retina} is
-related).  This greatly enlarges the space of inducible dynamics, and
-also suggests the possibility of inducing Hebbian learning, which we
+related).\marginpar{What does that mean?} This would greatly enlarge the space of inducible dynamics, and
+also suggests the possibility of manipulating Hebbian learning, which we
 presume would tend to magnify and stabilise the effect of such
 stimulation over time.\marginpar{Wild speculation. Too much so?}
 
 Whereas Histed used single electrodes, we use miltichannel arrays.
 Rather than a 16-channel array providing $n=16$ groups of neurons,
 different current-steering configurations may lead to a much higher
-value of $n$.  For such an electrode there are $2^{16}$
+value of $n$.  For an $m$-channel electrode there are $2^m$
 current-steering configurations even without manipulating current
-pulse magnitude or timing, and with those additions the search space
+pulse magnitude or shape or relative timing, and with those additions the search space
 is essentially infinite.
 
 \subsection{Ongoing Learning}
 
-DBS treatments depend on finding the most effective stimulation
-patterns given electrode placement and patient response. The best
+DBS treatments benefit from finding the most effective stimulation
+patterns given electrode placement. The best
 clinical outcomes require about 20 hours\marginpar{Now where did I
   read this? CITATION NEEDED} of hand-tuning, involving multiple
 patient visits to a clinic.\marginpar{This has nothing to do with our
   paper. Learning is not addressed here. But I could mention it as a
-  possibility. Should I? Or leave it out?} Work in automatic measures
+  possibility. Should I? Or leave it out?} Work in automatic metrics
 of patient outcome is progressing (see, e.g.,
 \cite{Basu2013dbsFeedback,Rosin2011adbs}), and with that comes the
 ability to continuously adapt the stimulation in order to optimise
@@ -999,8 +997,8 @@ unlikely to be effective, demanding automated search.
 \subsection{Power}
 
 Another limitation of DBS systems is power use: even when the system
-only activates in response to need (on-demand DBS), the currents
-required in order to achieve good clinical outcome drain power.  Small
+only activates in response to need (on-demand DBS), the current
+required for stimulation drains power.  Small
 electrodes that drastically reduce scarring allow stimulation currents
 several orders of magnitude lower than state-of-the-art systems, and
 even if current steering does not allow realtime therapy optimisation,
@@ -1009,10 +1007,10 @@ it appears to allow further optimisation of power usage.
 \subsection{Summary}
 
 While the current study is severely limited by the availability of
-good electrodes and by our continuously evolving experimental design,
-we feel that it will be of interest to the community. We have
+good electrodes and by our evolving experimental design,
+we feel that even these preliminary results will be of interest to the community. We have
 demonstrated the potential for thin carbon-fibre electrode arrays to
-splay in the brain (albeit with significant inconsistency), providing
+splay in the brain, providing
 multiple sites for recording and stimulation for at least a year
 without rejection by the brain. We have shown that the voltage
 required in order to induce responses can be minimised through
