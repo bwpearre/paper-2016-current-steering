@@ -25,9 +25,12 @@
 
 # $Id: Makefile,v 1.13 2005/02/03 12:32:14 mairas Exp $
 
-LATEX	= latex
+LATEX	= pdflatex
 BIBTEX	= bibtex
 MAKEINDEX = makeindex
+IMG_TYPE = jpg
+IMG_SIZE = 2048x2048
+IMG_DPI = 300
 XDVI	= xdvi -gamma 4
 XDVIPROC= xdvi-xaw
 DVIPS	= dvips
@@ -46,10 +49,10 @@ SRC	:= $(shell egrep -l '^[^%]*\\begin\{document\}' *.tex)
 # Here is BWP hack: add /home/bwp/r/bibs/ to bibfile.  Need a 'which'-type cmd.
 BIBFILE := $(shell perl -ne '($$_)=/^[^%]*\\bibliography\{(.*?)\}/;@_=split /,/;foreach $$b (uniq (@_)) {print "$$b.bib"}' $(SRC))
 
-EPSPICS := $(shell perl -ne '@foo=/^[^%]*\\(includegraphics|psfig)(\[.*?\])?\{(.*?)\}/g;if (defined($$foo[2])) { if ($$foo[2] =~ /.eps$$/) { print "$$foo[2] "; } else { print "$$foo[2].eps "; }}' *.tex)
+PICS := $(shell perl -ne '@foo=/^[^%]*\\(includegraphics)(\[.*?\])?\{(.*?)\}/g;if (defined($$foo[2])) { if ($$foo[2] =~ /.eps$$/) { print "$$foo[2] "; } else { print "$$foo[2] "; }}' *.tex)
 DEP	= *.tex
 
-TRG	= $(SRC:%.tex=%.dvi)
+TARGETS	= $(SRC:%.tex=%.dvi)
 PSF	= $(SRC:%.tex=%.ps)
 PDF	= $(SRC:%.tex=%.pdf)
 
@@ -58,8 +61,10 @@ RM = rm -f
 OUTDATED = echo "EPS-file is out-of-date!" && false
 
 
-all 	: $(TRG)
+default: $(TARGETS)
 	$(refreshxdvi)
+
+all 	: default $(PDF)
 
 define run-latex
 	$(COPY)
@@ -78,7 +83,7 @@ define refreshxdvi
 	-@killall -USR1 $(XDVIPROC)
 endef
 
-$(TRG)	: %.dvi : %.tex $(DEP) $(EPSPICS) $(BIBFILE)
+$(TARGETS)	: %.dvi : %.tex $(DEP) $(BIBFILE)  $(PICS)
 	  @$(run-latex)
 
 $(PSF)	: %.ps : %.dvi
@@ -92,8 +97,8 @@ $(PDF)  : %.pdf : %.dvi
 #$(PDF)  : %.pdf : %.ps
 #	  @$(PS2PDF) -p letter $<
 
-show	: $(TRG)
-	  @for i in $(TRG) ; do $(XDVI) $$i & ; done
+show	: $(TARGETS)
+	  @for i in $(TARGETS) ; do $(XDVI) $$i & ; done
 
 showps	: $(PSF)
 	  @for i in $(PSF) ; do $(GH) $$i & ; done
@@ -103,14 +108,17 @@ ps	: $(PSF)
 pdf	: clean $(PDF)
 
 diff	: main.tex
-	latexdiff ../paper-2016-syllable-detector-last/main.tex main.tex > diff.tex
+	latexdiff ../paper-2017-femtosecond-machining-last/main.tex main.tex > diff.tex
+
+%.$(IMG_TYPE) : %.eps
+	convert -density $(IMG_DPI) -resize $(IMG_SIZE) -colorspace RGB -flatten $< $@ 
 
 # TODO: This probably needs fixing
 #html	: @$(DEP) $(EPSPICS)
 #	  @$(L2H) $(SRC)
 
 clean	:
-	  -rm -f $(TRG) $(PSF) $(PDF) $(TRG:%.dvi=%.aux) $(TRG:%.dvi=%.bbl) $(TRG:%.dvi=%.blg) $(TRG:%.dvi=%.log) $(TRG:%.dvi=%.toc) $(TRG:%.dvi=%.out) *~
+	  -rm -f $(TARGETS) $(PSF) $(PDF) $(TARGETS:%.dvi=%.aux) $(TARGETS:%.dvi=%.bbl) $(TARGETS:%.dvi=%.blg) $(TARGETS:%.dvi=%.log) $(TARGETS:%.dvi=%.toc) $(TARGETS:%.dvi=%.out) *~
 
 .PHONY	: all show clean ps pdf showps
 

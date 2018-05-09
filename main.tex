@@ -121,16 +121,17 @@
 % Please capitalize all terms in the title except conjunctions, prepositions, and articles.
 \begin{flushleft}
 {\Large
-  \textbf\newline{A Multi-Channel Electrode for Chronic Recording and Safe Current-Steered Stimulation}
+  \textbf\newline{Safe Current-Steered Stimulation and Chronic Recording with a Multi-Channel Electrode: Preliminary Results}
 }
 \newline
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
 \\
-Ben Pearre\textsuperscript{1,a,\textcurrency},
-Sanne~Moorman\textsuperscript{1,b},
-Jun Shen\textsuperscript{1,c},
-Stuart F.~Cogan\textsuperscript{2,d}
-Timothy J.~Gardner\textsuperscript{1,e}
+Ben Pearre\textsuperscript{1\textcurrency},\\
+Sanne~Moorman\textsuperscript{1},\\
+Jun Shen\textsuperscript{1},\\
+Felix Deku\textsuperscript{2},\\
+Stuart F.~Cogan\textsuperscript{2},\\
+Timothy J.~Gardner\textsuperscript{1}
 \\
 \bigskip
 \textsuperscript{1} Department of Biology, Boston University, Boston, Massachusetts, United States of America\\
@@ -144,7 +145,7 @@ Timothy J.~Gardner\textsuperscript{1,e}
 %
 % Primary Equal Contribution Note
 %\Yinyang These authors contributed equally to this work.
-Author \textsuperscript{a}~did something, we think.  The histology data analysis was by Author \textsuperscript{b}. Author \textsuperscript{c} performed all surgeries.  Authors \textsuperscript{b} and \textsuperscript{c} did the histologies.  Author \textsuperscript{d} developed the iridium oxide coating technique.  Author \textsuperscript{e}, the PI, designed and guided the experiment and this paper.
+BWP developed and ran the electrophysiology and current-steering investigation, and wrote the manuscript.  SM performed the histology data analysis. JS performed all surgeries.  SM and JS did the histologies.  FD and SFC developed the iridium-oxide coating technique.  TJG supervised and guided the work.
 
 % Additional Equal Contribution Note
 % Also use this double-dagger symbol for special authorship notes, such as senior authorship.
@@ -162,7 +163,7 @@ Author \textsuperscript{a}~did something, we think.  The histology data analysis
 %\textpilcrow Membership list can be found in the Acknowledgments section.
 
 % Use the asterisk to denote corresponding authorship and provide email address in note below.
-\textsuperscript{\textcurrency} Corresponding author: bwpearre@gmail.com (BP)
+\textsuperscript{\textcurrency} Corresponding author: bwpearre@bu.edu (BP)
 
 \end{flushleft}
 
@@ -175,21 +176,20 @@ Author \textsuperscript{a}~did something, we think.  The histology data analysis
   Electrical control of the brain facilitates a variety of therapeutic
   and scientific goals, from treating sensory, motor, and cognitive
   defects to exploring the effects of disrupting or modifying the
-  brain's behaviour in real time.  These methods are limited by the
-  brain's immune reaction to foreign matter: over a period of months,
-  glia encapsulate the electrodes, isolating them from neurons. Small
-  electrodes ($<$ 10 $\mu$m) minimise encapsulation, and thus can both
-  record single neurons for many months and precisely stimulate small
-  groups of neurons.  However, such small electrodes are deliecate,
-  and their high impedance requires stimulation voltages that exceed
-  the water hydrolysis point.
+  brain's behaviour in real time.  These methods are limited by
+  compromises in electrode design: not only do large electrodes offer
+  poor spatial resolution, but over months they are encapsulated by
+  the brain's immune system, isolating them from neurons. Small
+  electrodes ($<$ 10 $\mu$m) maximise spatial resolution and minimise
+  encapsulation, but are deliecate, and their high impedance requires
+  stimulation voltages that can easily exceed the water hydrolysis point.
 
-  We have previously developed an electrode design in which groups of
+  We have previously developed an electrode design in which arrays of
   thin electrodes support each other during insertion and then splay
   in the brain. Here we describe the splaying properties of these
-  electrode arrays.  We present preliminary results showing that these
-  electrodes remain capable of recording individual spikes for a year
-  after implantatiion, and that the spatial scale of the splaying is
+  arrays.  We present preliminary results showing that they remain
+  capable of recording individual spikes for a year after
+  implantatiion, and that the spatial scale of the splaying is
   sufficient to allow the steering of current between the
   electrodes. We show a proof of concept of two consequences of
   current steering: it can produce neural responses while keeping
@@ -201,26 +201,33 @@ Author \textsuperscript{a}~did something, we think.  The histology data analysis
 \linenumbers
 \section{Introduction}
 
+\marginpar{Jun's list of awesome:\begin{itemize}\item First bird 2 x 16-channels! \item First year-long result! \item First low-impedance! \item First splay histology! \item First glial-damage histology! \item Should Jeff be a coauthor? Ackowledged for sure!
+  \end{itemize}
+}
+
 Direct control of the brain---the ability to sense and modify its
 dynamics in real time---is a longstanding goal in neuroscience,
 engineering, and medicine. Sensing has been achieved on a variety of
 spatial and temporal scales in humans and non-humans, using fMRI,
-scalp electrodes, trans-cranial magnetic stimulation,
-optigenetics, and with surgically implanted electrodes, both on the
-surface of the cortex and implanted into deep brain areas. The gold
-standard for spatial and temporal resolution is patch clamping, which
-can electrically record individual spikes, but is at present infeasible for
-chronic implants in behaving animals. Small extracellular electrodes
-can potentially provide high spatial and temporal resolution,
-recording individual neurons and stimulating regions on the scale
-of a single dendritic tree. Increasing the channel count of these
-electrodes allows recording signals from different locations
-simultaneously, as well as greater control over
-where current is delivered during stimulation. Decreasing the size of the electrodes improves spatial resolution and chronic recording capability, but at the expense of robustness and the ability to inject biologically relevant currents at safe voltages. We propose that a multichannel electrode
-arrays consisting of thin carbon fibres, combined with appropriate
-current steering, can achieve fine spatial resolution, biological
-compatibility, and safe stimulation, and can produce a variety of different
-neural dynamics.
+scalp electrodes, trans-cranial magnetic stimulation, optigenetics,
+and with surgically implanted electrodes, both on the surface of the
+cortex and in deep brain areas. The gold standard for spatial and
+temporal resolution is patch clamping, which can electrically record
+individual spikes, but is at present infeasible for chronic implants
+in behaving animals. Small extracellular electrodes can potentially
+provide high spatial and temporal resolution, recording individual
+neurons and stimulating regions on the scale of a single dendritic
+tree. Arrays of electrodes allow recording signals from multiple sites
+simultaneously, as well as greater control over the location of
+stimulation. Decreasing the size of the electrodes improves spatial
+resolution and chronic recording capability at the expense of
+robustness and the ability to inject biologically relevant currents at
+safe voltages. We propose that a multichannel electrode arrays
+consisting of thin carbon fibres, combined with appropriate current
+steering, can achieve fine spatial resolution, biological
+compatibility, and safe stimulation, and furthermore can produce some
+degree of control over the dynamics of the neural response to
+stimulation.
 
 Much of the work in current steering in the brain is due to interest
 in deep brain stimulation (DBS).  Despite the lack of understanding of
@@ -237,7 +244,7 @@ rendering them less effective over time. For example,
 the $\sim$~1.3-mm electrodes common in DBS.  This encapsulation
 results in ever-increasing stimulation thresholds, rendering the
 electrodes unable to record as effectively
-\cite{Barrese2016electrodestability,Biran2005gliosis,Polikov2005gliosis,Winslow2010gliosis}.
+\cite{Barrese2016electrodestability, Biran2005gliosis, Polikov2005gliosis, Winslow2010gliosis}.
 
 Even before glial encapsulation, large electrodes lack sufficient
 spatial resolution to record or stimulate near the single-neuron
@@ -247,9 +254,9 @@ computational models of brain tissue to predict steering
 configurations that preferentially target the intended area, or make
 up for errors in electrode placement during surgery
 \cite{Holloway2005stereotaxy}. One approach
-\cite{Butson2008steering,Chaturvedi2012} builds a model of the tissue
+\cite{Butson2008steering, Chaturvedi2012} builds a model of the tissue
 of interest using magnetic resonance imaging (MRI) and diffusion
-tensor imaging (DTI) \cite{Tuch2001conductivity,Alexander2007dti}.
+tensor imaging (DTI) \cite{Tuch2001conductivity, Alexander2007dti}.
 This produces data with voxels of roughly 2 mm\textsuperscript{3}.
 They then use finite element analysis to design current-steering
 patterns for the desired target.\marginpar{Lots more references
@@ -261,38 +268,39 @@ will not provide sufficient accuracy to take advantage of the control
 available with small electrodes.
 
 Steering current allows some degree of delivery of stimulus to
-locations between electrodes, allowing control policies to take the
-place of electrodes with higher channel count. For example, 64-channel
-electrode arrays, with electrode as closely packed as 30 $\mu$m, were
-used to stimulate macaque retina {\em in vitro}
+locations between electrodes: multielectrode stimulation patterns
+allow a ``virtual'' channel count much higher than the number of
+physical electrodes in the array. For example, 64-channel electrode
+arrays, with electrode as closely packed as 30 $\mu$m, were used to
+stimulate macaque retina {\em in vitro}
 \cite{Jepson2014steering_in_retina}. They stimulated the retina using
 single electrodes or combinations of three electrodes with
 charge-balanced pulses, and found that retinal response could be
 predicted with a piecewise linear model of the steered current. The
 connectivity of retinal cells differs from that in most brain regions
-of interest, but we believe that this experiment nonetheless hints at the
-potential of neuron-scale current steering.
+of interest, but we believe that this experiment nonetheless hints at
+the potential of neuron-scale current steering.
 
-Most DBS systems deliver some fixed stimulation pattern continuously.
+Most DBS systems continuously deliver a fixed stimulation pattern.
 Recently, interest in using biological feedback to tune medical
-devices has grown.  For feedback
-control, most systems rely on large-spatial-scale metrics such as local
-field potentials (LFP) \cite{Priori2013adbs-lfp} and other macroscopic
-measures of outcome such as surface electromyography and accelerations
-\cite{Afshar2012closedloop,Basu2013dbsFeedback}\marginpar{Great
+devices has grown.  For feedback control, most systems rely on
+large-spatial-scale metrics such as local field potentials (LFP)
+\cite{Priori2013adbs-lfp} and other macroscopic measures of outcome
+such as surface electromyography and accelerations
+\cite{Afshar2012closedloop, Basu2013dbsFeedback}\marginpar{Great
   review: \cite{Priori2015review}}. However, neuron-scale electrodes
 have shown promise for treatment of Parkinsonian symptoms in
 monkeys. A tungsten microelectrode stimulating the globus pallidum in
 response to individual spikes detected by a similar electrode in the
-related brain area M1 proved more effective than more standard
-feedback paradigms or open-loop control \cite{Rosin2011adbs}.
+related brain area M1 proved more effective than standard feedback
+paradigms or open-loop control \cite{Rosin2011adbs}.
 
-Insults during insertion, glial encapsulation over time, and poor spatial
-scale of large electrodes are all mitigated by electrodes $<$ 10
-$\mu$m, but these present two difficulties: they are too fragile to
-insert easily, and during stimulation, their small surface area
-requires dangerously high voltage in order to deliver sufficient
-current to induce response.
+Insults during insertion, glial encapsulation over time, and poor
+spatial resolution are all mitigated by electrodes $<$ 10 $\mu$m, but
+these present two difficulties: they are too fragile to insert easily,
+and during stimulation, their small surface area requires dangerously
+high voltage in order to deliver sufficient current to induce
+response.
 
 The electrode array of \cite{Guitchounts2013electrode} overcomes the
 structural fragility of thin electrodes by using multiple (in our
@@ -303,18 +311,18 @@ giving randomly distributed sites for recording and stimulation. Here
 we quantify that splay.
 
 In a current-controlled stimulating electrode,\marginpar{Why
-  current-controlled? E.g. \cite{Chaturvedi2012}?} the voltage
-required to induce neural activity goes up as the impedance increases
-and charge injection capacity decreases. Stimulation voltage above the
+  current-controlled? E.g. \cite{Chaturvedi2012}?}, as the impedance
+increases and charge injection capacity decreases the voltage required
+to induce neural activity goes up. Stimulation voltage above the
 hydrolysis point of water (around 1.3 V) increases the risk of tissue
 damage as well as leading to erosion of carbon electrodes due to
 oxidative etching \cite{Tamakov2010erosion}. This voltage limit is not
 a limiting factor for large DBS electrodes, whose surface area tends
-to be ample and which are in any case encapsulated by glia, but it
-creates a problem for our small electrodes (in our case the area per
-shank is around 2000 $\mu\textrm{m}^2$): their impedance is high and
-their charge delivery capacity is poor, leading to high voltage
-requirements for stimulation.
+to be ample, but it creates a problem for our small electrodes (in our
+case the area per shank is around 2000 $\mu\textrm{m}^2$): their
+impedance is high and their charge injection capacity is poor, with
+the result that a biologically significant stimulation current often
+requires a dangerously high voltage.
 
 We address the voltage problem in two ways. First, we confirm that
 electroplating the electrodes in iridium oxide, as suggested by
@@ -337,8 +345,8 @@ we provide evidence showing:
 \item How often the electrodes splay correctly in the brain, and the spatial scale of that splay.
 \item That the electrodes can record activity in single units\marginpar{Is this claim easily justifiable given the unreliability of spike-sorting?} a year after surgery.
 \item That the electrodes can be used to stimulate the brain.
-\item That the spatial scale of splay is sufficient to allow effective current steering.
-  \item That current steering can be used to reduce injected voltage, thus keeping neurons safe while still delivering biologically relevant currents.
+\item That the spatial scale of splay is sufficient to allow current steering.
+\item That current steering can be used to reduce injected voltage, thus keeping neurons safe while still delivering biologically relevant currents.
 \item That current-steered control of stimulation inputs allows
 fine-grained control over small groups of neurons, potentially
 permitting a wide variety of optimisations, such as controlling the
@@ -354,8 +362,6 @@ community, suggesting capabilities that have not heretofore been
 available.
 
 
-
-
 \section{Methods}
 
 \subsection{Electrode construction}
@@ -367,53 +373,22 @@ Electrode arrays were constructed as described in
 \label{sec:chargeinjection}
 
 The charge transfer capacity of one of the electrode arrays (16
-shanks) used for stimulating in Area X was enhanced by
+shanks) used for stimulating in Area~X was enhanced by
 electrodepositing iridium oxide. This effects an improvement of roughly
 an order of magnitude: impedances went from around 4 M$\Omega$ to 400
 k$\Omega$, and for a given current, the required voltage was much
 lower.\marginpar{FIXME} We also experimented with PEDOT, which has
 excellent charge-injection properties, but we found it to have
 durability issues. A detailed analysis is outside the scope of this
-work.\marginpar{All I know about this is hearsay.}  See
+work.\marginpar{All I know about this is hearsay. Does anyone want to add something here?}  See
 \cite{Cogan2008electrodes} for a review of charge transfer physics.
 
 \subsection{Bird surgery description}
 
-\subsubsection{Animals and Perfusions}
-
-At the end of the experiment, the birds were given an overdose of
-pentobarbital (PB) and perfused with 0.1M\marginpar{M is Mol?} phosphate buffer followed by 4\%
-paraformaldehyde in 0.1 M PB.  The brain and skull were removed. The
-electrodes were secured on the skull and brain. 2--4 holes were made
-on the skull to facilitate fluid flow. Following an
-overnight postfix in 4\% paraformaldehyde, brain with skull was
-treated overnight in 15\% and 30\% sucrose\marginpar{Which?} in 0.1M PB at 4$^\circ$C.
-The brains were sectioned with the electrodes in place. Tissue samples
-were sectioned in the direction from electrode base to tip\marginpar{Base-to-tip seems like the wrong way to do it--more chance of pulling an electrode out. Or is that so rare as to be irrelevant?} at
-50--100$\mu$m by a cryostat (CM 3050 S, Leica). The tissue samples
-were stored in $-20^\circ$C until immunohistochemistry was processed.
-
-\subsubsection{Fluorescent Immunohistochemistry of NeuN, MBP and DAPI}
-
-The brain slices were stained with
-NeuN and DAPI. Non-protein binding was blocked with 5\% normal donkey
-serum. The primary antibody against neuronal nuclei was a mouse
-anti-NeuN antibody (1:500, MAB377, A60, Chemicon) and the primary
-antibody against myelin was a rabbit Anti-Myelin Basic Protein / MBP
-Antibody (1:500, LS-C312288, LifeSpan BioSciences, Inc). Following
-primary antibodies incubation for overnight at 4$^\circ$C, Alexa
-Fluor 488 AffiniPure Donkey Anti-Mouse IgG (H+L) (1:500, 715-545-150,
-Jackson ImmunoResearch Laboratories) and Rhodamine (TRITC) AffiniPure
-Donkey Anti-Rabbit IgG (H+L) (1:500,711-025-152, Jackson
-ImmunoResearch Laboratories) added. The sections were coated with
-mounting medium containing 4',6-diamidino-2-phenylindole (DAPI,
-VECTASHIELD).  The sections of brain were visualised and the images
-were captured using a FV10i confocal microscope and its standard software (Olympus).
-
 \subsubsection{Surgery information}
 
 All procedures were approved by the Institutional Animal Care and Use
-Committee of Boston University (protocol number 14-029). Zebra finches
+Committee of Boston University (protocol number 14-029).\marginpar{Do they need the protocol number?} Zebra finches
 (n = 15: 13 for acute splay histology, 2\marginpar{Include the third?}
 for chronic HVC and Area X recordings) ($>$120 days post-hatch) were
 anesthetised with 4.0\% isoflurane and maintained at 1--2\% isoflurane
@@ -426,9 +401,9 @@ into the scalp before an incision was made along the AP axis.
 
 The same surgical procedure was followed for the acute and chronic
 surgeries \cite{Guitchounts2013electrode}. The skull
-over Area X was localized using stereotactic coordinates (20° head
-angle; 5.8 mm AP, 1.5 mm ML, 2.8 mm DV)\marginpar{I think the coord abbrevs should be spelled out, no?} and the skull over HVC was
-localized using stereotactic coordinates (30° head angle; 0.7 mm AP,
+over Area X was localised using stereotactic coordinates ($20^\circ$ head
+angle; 5.8 mm anterior-posterior (AP), 1.5 mm medial-lateral (ML), 2.8 mm dorsal-ventral (DV) and the skull over HVC was
+localised using stereotactic coordinates (30° head angle; 0.7 mm AP,
 2.3 mm ML, 0.4--0.7 mm DV). At each location, the outer bone leaflet was removed with a dental drill, and the lower bone
 leaflet was removed with an opthalamic scalpel---similar to
 implant procedures for recording with microdrives
@@ -448,14 +423,41 @@ portion of the carbon fibre bundle was left exposed or loose. Both arrays’
 grounding wires were secured to a $\sim
 150$-$\mu$m hole in the skull at the cerebellum using light-bonded acrylic.
 
+\subsubsection{Animals and Perfusions}
+
+At the end of the experiment, the birds were given an overdose of
+pentobarbital and perfused with 0.1 M phosphate buffer (PB) followed by 4\%
+paraformaldehyde in 0.1 M PB.  The brain and skull were removed. The
+electrodes were secured on the skull and brain. 2--4 holes were made
+on the skull to facilitate fluid flow. Following an
+overnight postfix in 4\% paraformaldehyde, brains in skulls were
+treated with a sequence from 15\% to 30\% sucrose in 0.1 M PB 4$^\circ$C.
+The brains were sectioned with the electrodes in place. Tissue samples
+were sectioned from electrode tip toward the base at
+50 or 100$\mu$m by a cryostat (CM 3050 S, Leica). The tissue samples
+were stored in $-20^\circ$C until immunohistochemistry was processed.
+
+\subsubsection{Fluorescent Immunohistochemistry of NeuN, MBP and DAPI}
+
+The brain slices were stained with
+NeuN and DAPI. Non-protein binding was blocked with 5\% normal donkey
+serum. The primary antibody against neuronal nuclei was a mouse
+anti-NeuN antibody (1:500, MAB377, A60, Chemicon). Following
+primary antibodies incubation for overnight at 4$^\circ$C, Alexa
+Fluor 488 AffiniPure Donkey Anti-Mouse IgG (H+L) (1:500, 715-545-150,
+Jackson ImmunoResearch Laboratories). The sections were coated with
+mounting medium containing 4',6-diamidino-2-phenylindole (DAPI,
+VECTASHIELD).  The sections of brain were visualised and the images
+were captured using a FV10i confocal microscope and its standard software (Olympus).
+
 \subsection{Splay histology}
 
 Electrode bundles were implanted into birds, all to a depth of roughly
 3 mm.  Most of these were ``dummy'' uncoated and blunt-cut rather than
 fire-sharpened as in \cite{Guitchounts2013electrode}, with 10--16
 channels (fibres).  The birds were killed, and their brains sectioned
-roughly perpendicularly to the electrodes, with a slice thickness of
-50 $\mu$m.\marginpar{Jun \& Sanne: what slice thickness?}
+roughly perpendicularly to the electrodes, with a slice thickness of either
+50 or 75 $\mu$m.\marginpar{Jun \& Sanne: what slice thickness?}
 
 The following criteria were used to exclude observations:\marginpar{Sanne: check exclusion criteria.}
 \begin{itemize}
@@ -479,7 +481,7 @@ clustered as follows:
 
 \begin{figure}
   % montage -geometry 1024x1024 splay_full.jpeg splay_partial.jpeg splay_no.jpeg splay_montage.eps
-  \includegraphics[width=\textwidth]{splay_montage}
+  \includegraphics[width=\textwidth]{splay_montage.jpg}
   \caption{Splay types, left to right: examples of full splay, partial
     splay, and clumped.  In all images, black circles are electrode
     shafts; in many cases the slicing plane is not quite orthogonal to
@@ -604,8 +606,8 @@ midpoint $\mu$ as the voltage required to induce a response with
 probability 50\%.
 
 \begin{figure}
-  \includegraphics[width=\textwidth]{lw95rhp-2015-08-05_18.39.07.eps}
-  \includegraphics[width=\textwidth]{lw95rhp-2015-12-02}
+  \includegraphics[width=\textwidth]{lw95rhp-2015-08-05_18_39_07.jpg}
+  \includegraphics[width=\textwidth]{lw95rhp-2015-12-02.jpg}
   \caption{An example of a strong response in HVC.  {\bf Top:} The
     horizontal axis is time in milliseconds relative to the onset of a
     stimulation pulse.  Here, the stimulation is a 400-$\mu$s biphasic
@@ -725,7 +727,7 @@ for visualisations thereof.\marginpar{Perhaps take out the table and
 \end{table}
 
 \begin{figure}
-  \includegraphics[width=\textwidth]{splay_data}
+  \includegraphics[width=\textwidth]{splay_data.jpg}
   \caption{Splay histology data from Table~\ref{table:splaydata}.}
   \label{fig:splaydata}
 \end{figure}
@@ -747,7 +749,7 @@ the brain (see Section~\ref{sec:results:recording}).
 
 \begin{figure}
   % montage -geometry 1024x1024 DAPI-and-NeuN*.jpeg damage.eps
-  \includegraphics[width=\textwidth]{damage}
+  \includegraphics[width=\textwidth]{damage.jpg}
   \caption{Typical damage.  Neural nuclei are shown in green (stained with
     NeuN) and all cells in blue (DAPI).  The presence of non-neural
     cells indicates damage, and is notable in the vicinity of the
@@ -772,7 +774,7 @@ the brain (see Section~\ref{sec:results:recording}).
 
 \begin{figure}
   % Width 9, height 5, fonts auto (100%), lw94rhp
-  \includegraphics[width=\textwidth]{Impedances}
+  \includegraphics[width=\textwidth]{Impedances.jpg}
   \caption{Impedances for the electrodes shown in
     \fig{fig:XSpikeRecording}.  Most good electrodes were in the range
     400 k$\Omega$--1M$\Omega$ for the recordings shown in that
@@ -782,7 +784,7 @@ the brain (see Section~\ref{sec:results:recording}).
 
 
 \begin{figure}
-  \includegraphics[width=\textwidth]{Impedances-all}
+  \includegraphics[width=\textwidth]{Impedances-all.jpg}
   \caption{{\em Full version of \fig{fig:impedances}.  I think I like this one less, but it could be more useful despite (or because of) showing a bunch of bad electrodes\dots}}
   \label{fig:impedances-all}
 \end{figure}
@@ -790,7 +792,7 @@ the brain (see Section~\ref{sec:results:recording}).
 
 \begin{figure}
   % Width 9, height 5, fonts auto (100%), lw95rhp
-  \includegraphics[width=\textwidth]{Impedances-lw95rhp}
+  \includegraphics[width=\textwidth]{Impedances-lw95rhp.jpg}
   \caption{Electrode impedances over time on another bird.  This Area X array was treated with iridium oxide.  {\em This plot probably requires a bunch more explanation.  Notably: why the big jumps?  Need to check on stimulation, but hard to generalise with so little data\dots}}
   \label{fig:impedances-lw95rhp}
 \end{figure}
@@ -815,7 +817,7 @@ implantation for the most stable electrodes of the 16.
 
 \begin{figure}
   % Width 9, Height 9, Font scaling 100%, lw94rhp I think?
-  \includegraphics[width=\textwidth]{XSpikeRecording}
+  \includegraphics[width=\textwidth]{XSpikeRecording.jpg}
   \caption{{\em FIXME Here I show 6 electrodes.  3 are beautiful, and
       3 fade in and out.  What's the best way to present this?  Should
       I omit graphs with fewer than 20 spikes as I've done here Or
@@ -872,7 +874,7 @@ response rate.
   % plot_max_voltage_bar.m, reanalyse_thresholds.m
   % lw95rhp-2015-12-04 (data also available on -09 and lw85ry-2015-12-17)
   % width 7 in, height 6 in, fonts auto
-  \includegraphics[width=\textwidth]{VoltageVsCSC}
+  \includegraphics[width=\textwidth]{VoltageVsCSC.jpg}
   \caption{The peak Area X stimulation voltage required in order to
     achieve biologically effective levels of stimulation in HVC varies
     with different current-steering configurations.  Here are 32
@@ -903,8 +905,8 @@ approach might be able to induce specifically targeted neural dynamics
 beyond simply the presence or absence of a response.
 
 \begin{figure}
-  \includegraphics[width=\textwidth]{HVCresponseVsCSC}
-  \includegraphics[width=\textwidth]{lr7-unique-responses-10-07-a}
+  \includegraphics[width=\textwidth]{HVCresponseVsCSC.jpg}
+  \includegraphics[width=\textwidth]{lr7-unique-responses-10-07-a.jpg}
   \caption{Different CSCs delivered to Area X can induce different
     responses antidromically in upstream area HVC.  {\em Top:} four of the most
     distinct responses to four of the 32 CSCs shown in
@@ -1012,7 +1014,7 @@ we feel that even these preliminary results will be of interest to the community
 demonstrated the potential for thin carbon-fibre electrode arrays to
 splay in the brain, providing
 multiple sites for recording and stimulation for at least a year
-without rejection by the brain. We have shown that the voltage
+without rejection. We have shown that the voltage
 required in order to induce responses can be minimised through
 reasonably careful selection of current-steering configuration during
 stimulus. Finally, we have shown the potential for multielectrode
